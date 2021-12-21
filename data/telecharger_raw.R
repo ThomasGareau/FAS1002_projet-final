@@ -1,4 +1,6 @@
-# Packgages utilisés
+######## Télécharger les données RAW ########
+
+# Packgages utilisés 
 
 library(readr)
 library(tidyverse)
@@ -13,12 +15,12 @@ library(lubridate)
 
 cv <- file.info("data/raw/vaccination_raw.csv")
 cv_date <- as_date(cv$ctime)
-remove(cv)
+rm(cv)
 
 ### Mise à jour lorsque cv_date != today
 
 ifelse(cv_date == today(), "Les données « Data on COVID-19 (coronavirus) vaccinations by Our World in Data » ont été colligées dans les 24 dernières heures", download.file("https://github.com/owid/covid-19-data/raw/master/public/data/vaccinations/vaccinations.csv", destfile = "data/raw/vaccination_raw.csv"))
-remove(cv_date)
+rm(cv_date)
 
 
 ## 2. Gapminder
@@ -27,65 +29,69 @@ remove(cv_date)
 
 pop_raw <- file.info("data/raw/population_raw.xlsx")
 pop_raw_date <- as_date(pop_raw$ctime)
-remove(pop_raw)
+rm(pop_raw)
 month <- month(Sys.Date())
 
 
 ### Mise à jour lorsque month(pop_raw_date) != month
 
 ifelse(month(pop_raw_date) == month, "Les données sur la population mondiale de Gapminder ont été colligées dans le dernier mois (il y a moins de 31 jours)", download.file("https://docs.google.com/spreadsheets/d/14_suWY8fCPEXV0MH7ZQMZ-KndzMVsSsA5HdR-7WqAC0/export?format=xlsx", destfile = "data/raw/population_raw.xlsx"))
-remove(pop_raw_date)
+rm(pop_raw_date)
 
 
 ### 2.2 GDP per capita Dataset : 
 
 gdp_capita_raw <- file.info("data/raw/gdp_capita_raw.xlsx")
 gdp_capita_raw_date <- as_date(gdp_capita_raw$ctime)
-remove(gdp_capita_raw)
+rm(gdp_capita_raw)
 
 ### Mise à jour lorsque month(pop_raw_date) != month
 
 ifelse(month(gdp_capita_raw_date) == month, "Les données sur le PIB par habitant de Gapminder ont été colligées dans le dernier mois (il y a moins de 31 jours)", download.file("https://docs.google.com/spreadsheets/d/1h3z8u0ykcUum8P9FV8EHF9fszDYr7iPDZQ-fgE3ecls/export?format=xlsx", destfile = "data/raw/gdp_capita_raw.xlsx"))
-remove(gdp_capita_raw_date)
+rm(gdp_capita_raw_date)
 
 
 ### 2.3 Life expectancy Dataset / Esprérance de vie : 
 
 life_exp_raw <- file.info("data/raw/life_exp_raw.xlsx")
 life_exp_date <- as_date(life_exp_raw$ctime)
-remove(life_exp_raw)
+rm(life_exp_raw)
 
 ### Mise à jour lorsque month(pop_raw_date) != month
 
 ifelse(month(life_exp_date) == month, "Les données sur l'espérance de vie de Gapminder ont été colligées dans le dernier mois (il y a moins de 31 jours)", download.file("https://docs.google.com/spreadsheets/d/11mulzUH3_cueq-V9D5KIlo9oHE9YYZrUSeVyCin7_rM/export?format=xlsx", destfile = "data/raw/life_exp_raw.xlsx"))
-remove(life_exp_date)
+rm(life_exp_date)
 
 
+## Ouvrir translator ISO - Pays - Continent
 
-## 3. Lecture des données
+iso_translator <- read_csv("data/raw/iso_translator.csv")
 
-### 3.1 Data Vaccination
+## 4. Lecture des données
+
+### 4.1 Data Vaccination
 
 vaccination_raw <- read_csv("data/raw/vaccination_raw.csv")
 
-### 3.2 Data Population 
+### 4.2 Data Population 
 
 world_pop_raw <- read_excel("data/raw/population_raw.xlsx", sheet = 2)
 regions_pop_raw <- read_excel("data/raw/population_raw.xlsx", sheet = 3)
 countries_pop_raw <- read_excel("data/raw/population_raw.xlsx", sheet = 4)
 
-### 3.3 Data PIB par habitant
+### 4.3 Data PIB par habitant
 
 world_gdpc_raw <- read_excel("data/raw/gdp_capita_raw.xlsx", sheet = 2)
 regions_gdpc_raw <- read_excel("data/raw/gdp_capita_raw.xlsx", sheet = 3)
 countries_gdpc_raw <- read_excel("data/raw/gdp_capita_raw.xlsx", sheet = 4)
 
 
-### 3.4 Data espérance de vie
+### 4.4 Data espérance de vie
 
 world_lifeexp_raw <- read_excel("data/raw/life_exp_raw.xlsx", sheet = 2)
 regions_lifeexp_raw <- read_excel("data/raw/life_exp_raw.xlsx", sheet = 3)
 countries_lifeexp_raw <- read_excel("data/raw/life_exp_raw.xlsx", sheet = 4)
+
 
 
 

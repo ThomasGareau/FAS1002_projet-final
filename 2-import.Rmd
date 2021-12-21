@@ -36,9 +36,9 @@ library(tidyverse)
 
 
 ```{r}
-source("R/telecharger.R", local = knit_global())     
-source("R/ouvrir.R", local = knit_global())      
-source("R/merge.R", local = knit_global())        
+source("R/telecharger_raw.R", local = knit_global())     
+source("R/manipulation.R", local = knit_global())      
+source("R/merge_reopen.R", local = knit_global())        
 opts_chunk$set(echo = FALSE)
 ```
 

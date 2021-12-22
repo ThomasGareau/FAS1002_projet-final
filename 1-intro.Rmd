@@ -29,7 +29,13 @@ output: distill::distill_article
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Il est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l'importation et la manipulation des données. 
+
+# « A crisis like no other »
+Ces deux dernières années ont été, à de nombreux égards, historiques en raison des dangers entourant la COVID-19 et ses variants. Pour reprendre les mots du Fond monétaire international (FMI), les marchés et les populations des 5 continents ont vécu (et vivent toujours) les chocs et contrecoups d'une [« *Crisis like no other* »](https://www.imf.org/en/Publications/WEO/Issues/2020/06/24/WEOUpdateJune2020).
+
+Qualitativement,les expériences personnelles liées à cette pandémie varient. Quantitativement, toutefois, les indicateurs ne mentent pas quant à l'étendue de cette crise qui s'est étendue à toutes les sphères de la société. Ainsi, pour tempérer la chute des indicateurs les plus centraux, les gouvernements n'y sont pas allés de main morte. L'économiste Adam Tooze (2021) va même jusqu'à affirmer que l'effort mobilisé rappelait des dimensions qui n'avaient jusqu'alors été vues uniquement en temps de guerre.  
+
+
 
 Il s'agit d'un fichier R Markdown traditionnel, évidemment. Je vous conseille d'écrire cette partie en dernier, une fois que vous aurez déjà vos résultats et figures afin d'éviter de réécrire cette page plusieurs fois.
 

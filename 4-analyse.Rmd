@@ -1,0 +1,40 @@
+---
+title: "Exploration des données"
+description: | 
+  Petite description du contenu de cette page
+date: "`r Sys.Date()`"
+# Modifier les détails que vous voulez
+author:
+  - first_name: "Thomas"
+    last_name: "Gareau Paquette"
+    url: https://github.com/thomasgareau
+    # les champs d'affiliation sont optionnels, vous pouvez les
+    # comment out en ajoutant un # devant.
+    affiliation: FAS1002
+    affiliation_url: https://admission.umontreal.ca/programmes/microprogramme-de-1er-cycle-en-analyse-des-megadonnees-en-sciences-humaines-et-sociales/structure-du-programme/
+    # changer pour votre propre orcid id
+    # https://orcid.org/ pour vous inscrire.
+    orcid_id: 0000-0003-4421-4855
+# Changer pour votre propre URL si jamais quelqu'un vous cite!
+citation_url: https://fas1002.github.io/FAS1002_projet-final
+# Inclure les références que vous utilisez dans vos rapports
+# dans un fichier biblio.bib. Je conseille Zotero pour construire
+# ce fichier ou d'utiliser le package citr dans RStudio.
+# Installation: devtools::install_github("crsh/citr")
+bibliography: references.bib
+output: distill::distill_article
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Distill is a publication format for scientific and technical writing, native to the web. 
+
+Learn more about using Distill for R Markdown at <https://rstudio.github.io/distill>.
+
+
+
+
+

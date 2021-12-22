@@ -91,7 +91,7 @@ continent_vaccination_annee <- continent_vaccination %>%
     fill(c(date, continent, total_boosters_per_hundred), .direction = "up") %>%
     fill(c(date, continent, people_fully_vaccinated_per_hundred), .direction = "up") %>%
     fill(c(date, continent, total_vaccinations_per_hundred), .direction = "up") %>%
-    subset(date == Sys.Date() -7) %>%
+    subset(date == Sys.Date() -1) %>%
     group_by(continent) %>%
     summarize_if(is.numeric, .funs = sum, na.rm = TRUE)
 
@@ -226,7 +226,7 @@ rm(continent_vaccination,
 ### 2.1 Population mondiale
 
 continent_pop <- regions_pop_raw %>%
-    subset(time == 2021) %>%
+    subset(time == year(Sys.Date())) %>% # bug de l'an 2022 au premier janvier ?
     pivot_wider(names_from=time, values_from=Population) %>%
     rename("population_2021" = "2021",
            "continent" = "name") %>%
@@ -236,7 +236,7 @@ continent_pop <- regions_pop_raw %>%
 
 
 country_pop <- countries_pop_raw %>%
-    subset(time == 2021) %>%
+    subset(time == year(Sys.Date())) %>%
     pivot_wider(names_from=time, values_from=Population) %>%
     rename("population_2021" = "2021",
            "country" = "name")  # Nous garderons ce "geo"
@@ -249,7 +249,7 @@ country_pop <- countries_pop_raw %>%
 ### 2.2 PIB mondial
 
 continent_gdpc <- regions_gdpc_raw %>%
-    subset(time == 2021) %>% 
+    subset(time == year(Sys.Date())) %>% 
     pivot_wider(names_from=time, values_from= "GDP per capita growth (%)") 
 
 continent_gdpc <- continent_gdpc %>%
@@ -261,7 +261,7 @@ country_gdpc <- countries_gdpc_raw %>%
     rename("GDP_capita_growth" = "Annual percentage growth rate of GDP per capita based on constant interantional dollars. Aggregates are based on PPP, constant 2017 U.S. dollars. GDP per capita is gross domestic product divided by population. GDP at purchaser's prices is the sum of gross value added by all resident producers in the economy plus any product taxes and minus any subsidies not included in the value of the products. It is calculated without making deductions for depreciation of fabricated assets or for depletion and degradation of natural resources.")
 
 country_gdpc <- country_gdpc %>%
-    subset(time == 2021) %>%
+    subset(time == year(Sys.Date())) %>%
     pivot_wider(names_from=time, values_from=GDP_capita_growth) %>%
     rename("growth_2021" = "2021",
            "country" = "name") %>%
@@ -272,7 +272,7 @@ country_gdpc <- country_gdpc %>%
 
 
 continent_lifeexp <- regions_lifeexp_raw %>%
-    subset(time == 2021) %>%
+    subset(time == year(Sys.Date())) %>%
     pivot_wider(names_from=time, values_from="Life expectancy") %>%
     rename("lifeeexp_2021" = "2021",
            "continent" = "name") %>%
@@ -282,7 +282,7 @@ continent_lifeexp <- regions_lifeexp_raw %>%
 
 country_lifeexp <- countries_lifeexp_raw
     country_lifeexp <- country_lifeexp %>%
-    subset(time == 2021) %>%
+    subset(time == year(Sys.Date())) %>%
     pivot_wider(names_from=time, values_from="Life expectancy") %>%
     rename("lifeeexp_2021" = "2021",
            "country" = "name") %>%
@@ -308,7 +308,8 @@ df_country <- right_join(vaccination_today, country_pop, by="country")
 
 df_country <- right_join(country_gdpc, df_country, by="country")
 
-df_country <- right_join(country_lifeexp, df_country, by="country")
+df_country <- right_join(country_lifeexp, df_country, by="country") %>%
+    relocate(date, .before = country)
 
 
 
@@ -331,11 +332,20 @@ rm(continent_vaccination_annee,
    continent_gdpc,
    continent_lifeexp)
 
+#### Franciser le nom des continents
+
+df_continent = df_continent %>%
+    mutate(continent = str_replace_all(continent, "Africa", "Afrique"),
+           continent = str_replace_all(continent, "Oceania", "Océanie"),
+           continent = str_replace_all(continent, "Americas", "Amériques"),
+           continent = str_replace_all(continent, "Asia", "Asie"))
+
 
 ##### Merge des bases de données par semaine ####
 
 df_semaine <- right_join(continent_vaccination_semaine, country_vaccination_semaine, by="time") %>%
     select(-c(people_fully_vaccinated, total_vaccinations, total_boosters, total_vaccinations_per_hundred, people_vaccinated_per_hundred, total_boosters_per_hundred, people_vaccinated, people_fully_vaccinated_per_hundred))
+
 
 rm(continent_vaccination_semaine,
    country_vaccination_semaine)
@@ -353,7 +363,16 @@ iso_translator <- iso_translator %>%
     mutate(geo = tolower(geo))
 
 df_country <- full_join(iso_translator, df_country, by="geo") %>% 
-    drop_na("total_vaccinations")
+    drop_na("total_vaccinations") %>%
+    select(-geo)
+
+#### Franciser le nom des continents
+
+df_country = df_country %>%
+    mutate(Continent_Name = str_replace_all(Continent_Name, "Africa", "Afrique"),
+           Continent_Name = str_replace_all(Continent_Name, "Oceania", "Océanie"),
+           Continent_Name = str_replace_all(Continent_Name, "North America | South America", "Amériques"),
+           Continent_Name = str_replace_all(Continent_Name, "Asia", "Asie"))
 
 
 rm(iso_translator)

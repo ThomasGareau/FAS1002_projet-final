@@ -71,16 +71,9 @@ Enfin, le dernier jeu de données que nous utilisons [(disponible ici)](https://
 
 # Manipulations
 
-D'une part, les données de **Our World in Data** sont mises à jour à tout les jour. Les données de **Gapminder** subiront quant-à-elles un traitement similaire à tous les changements de mois. Comment avons-nous procédé pour permettre, via un script, de re-télécharger ces données périodiquement ? Si nous prenons les données de **Our World in Data** en guise d'exemple, nous avons procédé ainsi : 
+D'une part, les données de **Our World in Data** sont mises à jour à tout les jour. Les données de **Gapminder** subiront quant-à-elles un traitement similaire à tous les changements de mois. Comment avons-nous procédé pour permettre, via un script, de re-télécharger ces données périodiquement ? Si nous prenons les données de **Our World in Data** en guise d'exemple, nous avons procédé par un énoncé conditionnel : 
 
 ```{r, eval=FALSE}
-### 1.1 Data on COVID-19 (coronavirus) vaccinations by Our World in Data : 
-
-cv <- file.info("data/raw/vaccination_raw.csv")
-cv_date <- as_date(cv$ctime)
-
-### Mise à jour lorsque cv_date != today
-
 ifelse(cv_date == today(), "Les données « Data on COVID-19 (coronavirus) vaccinations by Our World in Data » ont été colligées dans les 24 dernières heures", download.file("https://github.com/owid/covid-19-data/raw/master/public/data/vaccinations/vaccinations.csv", destfile = "data/raw/vaccination_raw.csv"))
 ```
 
@@ -150,7 +143,7 @@ La commande exécutée est donc la suivante :
 ```{r, eval=FALSE}
 country_lifeexp <- countries_lifeexp_raw
     country_lifeexp <- country_lifeexp %>%
-    subset(time == 2021) %>%
+    subset(time == year(Sys.Date())) %>% # NB Si Gapminder ne modifie pas sa base de données au premier janvier, il pourrait y avoir un problème!
     pivot_wider(names_from=time, values_from="Life expectancy")
 ```
 

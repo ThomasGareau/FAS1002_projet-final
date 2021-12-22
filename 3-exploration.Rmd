@@ -1,7 +1,6 @@
 ---
-title: "Titre de votre troisième R Markdown"
-description: | 
-  Petite description du contenu de cette page
+title: "Exploration des données"
+description: "Dans cette section, nous explorons les données à l'aide des nombreux outils offerts par le langage R"
 date: "`r Sys.Date()`"
 # Modifier les détails que vous voulez
 author:
@@ -29,47 +28,167 @@ output: distill::distill_article
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Un peu d'interactivité pour le plaisir!
-
-```{r map, layout = "l-page"}
-library(leaflet)
-leaflet() %>%
-  addTiles() %>%
-  addMarkers(lng=174.768, lat=-36.852, popup="Là où R est né") %>%
-  addProviderTiles(providers$Stamen.Watercolor)
+```{r, include=FALSE}
+library(knitr)
+library(tidyverse)
+library(kableExtra)
+library(skimr) 
+library(moderndive)
+library(modelsummary)
+library(DT)
 ```
 
+```{r, include=FALSE}
+# importer nos scripts
+source("data/telecharger_raw.R", local = knit_global())     
+source("data/manipulation.R", local = knit_global())      
+source("data/open_data_clean.R", local = knit_global())
+source("fonctions.R", local = knit_global())        
+```
+
+
+# Section descriptive
+
+
+### df_continent
+
+Le dataframe `df_continent` recense les variables de **Gapminder** et de **Our World in Data** en fonction des continents. Les données permettent d'entrevoir d'importants écarts entre pays en ce qui a trait aux indicateurs qui y ont été ajoutés : 
+
+
+```{r, echo=FALSE}
+tableau_1 <- datatable(df_continent, 
+  fillContainer = TRUE, 
+  options = list(pageLength = 20),
+    caption = "Tableau 1 : Données sur la vaccination par continent")
+tableau_1
+```
+Les observations étant limtées à 4 (les données de **Gapminder** ignorant l'Océanie), il est difficile d'inférer quoi que ce soit des mesures de centralité ou de dispersion. Il convient toutefois de noter les disparités en termes de vaccination totale par cent habitants (`total_vaccinations_per_hundred`). L'écart entre les Amériques et le reste du monde a de quoi laisser dubitatif. Concernant, les statistiques descriptives, celles-ci se présentent ainsi :
+
+```{r, echo=FALSE}
+tableau_2 <- df_continent %>%
+  select(Income.per.person, total_vaccinations, growth_2021, people_vaccinated) %>%
+datasummary_skim() %>%
+  kable_styling(font_size = 4, full_width = FALSE)
+tableau_2
+```
+
+
+
+En soi, cette banque de données ne sera pas utilisée dans nos analyses. Celle-ci permet malgré tout d'appréhender les différences entre les cadres nationaux en termes de vaccination. Ces données nous permettent donc d'introduire l'étude des déterminants de la vaccination élaborée ici. 
+
+
+### df_country
+
+La deuxième banque de données est beaucoup plus riche en raison du nombre d'observations qui y est associé.
+
+La fonction `glimpse` permet d'avoir un aperçu de ce que nous pourrons observer via `df_country`
+
+```{r, echo=FALSE}
+glimpse(df_country)
+```
+
+
+En tableau « interactif », il est possible de saisir un peu mieux cette vaste banque de données.
+
+```{r, echo=FALSE}
+tableau_3 <- datatable(df_country, 
+  fillContainer = TRUE, 
+  options = list(pageLength = 20),
+    caption = "Données sur la vaccination par continent")
+tableau_3
+```
+
+
+Mais qu'en est-il des statistiques descriptives à proprement parler? Encore une fois, faisons appel à la fonction `skim()`, présente dans le package `modelsummary` de Vincent Arel-Bundock : 
+
+```{r, echo=FALSE}
+tableau_4 <- df_country %>%
+datasummary_skim(caption = "Statistiques descriptives obtenues avec Skim") %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+tableau_4
+```
+Ce tableau présente de  nombreuses statistiques descriptives d'importance, à commencer par le nombre d'observations, des mesures de centralité comme la moyenne, des mesures de dispersion comme l'écart type, etc. Les valeurs maximales et minimales sont aussi incluses.
+
+D'une part, les mesures de dispersion pour des variables comme `people_fully_vaccinated_per_hundred` montrent de grands écarts entre les pays par rapport à la moyenne, qui elle est pourtant assez élevée. Ainsi, lorsque **Our World in Data** explique que « [56.9% of the world population has received at least one dose of a COVID-19 vaccine](https://ourworldindata.org/covid-vaccinations), il conviendrait de s'attarder plus spécifiquement à la distribution de ces variables. 
+
+
+
+```{r}
+ggplot(df_country) +
+ aes(x = Income.per.person, y = people_fully_vaccinated_per_hundred, colour = Continent_Name) +
+ geom_point(shape = "circle", size = 1.5) +
+ scale_color_brewer(palette = "Paired", direction = 1) +
+ labs(x = "Revenu par habitant", y = "Nombre d'individus complètement vaccinés pour 100 habitants", 
+ title = "Distribution des individus complètement vaccinés", subtitle = "En fonction du pays", 
+ caption = "En date du 20 décembre. Source : Gapminder et Our World in Data", color = "Continent") +
+ theme_minimal()
+```
+
+
+```{r}
+ggplot(df_country) +
+ aes(x = people_fully_vaccinated_per_hundred, fill = Continent_Name) +
+ geom_histogram(bins = 30L) +
+ scale_fill_brewer(palette = "Paired", direction = 1) +
+ labs(x = "Inidividus complètement vaccinés par 100 habitants", 
+ y = "Nombre de pays", title = "Distribution des individus complètement vaccinés", subtitle = "En fonction du pays", 
+ caption = "En date du 20 décembre. Source : Gapminder et Our World in Data", fill = "Continent") +
+ theme_minimal()
+```
+
+
+
+
+```{r}
+ggplot(df_country) +
+ aes(x = people_fully_vaccinated_per_hundred, y = lifeeexp_2021, colour = Continent_Name) +
+ geom_point(shape = "circle", size = 1.5) +
+ scale_color_brewer(palette = "Paired", direction = 1) +
+ labs(x = "Inidividus complètement vaccinés par 100 habitants", y = "Espérance de vie", title = "Distribution des individus complètement vaccinés", 
+ subtitle = "Croisé avec l'espérance de vie", caption = "En date du 20 décembre. Source : Gapminder et Our World in Data", 
+ color = "Continent") +
+ theme_minimal()
+
+```
+
+
+
+
+
+
+
+
+
+```{r}
+glimpse(df_semaine)
+```
+
+
+
+
+
+# MESURE DE DISPERSION (sd et iqr)
+```{r}
+#sd(df$sad)
+```
+
+```{r}
+#IQR(df$sad)
+```
+
+
+```{r}
+#kable(table(df$sag),
+#      caption = "",
+#      digits=4) %>%
+#  kable_styling()
+```
 
 ## Peut-être que ça vous inspirera!
 
-```{r plotly}
-library(plotly)
-library(gapminder)
-df <- gapminder
 
-fig <- df %>%
-  plot_ly(
-    x = ~ gdpPercap,
-    y = ~ lifeExp,
-    size = ~ pop,
-    color = ~ continent,
-    frame = ~ year,
-    text = ~ country,
-    hoverinfo = "text",
-    type = 'scatter',
-    mode = 'markers',
-    width = "100%",
-    height = 600
-  )
 
-fig <- fig %>% layout(xaxis = list(type = "log"))
 
-fig <- fig %>%
-  animation_button(
-    x = 0, xanchor = "left", y = -0.15, yanchor = "bottom"
-  )
-
-fig
-```
 
 

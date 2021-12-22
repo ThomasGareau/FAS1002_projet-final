@@ -29,20 +29,7 @@ xtab.conti <- function(y_var, x_var) {
 }
 
 
-## Autre fonction en dévelopement qui, pour le moment, ne fonctionne pas
 
 
-# total_jour <- function(x_var) {
-#     df <- vaccination_raw %>%
-#         select(c(location, x_var, date)) %>%
-#         rename(country = location) %>% 
-#         complete(date, country) %>%
-#         pivot_wider(names_from = country, values_from = x_var) %>%
-#         fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
-#         subset(date == Sys.Date() -1) %>%
-#         pivot_longer(Afghanistan:Zimbabwe, names_to = "country", values_to = "x_var")
-# 
-#     return(df)  
-# }
 
 

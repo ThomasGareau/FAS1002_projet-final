@@ -1,4 +1,4 @@
-"","Continent_Name","date","location","lifeeexp_2021","Income per person","GDP total","growth_21_22","temps_ecoule","people_fully_vaccinated_per_hundred","people_vaccinated_per_hundred","verification_vaccination_par_100","total_vaccinations_per_hundred","people_fully_vaccinated","total_boosters","total_vaccinations","population_21_22"
+"","Continent_Name","date","country","lifeeexp_2021","Income per person","GDP total","growth_21_22","temps_ecoule","people_fully_vaccinated_per_hundred","people_vaccinated_per_hundred","verification_vaccination_par_100","total_vaccinations_per_hundred","people_fully_vaccinated","total_boosters","total_vaccinations","population_21_22"
 "1","Asie",2021-11-27,"Afghanistan",64.74,1950,77660991250,2.17,25,8.95,11.04,13.1257683487171,13.13,3566192,NA,5228706,39835428
 "2","Europe",2021-12-18,"Albania",78.7,13950,40078428539,4.17,4,35.1,38.96,78.352304647444,78.35,1008465,123115,2251010,2872934
 "3","Afrique",2021-12-14,"Algeria",78.49,10735,478970233056,1.01,8,12.45,15.73,27.8759850644018,27.88,5554702,25381,12437324,44616626

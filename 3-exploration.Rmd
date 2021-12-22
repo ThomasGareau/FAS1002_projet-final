@@ -62,53 +62,80 @@ tableau_1 <- datatable(df_continent,
     caption = "Tableau 1 : Données sur la vaccination par continent")
 tableau_1
 ```
-Les observations étant limtées à 4 (les données de **Gapminder** ignorant l'Océanie), il est difficile d'inférer quoi que ce soit des mesures de centralité ou de dispersion. Il convient toutefois de noter les disparités en termes de vaccination totale par cent habitants (`total_vaccinations_per_hundred`). L'écart entre les Amériques et le reste du monde a de quoi laisser dubitatif. Concernant, les statistiques descriptives, celles-ci se présentent ainsi :
+Il est difficile d'inférer quoi que ce soit des mesures de centralité ou de dispersion, tous les pays d'un continent donné ayant le même « poids ». C'était toutefois le « prix à payer » pour avoir une idée précise des données en matière de vaccination en Océanie, en Amérique du Sud et en Amérique du Nord. Nonobstant, les différences de « paysage » entre les continents sont toutefois flagrantes, notamment au regard des disparités par rapport à l'espérance de vie ou aux taux de vaccination moyens.
+
+
+Il convient aussi de noter les disparités en termes de vaccination totale par cent habitants (`total_vaccinations_per_hundred`). L'écart entre les Amériques et le reste du monde a de quoi laisser dubitatif. Concernant, les statistiques descriptives, celles-ci se présentent ainsi :
 
 ```{r, echo=FALSE}
 tableau_2 <- df_continent %>%
-  select(Income.per.person, total_vaccinations, growth_2021, people_vaccinated) %>%
+  select(lifeeexp_2021, total_vaccinations, growth_21_22, people_fully_vaccinated) %>%
 datasummary_skim() %>%
   kable_styling(font_size = 4, full_width = FALSE)
 tableau_2
 ```
+<br>
 
 
-Flagrante en terme de de nombre de personnes vaccinées,
+Flagrante en termes de de nombre de personnes vaccinées,
+
 
 ```{r}
-ggplot(df_continent) +
- aes(x = continent, weight = people_vaccinated) +
- geom_bar(fill = "#112446") +
- labs(x = "Continent", y = "Nombre d'individus (densité)", title = "Nombre d'individus vaccinés par continent") +
- theme_minimal()
 
+graphique_1 <- ggplot(df_continent) +
+ aes(x = continent, fill = continent, weight = total_vaccinations_per_hundred) +
+ geom_bar() + 
+  scale_x_discrete(guide = guide_axis(n.dodge=2)) +
+ scale_fill_manual(values = c(Afrique = "#A50026", `Amérique du Nord` = "#F46D43", `Amérique du Sud` = "#FEE090",
+Asie = "#E0F3F8", Europe = "#74ADD1", Oceanie = "#313695")) +
+ labs(x = "Continent", y = "Nombre d'individus vaccinés", 
+ title = "Nombre d'individus vaccinés par cent habitants", subtitle = "En fonction du continent", 
+ caption = "Source : Our World in data", fill = "Continent") +
+ theme_bw() +
+ theme(plot.title = element_text(face = "bold.italic"),
+    legend.position = "none")
+
+graphique_1
 ```
+<br>
 
 
 Ces inégalités sont encore plus flagrantes en ce qui a trait au fameux *"booster"*, cette troisième dose maintenant devenue d'une importance capitale en raison du développement et de la généralisation du variant Omicron :  
 
+
 ```{r}
-ggplot(df_continent) +
- aes(x = continent, weight = total_boosters) +
- geom_bar(fill = "#112446") +
- labs(x = "Continent", 
- y = "Nombre de \"boosters\"", title = "Nombre de \"boosters\" reçus par continent") +
- theme_minimal()
+graphique_2 <- ggplot(df_continent) +
+ aes(x = continent, fill = continent, weight = total_boosters) +
+ geom_bar() +
+ scale_fill_manual(values = c(Afrique = "#A50026", 
+`Amérique du Nord` = "#F46D43", `Amérique du Sud` = "#FEE08B", Asie = "#D9EF8B", Europe = "#66BD63", 
+Oceanie = "#006837")) +
+   scale_x_discrete(guide = guide_axis(n.dodge=2)) +
+ labs(x = "Continent", y = "Nombre de « boosters » donnés", title = "Nombre de boosters inoculés", 
+ subtitle = "En fonction du continent", caption = "Source : Our World in data", fill = "Continent") +
+ theme_bw() +
+ theme(plot.title = element_text(face = "bold.italic"), legend.position = "none")
+
+graphique_2
 ```
+<br>
 
 
-En soi, cette banque de données ne sera pas utilisée dans nos analyses. Celle-ci permet malgré tout d'appréhender les différences entre les cadres nationaux en termes de vaccination. De plus, des données plus précises sur les continents se trouvent dans la banque de données suivante. Ce sont ces données qui seront utiliées dans le cadre des prochaines analyses. celles-ci nous ont toutefois permis d'introduire l'étude des déterminants nationaux de la vaccination, soit ce que nous tâcherons d'élaborer ici. 
+
+En soi, cette banque de données ne sera pas directement utilisée dans nos analyses. Celle-ci permet malgré tout d'appréhender les différences entre les cadres continentaux en termes de vaccination. De plus, des données plus précises sur les continents se trouvent dans la banque de données suivante. Ce sont ces données qui seront utilisées dans le cadre des prochaines analyses lorsque viendra le temps de mobiliser nos variables à l'échelle des continents. La banque de données `df_continent` nous aura toutefois permis d'introduire l'étude des déterminants nationaux de la vaccination, soit ce que nous tâcherons d'élaborer ici. 
 
 
 ### 2. df_country
 
 La deuxième banque de données est beaucoup plus riche en raison du nombre d'observations qui y est associé. Celle-ci est composée de 185 observations et de 15 varuiables. 
 
-La fonction `glimpse` permet d'avoir un aperçu de ce que nous pourrons observer via `df_country`
+La fonction `glimpse` permet d'avoir un aperçu de ce que nous pourrons observer via `df_country`.
 
 ```{r, echo=FALSE}
 glimpse(df_country)
 ```
+
+<br>
 
 
 En tableau « interactif », il est possible de saisir un peu mieux cette vaste banque de données.
@@ -118,8 +145,11 @@ tableau_3 <- datatable(df_country,
   fillContainer = TRUE, 
   options = list(pageLength = 20),
     caption = "Données sur la vaccination par continent")
+
 tableau_3
 ```
+
+<br>
 
 
 Mais qu'en est-il des statistiques descriptives à proprement parler? Encore une fois, faisons appel à la fonction `skim()`, présente dans le package `modelsummary` de Vincent Arel-Bundock : 
@@ -131,6 +161,10 @@ datasummary_skim(caption = "Statistiques descriptives obtenues avec Skim") %>%
   scroll_box(width = "800px", height = "400px")
 tableau_4
 ```
+
+<br>
+
+
 Ce tableau présente de  nombreuses statistiques descriptives d'importance, à commencer par le nombre d'observations, des mesures de centralité comme la moyenne, des mesures de dispersion comme l'écart type, etc. Les valeurs maximales et minimales sont aussi incluses.
 
 D'une part, les mesures de dispersion pour des variables comme `people_fully_vaccinated_per_hundred` montrent de grands écarts entre les pays par rapport à la moyenne, qui elle est pourtant assez élevée. Ainsi, lorsque **Our World in Data** explique que « [56.9% of the world population has received at least one dose of a COVID-19 vaccine](https://ourworldindata.org/covid-vaccinations), il conviendrait de s'attarder plus spécifiquement à la distribution de ces variables. 
@@ -139,18 +173,23 @@ Nos analyses vont se pencher plus spécifiquement sur les déterminants de la va
 
 
 ```{r}
-graphique_1 <- ggplot(df_country) +
+graphique_3 <- ggplot(df_country) +
  aes(x = Income.per.person, y = people_fully_vaccinated_per_hundred, colour = Continent_Name) +
- geom_point(shape = "circle", size = 1.5) +
+ geom_point(shape = "circle", size = 1.5) + scale_x_discrete(guide = guide_axis(n.dodge=3)) +
  scale_color_brewer(palette = "Paired", direction = 1) +
  labs(x = "Revenu par habitant", y = "Population complètement vaccinée pour 100 habitants", 
  title = "Distribution des individus complètement vaccinés", subtitle = "En fonction du pays en date du 20 décembre 2021", 
  caption = "Graphique 1. Source : Gapminder et Our World in Data", color = "Continent") +
  theme_minimal()
+
+graphique_3
+
 ```
 
+<br>
 
-Le graphique 1 montre une distribution inégale en fonction des continents et du revenu par habitant. Le graphique 2 illustre lui aussi, mais à l'Aide d'un histogramme, cette distribution :
+
+Le graphique ci-haut montre une distribution inégale en fonction des continents et du revenu par habitant. Le graphique 2 illustre lui aussi, mais à l'Aide d'un histogramme, cette distribution :
 
 ```{r}
 graphique_2 <- ggplot(df_country) +
@@ -162,6 +201,9 @@ graphique_2 <- ggplot(df_country) +
  caption = "En date du 20 décembre. Source : Gapminder et Our World in Data", fill = "Continent") +
  theme_minimal()
 ```
+
+<br>
+
 
 Les pays africains semblent systématiquement désavantagés à quelques rares exceptions près. Nous avions vu l'ampleur de l'écart type lorsque nous analysions les données descriptives de `df_continent`, mais le tout semble vouloir se confirmer. De fait, nous allons vérifier statistiquement cette hypothèse ultérieurement dans la section portant sur les analyses, mais ces déterminants semblent à première vue corrélés à l'espérance de vie pour l'année 2021. 
 
@@ -175,6 +217,7 @@ graphique_3 <- ggplot(df_country) +
  color = "Continent") +
  theme_minimal()
 ```
+
 
 
 ### 3. df_semaine

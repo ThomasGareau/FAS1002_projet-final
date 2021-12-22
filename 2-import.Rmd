@@ -32,8 +32,13 @@ library(tidyverse)
 library(kableExtra)
 ```
 
-
-
+```{r, include=FALSE}
+# importer nos scripts
+source("data/telecharger_raw.R", local = knit_global())     
+source("data/manipulation.R", local = knit_global())      
+source("data/open_data_clean.R", local = knit_global())
+source("fonctions.R", local = knit_global())        
+```
 
 
 
@@ -105,7 +110,7 @@ continent_vaccination_semaine <- continent_vaccination_semaine %>% group_by(time
 
 
 
-De même, dans le cas des continents, nous avons aussi ajouté le pourcentage du nombre de doses quotidiennes par continent. Le tout donne des données très intéressantes que nous explorerons dans la prochaine section :
+De même, nous avons aussi ajouté le pourcentage du nombre de doses quotidiennes par continent. Le tout donne des données très intéressantes que nous explorerons dans la prochaine section :
 
 ```{r, eval=FALSE}
 continent_vaccination_semaine = continent_vaccination_semaine %>%
@@ -154,9 +159,11 @@ Nous terminons donc avec trois jeux de données :
 
 * `df_continent`, qui recense les variables de **Gapminder** et de **Our World in Data** en fonction des continents. 
 
+En ce qui a trait à cette base de donnée, nous avons préféré utiliser les données de vaccination qui sont dédiées explicitement aux continents provenant de **Our World in Data**. Les données de **Gapminder** présentes dans cette banque de données (`lifeexp_21_22`, `income.per.person`, `growth` et `population_21_22`) proviennent quant-à-elles des données individuelles par pays, car l'organisation suédoise considère les deux Amériques comme un seul continent en plus d'ignorer l'Océanie.
+
 * `df_country`, qui recense ces mêmes données en fonction de 185 pays. 
 
-* `df_semaine`, qui raconte la course à la vaccination en présentant la moyenne des vaccinations quotidiennes pour les 5 continents ainsi que pour 219 nations. Les données des cinq continents sont aussi accompagnés de pourcentage afin de déterminer à chaque semaine dans quelle partie du monde à chaque semaine le plus de doses sont inoculées. 
+* `df_semaine`, qui raconte la course à la vaccination en présentant la sommme des vaccinations quotidiennes pour les 5 continents ainsi que pour 219 nations par semaine. Les données des cinq continents sont aussi accompagnés de pourcentage afin de déterminer à chaque semaine dans quelle partie du monde à chaque semaine le plus de doses sont inoculées. De plus, d'autres données liées aux innoculations quotidiennes (`daily_vaccination_per_million`, `daily_people_vaccinated` et `daily_people_vaccinated_per_hundred`, s'y trouvent résumées. 
 
 
 # Tests d'aptitude en matière de manipulation
@@ -182,7 +189,7 @@ df_country <- full_join(iso_translator, df_country, by="geo") %>%
 
 ```{r, echo=FALSE}
 preuve <- df_country %>%
-  select(Continent_Name, country)
+  select(Continent_Name, location)
 
 kable(head(preuve), caption = "Ajout de la variable continent") %>%
   kable_styling()

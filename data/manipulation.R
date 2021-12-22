@@ -194,7 +194,7 @@ df_continent <- vaccination_today %>%
 country_pop <- countries_pop_raw %>%
     subset(time == year(Sys.Date())) %>%
     pivot_wider(names_from=time, values_from=Population) %>%
-    rename("population_21_22" = "2021",
+    rename("population_21_22" = "2021", # Façon de « rename » en fonction de Sys.Date ?
            "location" = "name") # Nous garderons ce "geo"
 
 ### 2.2 PIB mondial
@@ -276,6 +276,9 @@ df_country = df_country %>%
            Continent_Name = str_replace_all(Continent_Name, "South America", "Amérique du Sud"),
            Continent_Name = str_replace_all(Continent_Name, "Asia", "Asie"))
 
+df_country = df_country %>%
+    rename(country = location)
+    
 
 rm(iso_translator)
 
@@ -285,14 +288,13 @@ rm(iso_translator)
 df_continent_bis <- df_country %>%
     group_by(Continent_Name) %>%
     summarize(lifeeexp_2021 = mean(lifeeexp_2021, na.rm = TRUE),
-              `Income per person` = mean(`Income per person`, na.rm = TRUE),
               growth_21_22 = mean(growth_21_22, na.rm = TRUE),
               population_21_22 = sum(population_21_22, na.rm = TRUE)) %>%
     rename(continent = Continent_Name)
 
-df_continent <- right_join(df_continent_bis, df_continent, by="continent")
-
-
+df_continent <- right_join(df_continent_bis, df_continent, by="continent") %>%
+    relocate(date, .before = continent) %>%
+    select(-temps_ecoule)
 
 rm(df_continent_bis)
 

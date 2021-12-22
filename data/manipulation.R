@@ -334,7 +334,8 @@ rm(continent_vaccination_annee,
 
 ##### Merge des bases de données par semaine ####
 
-df_semaine <- right_join(continent_vaccination_semaine, country_vaccination_semaine, by="time")
+df_semaine <- right_join(continent_vaccination_semaine, country_vaccination_semaine, by="time") %>%
+    select(-c(people_fully_vaccinated, total_vaccinations, total_boosters, total_vaccinations_per_hundred, people_vaccinated_per_hundred, total_boosters_per_hundred, people_vaccinated, people_fully_vaccinated_per_hundred))
 
 rm(continent_vaccination_semaine,
    country_vaccination_semaine)
@@ -362,9 +363,9 @@ rm(iso_translator)
 ### Second critère : vérifier la validité des valeurs de la variable "total_vaccinations_per_hundred"
 
 df_country <- df_country %>%
-    mutate(verficiation_vaccination_par_100 = NA,
-           verficiation_vaccination_par_100 = (total_vaccinations/population_2021*100)) %>%
-    relocate(verficiation_vaccination_par_100, .before = total_vaccinations_per_hundred) ##### Validité vérifiée
+    mutate(verification_vaccination_par_100 = NA,
+           verification_vaccination_par_100 = (total_vaccinations/population_2021*100)) %>%
+    relocate(verification_vaccination_par_100, .before = total_vaccinations_per_hundred) ##### Validité vérifiée
 
 
 
@@ -373,5 +374,9 @@ df_country <- df_country %>%
 write.csv(df_semaine, "data/processed/daily_vaccination_semaine_clean.csv")
 write.csv(df_continent, "data/processed/continent_clean.csv") 
 write.csv(df_country, "data/processed/country_clean.csv")
+
+rm(df_semaine,
+   df_continent,
+   df_country)
 
 

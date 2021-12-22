@@ -1,7 +1,6 @@
 ---
-title: "Titre de votre deuxième R Markdown"
-description: | 
-  Petite description du contenu de cette page
+title: "Importation des variables"
+description: "Il est ici question d'une description sommaire des données et des méthodes utilisées pour importer (périodiquement) les bases de données ici mobilisées. Nous en profitons aussi pour répondre aux deux critères établis dans les consignes en ce qui a trait à la manipulation des variables."
 date: "`r Sys.Date()`"
 # Modifier les détails que vous voulez
 author:
@@ -12,8 +11,6 @@ author:
     # comment out en ajoutant un # devant.
     affiliation: FAS1002
     affiliation_url: https://admission.umontreal.ca/programmes/microprogramme-de-1er-cycle-en-analyse-des-megadonnees-en-sciences-humaines-et-sociales/structure-du-programme/
-    # changer pour votre propre orcid id
-    # https://orcid.org/ pour vous inscrire.
     orcid_id: 0000-0003-4421-4855
 # Changer pour votre propre URL si jamais quelqu'un vous cite!
 citation_url: https://fas1002.github.io/FAS1002_projet-final
@@ -29,17 +26,10 @@ output: distill::distill_article
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-```{r}
+```{r, include=FALSE}
 library(knitr)
 library(tidyverse)
-```
-
-
-```{r}
-source("R/telecharger_raw.R", local = knit_global())     
-source("R/manipulation.R", local = knit_global())      
-source("R/merge_reopen.R", local = knit_global())        
-opts_chunk$set(echo = FALSE)
+library(kableExtra)
 ```
 
 
@@ -47,7 +37,184 @@ opts_chunk$set(echo = FALSE)
 
 
 
-### Différents niveaux de titres
+# Les bases de données via lesquelles sont conçues ces analyses
 
-Dans vos différents documents, assurez-vous de bien utiliser la notation avec du Markdown et autres. 
+Ces deux dernières années ont été, à de nombreux égards, historiques en raison des dangers entourant la COVID-19 et ses variants. Pour la quasi-totalité de la communauté scientifique, la sortie de cette crise passe par la vaccination. Cette consigne a été prise à la lettre par de nombreux gouvernements, au point où certains experts ont mobilisé le terme « protectionnisme vaccinal » pour définir cette pratique corollaire d'une reproduction des inégalités à l'échelle internationale. 
+
+Afin de déterminer l'étendue de ces inégalités de même que l'effort entrepris par ces pays, nous mobiliserons les données de quatre bases de données distinctes. D'une part, nous utiliserons les données sur la vaccination de [Our World in Data](https://ourworldindata.org/covid-vaccinations). D'autre part, nous mobiliserons trois bases de données provenant de [Gapminder](https://www.gapminder.org) : 
+
+1. [Les données sur la population mondiale](https://www.gapminder.org/category/world-population/)
+
+1. [Les données du PIB par habitant en fonction des pays](https://www.gapminder.org/tag/life-expectancy/)
+
+1. [Les données d'espérance de vie en fonction des pays](https://www.gapminder.org/tag/life-expectancy/)
+
+
+Pour des raisons purement techniques, une base de données permettant de faire la « traduction » entre les codes régionaux, les pays et les continents a ausi été utilisée. Cette base de données, appelée « **Country and continent code list** », est disponible [ici](https://gist.github.com/stevewithington/20a69c0b6d2ff846ea5d35e5fc47f26c).
+
+
+
+## Les données de Our World in Data
+L'objectif de **Our World in Data** est de rendre accessibles et compréhensibles [les connaissances sur les grands problèmes contemporains](https://ourworldindata.org/about). Nous utiliserons les données par pays et par continent sur la vaccination mondiale dans la lutte contre la COVID-19. ([disponibles en format brut ici](https://github.com/owid/covid-19-data/tree/master/public/data/vaccinations)) sont colligées via des sources publiques officielles et centralisées par l'organisation dans une même base de données. Celle-ci contient de nombreuses variables permettant de mieux saisir l'effort vaccinal dans sa complétude. L'ensemble des données présentes dans cette base de données sont énumérées dans le [READ.me](https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/README.md) de la base de données. 
+
+
+## Les données Gapminder
+Ce rapport analytique (de qualité profressionelle) portant sur les déterminants de la vaccination utilise aussi les données de **Gapminder**. Gapminder est un organisme à but non-lucratif enregistré en Suède. Son objectif est de  lutter contre les idées fausses à l'international.
+
+D'une part, les données sur la population mondiale [(disponibles en format brut ici)](https://docs.google.com/spreadsheets/d/14_suWY8fCPEXV0MH7ZQMZ-KndzMVsSsA5HdR-7WqAC0/edit#gid=501532268) donnent accès aux informations liées à la population mondiale par pays, par continent et pour la planète, de 1800 à aujourd'hui. Nous n'utilisons toutefois que les données pour 2021, en fonction des pays et des continents.
+
+Deuxièmement, les données sur le produit intérieur brut par habitant [(disponibles en format brut ici)](https://docs.google.com/spreadsheets/d/1gZZ28UiWCVue-tFHMEVOvSO58x7x-w20E23l1wZTR3E/edit#gid=501532268) donnent encore une fois accès aux données indiquées par le titre de 1800 à aujourd'hui, en fonction du monde entier, des continents et des pays. En plus du PIB *per capita*, le taux de croissance et le PIB total sont aussi disponibles. Encore une fois ici, nous n'utilisons que les données pour 2021. 
+
+Enfin, le dernier jeu de données que nous utilisons [(disponible ici)](https://docs.google.com/spreadsheets/d/11mulzUH3_cueq-V9D5KIlo9oHE9YYZrUSeVyCin7_rM/edit#gid=501532268) présente les données liées à l'espérance de vie de 1800 à aujourd'hui pour la terre, les cinq continents et les 197 pays reconnus par l'Organisation des nations unies. À nouveau, nous n'utilisons que les données de 2021.
+
+
+
+# Manipulations
+
+D'une part, les données de **Our World in Data** sont mises à jour à tout les jour. Les données de **Gapminder** subiront quant-à-elles un traitement similaire à tous les changements de mois. Comment avons-nous procédé pour permettre, via un script, de re-télécharger ces données périodiquement ? Si nous prenons les données de **Our World in Data** en guise d'exemple, nous avons procédé ainsi : 
+
+```{r, eval=FALSE}
+### 1.1 Data on COVID-19 (coronavirus) vaccinations by Our World in Data : 
+
+cv <- file.info("data/raw/vaccination_raw.csv")
+cv_date <- as_date(cv$ctime)
+
+### Mise à jour lorsque cv_date != today
+
+ifelse(cv_date == today(), "Les données « Data on COVID-19 (coronavirus) vaccinations by Our World in Data » ont été colligées dans les 24 dernières heures", download.file("https://github.com/owid/covid-19-data/raw/master/public/data/vaccinations/vaccinations.csv", destfile = "data/raw/vaccination_raw.csv"))
+```
+
+Cette façon de procéder remplace immédiatement le fichier qui n'est plus à jour pour une nouvelle mouture de cette même base de données.
+
+D'autre part, certaines modifications ont été exécutées à-même le fichier présentant les données sur la vaccination :
+
+* D'abord, les observations renvoyant à des entités sous-nationales, comme l'Écosse, l'Angleterre ou la République de Chypre du Nord, ont été supprimées. De même, l'Union Européenne (en tant que seule entité supra-étatique présente dans le jeu de données) a été retirée. Les données associées aux « groupes de revenus » ont aussi été retirées. 
+
+* Certaines observations/variables non-concordantes ont été harmonisées pour que la fusion entre les jeux de données de **Our World in Data** et de **Gapminder** se fasse rondement.
+
+* La base de données sur la vaccination a été « pivotée », afin que nous puissons avoir la moyenne sur une semaine du nombre de vaccinations quotidiennes par continent et par pays. Par exemple : 
+
+```{r, eval=FALSE}
+continent_vaccination_semaine <- continent_vaccination %>% 
+     mutate(time = format(date, "%Y-%m-%U")) %>% 
+    pivot_wider(names_from= continent,
+                values_from=daily_vaccinations)
+
+continent_vaccination_semaine <- continent_vaccination_semaine %>% group_by(time) %>%
+    summarize(Africa = mean(Africa, na.rm = TRUE),
+              Europe = mean(Europe, na.rm = TRUE),
+              Asia = mean(Asia, na.rm = TRUE),
+              Americas = mean(Americas, na.rm = TRUE),
+              Oceania = mean(Oceania, na.rm = TRUE),
+              total = mean(Oceania + Africa + Americas + Asia + Europe + Africa, na.rm = TRUE))
+```
+
+
+
+
+De même, dans le cas des continents, nous avons aussi ajouté le pourcentage du nombre de doses quotidiennes par continent. Le tout donne des données très intéressantes que nous explorerons dans la prochaine section :
+
+```{r, eval=FALSE}
+continent_vaccination_semaine = continent_vaccination_semaine %>%
+     group_by(time) %>%
+     ungroup() %>%
+     mutate(pourcentage_Africa = round(Africa/total*100),
+            pourcentage_Europe = round(Europe/total*100),
+            pourcentage_Asia = round(Asia/total*100),
+            pourcentage_Americas = round(Americas/total*100),
+            pourcentage_Oceania = round(Oceania/total*100))
+```
+
+
+
+* Pour harmoniser la base de données sur la vaccination avec les différentes bases de données issues de **Gapminder**, il a été nécessaire de changer le nom de quelques variables, mais aussi de prendre les données de la seule année pouvant témoigner de l'effort vaccinal en cours, soit 2021 afin d'effectuer des croisements intéressants dans les analyses subséquentes. En ce qui concerne les chiffres liés à la vaccination, notre code utilise les données de vaccination totale de la veille. La synthaxe ressemble à ceci et est répété pour chacune des variables d'intérêt : 
+
+```{r, eval=FALSE}
+total_vaccination_today <- vaccination_raw %>%
+    select(c(location, total_vaccinations, date)) %>%
+    rename(country = location) %>% 
+    complete(date, country) %>%
+    pivot_wider(names_from = country, values_from = total_vaccinations) %>%
+    fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
+    subset(date == Sys.Date() -1) %>%
+    pivot_longer(Afghanistan:Zimbabwe, names_to = "country", values_to = "total_vaccinations")
+```
+
+
+* De même, afin de rendre l'ensemble de nos données [***Tidy***](https://thomasgareau.github.io/Presentation_Tidyr/tidyr_presentation.html#1), les bases de données de Gapminder ont elles aussi dû être « pivotées » pour qu'elles se départissent de leur modalité longitudinale. Il s'agit en quelque sorte d'émuler ce que propose le *gif* ci-bas :
+
+![Source : Education rstudio](https://education.rstudio.com/blog/2020/07/teaching-the-tidyverse-in-2020-part-3-data-wrangling-and-tidying/img/tidyr-longer-wider.gif)
+
+La commande exécutée est donc la suivante :
+
+```{r, eval=FALSE}
+country_lifeexp <- countries_lifeexp_raw
+    country_lifeexp <- country_lifeexp %>%
+    subset(time == 2021) %>%
+    pivot_wider(names_from=time, values_from="Life expectancy")
+```
+
+
+La totalité du script de manipulation est disponible sur le [*repository*](https://github.com/ThomasGareau/FAS1002_projet-final) de ce rapport. 
+
+Nous terminons donc avec trois jeux de données :
+
+* `df_continent`, qui recense les variables de **Gapminder** et de **Our World in Data** en fonction des continents. 
+
+* `df_country`, qui recense ces mêmes données en fonction de 185 pays. 
+
+* `df_semaine`, qui raconte la course à la vaccination en présentant la moyenne des vaccinations quotidiennes pour les 5 continents ainsi que pour 219 nations. Les données des cinq continents sont aussi accompagnés de pourcentage afin de déterminer à chaque semaine dans quelle partie du monde à chaque semaine le plus de doses sont inoculées. 
+
+
+# Tests d'aptitude en matière de manipulation
+
+### Créer une variable pour les continents
+
+Afin de tester nos habiletés, deux tâches nous étaient explicitement demandées : 
+
+* D'une part, il faillait créer une nouvelle variable pour l'ensemble des données permettant de regrouper les différents pays en continents. Nous y sommes parvenus grâce à ce que nous appelons affectueusement notre **"iso-translator"** : 
+
+
+```{r, eval=FALSE}
+iso_translator <- iso_translator %>%
+    select(Continent_Name, Three_Letter_Country_Code)
+
+iso_translator <- iso_translator %>%
+    rename(geo = Three_Letter_Country_Code) %>%
+    mutate(geo = tolower(geo))
+
+df_country <- full_join(iso_translator, df_country, by="geo") %>% 
+    drop_na("total_vaccinations")
+```
+
+```{r, echo=FALSE}
+preuve <- df_country %>%
+  select(Continent_Name, country)
+
+kable(head(preuve), caption = "Ajout de la variable continent") %>%
+  kable_styling()
+```
+
+### Vérifier la validité de 'total_vaccinations_per_hundred'
+
+Dans les données de vaccinations,  il nous fallait vérifier la validité de la variable `total_vaccinations_per_hundred`.
+
+Afin de recalculer le taux pour chaque pays dans une nouvelle variable, il nous faut  prendre la population estimée pour 2021 du jeu de données de **Gapminder** sur la population mondiale :
+
+```{r, echo=FALSE}
+preuve <- df_country %>%
+  select(total_vaccinations_per_hundred, verification_vaccination_par_100)
+
+kable(head(preuve), caption = "Bonnet blanc, blanc bonnet") %>%
+  kable_styling()
+```
+
+Ces valeurs sont quasi-identitiques. Mission accomplie !
+
+![Source : Giphy](https://media.giphy.com/media/8UF0EXzsc0Ckg/giphy.gif)
+
+```{r, include=FALSE}
+rm(preuve)
+```
+
 

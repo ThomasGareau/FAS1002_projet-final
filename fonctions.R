@@ -1,8 +1,6 @@
 
 ##### Programmation de trois fonctions pour les tableaux #####
 
-require(tidyverse)
-
 xtab.cat <- function(y_var, x_var) { 
     perc <- prop.table(table(y_var)) * 100                  
     percX <- prop.table(table(y_var, x_var), 2)*100

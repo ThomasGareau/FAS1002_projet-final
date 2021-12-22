@@ -82,15 +82,15 @@ continent_vaccination_semaine = continent_vaccination_semaine %>%
 
 
 continent_vaccination_annee <- continent_vaccination %>%
-    select(-c(daily_people_vaccinated_per_hundred, daily_vaccinations_per_million, daily_people_vaccinated)) %>%
-    fill(c(date, continent, total_vaccinations), .direction = "downup") %>%
-    fill(c(date, continent, people_vaccinated), .direction = "downup") %>%
-    fill(c(date, continent, people_fully_vaccinated), .direction = "downup") %>%
-    fill(c(date, continent, daily_vaccinations), .direction = "downup") %>%
-    fill(c(date, continent, people_vaccinated_per_hundred), .direction = "downup") %>%
-    fill(c(date, continent, total_boosters_per_hundred), .direction = "downup") %>%
-    fill(c(date, continent, people_fully_vaccinated_per_hundred), .direction = "downup") %>%
-    fill(c(date, continent, total_vaccinations_per_hundred), .direction = "downup") %>%
+    select(-c(daily_people_vaccinated_per_hundred, daily_vaccinations_per_million, daily_people_vaccinated, )) %>%
+    fill(c(date, continent, total_vaccinations), .direction = "up") %>%
+    fill(c(date, continent, people_vaccinated), .direction = "up") %>%
+    fill(c(date, continent, people_fully_vaccinated), .direction = "up") %>%
+    fill(c(date, continent, daily_vaccinations), .direction = "up") %>%
+    fill(c(date, continent, people_vaccinated_per_hundred), .direction = "up") %>%
+    fill(c(date, continent, total_boosters_per_hundred), .direction = "up") %>%
+    fill(c(date, continent, people_fully_vaccinated_per_hundred), .direction = "up") %>%
+    fill(c(date, continent, total_vaccinations_per_hundred), .direction = "up") %>%
     subset(date == Sys.Date() -7) %>%
     group_by(continent) %>%
     summarize_if(is.numeric, .funs = sum, na.rm = TRUE)
@@ -127,23 +127,89 @@ country_vaccination_semaine <- country_vaccination_semaine %>% group_by(time) %>
     summarize_if(is.numeric, .funs = sum, na.rm = TRUE)
 
 
-#### Pour avoir les données de vaccination les plus récentes (certains pays partagent leurs informations aux semaines, d'où le -7)
+#### Pour avoir les données de vaccination les plus récentes
 
-vaccination_today <- vaccination_raw %>%
-    select(-c(daily_people_vaccinated_per_hundred, daily_vaccinations_per_million, daily_people_vaccinated)) %>%
-    rename(country = location) %>%
-    fill(c(date, country, total_vaccinations), .direction = "downup") %>%
-    fill(c(date, country, people_vaccinated), .direction = "downup") %>%
-    fill(c(date, country, people_fully_vaccinated), .direction = "downup") %>%
-    fill(c(date, country, daily_vaccinations), .direction = "downup") %>%
-    fill(c(date, country, people_vaccinated_per_hundred), .direction = "downup") %>%
-    fill(c(date, country, total_boosters_per_hundred), .direction = "downup") %>%
-    fill(c(date, country, people_fully_vaccinated_per_hundred), .direction = "downup") %>%
-    fill(c(date, country, total_vaccinations_per_hundred), .direction = "downup") %>%
-    subset(date == Sys.Date() -7) %>%
-    group_by(country) %>%
-    summarize_if(is.numeric, .funs = sum, na.rm = TRUE)
+total_vaccination_today <- vaccination_raw %>%
+    select(c(location, total_vaccinations, date)) %>%
+    rename(country = location) %>% 
+    complete(date, country) %>%
+    pivot_wider(names_from = country, values_from = total_vaccinations) %>%
+    fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
+    subset(date == Sys.Date() -1) %>%
+    pivot_longer(Afghanistan:Zimbabwe, names_to = "country", values_to = "total_vaccinations")
 
+
+total_boosters_today <- vaccination_raw %>%
+    select(c(location, total_boosters, date)) %>%
+    rename(country = location) %>% 
+    complete(date, country) %>%
+    pivot_wider(names_from = country, values_from = total_boosters) %>%
+    fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
+    subset(date == Sys.Date() -1) %>%
+    pivot_longer(Afghanistan:Zimbabwe, names_to = "country", values_to = "total_boosters") %>%
+    select(-date)
+
+total_people_fully_vaccinated_today <- vaccination_raw %>%
+    select(c(location, people_fully_vaccinated, date)) %>%
+    rename(country = location) %>% 
+    complete(date, country) %>%
+    pivot_wider(names_from = country, values_from = people_fully_vaccinated) %>%
+    fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
+    subset(date == Sys.Date() -1) %>%
+    pivot_longer(Afghanistan:Zimbabwe, names_to = "country", values_to = "people_fully_vaccinated") %>%
+    select(-date)
+
+total_vaccinations_per_hundred_today <- vaccination_raw %>%
+    select(c(location, total_vaccinations_per_hundred, date)) %>%
+    rename(country = location) %>% 
+    complete(date, country) %>%
+    pivot_wider(names_from = country, values_from = total_vaccinations_per_hundred) %>%
+    fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
+    subset(date == Sys.Date() -1) %>%
+    pivot_longer(Afghanistan:Zimbabwe, names_to = "country", values_to = "total_vaccinations_per_hundred") %>%
+    select(-date)
+
+
+people_vaccinated_per_hundred_today <- vaccination_raw %>%
+    select(c(location, people_vaccinated_per_hundred, date)) %>%
+    rename(country = location) %>% 
+    complete(date, country) %>%
+    pivot_wider(names_from = country, values_from = people_vaccinated_per_hundred) %>%
+    fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
+    subset(date == Sys.Date() -1) %>%
+    pivot_longer(Afghanistan:Zimbabwe, names_to = "country", values_to = "people_vaccinated_per_hundred") %>%
+    select(-date)
+
+people_fully_vaccinated_per_hundred <- vaccination_raw %>%
+    select(c(location, people_fully_vaccinated_per_hundred, date)) %>%
+    rename(country = location) %>% 
+    complete(date, country) %>%
+    pivot_wider(names_from = country, values_from = people_fully_vaccinated_per_hundred) %>%
+    fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
+    subset(date == Sys.Date() -1) %>%
+    pivot_longer(Afghanistan:Zimbabwe, names_to = "country", values_to = "people_fully_vaccinated_per_hundred") %>%
+    select(-date)
+
+
+
+#### Merge les df à jour
+
+vaccination_today <- right_join(total_boosters_today, total_vaccination_today, by="country")
+vaccination_today <- right_join(total_people_fully_vaccinated_today, vaccination_today, by="country")
+vaccination_today <- right_join(total_vaccinations_per_hundred_today, vaccination_today, by="country")
+vaccination_today <- right_join(people_vaccinated_per_hundred_today, vaccination_today, by="country")
+vaccination_today <- right_join(people_fully_vaccinated_per_hundred, vaccination_today, by="country")
+
+
+vaccination_today <- vaccination_today %>%
+    relocate(date, .before = country)
+
+rm(total_vaccination_today,
+   total_boosters_today,
+   total_people_fully_vaccinated_today,
+   total_vaccinations_per_hundred_today,
+   people_vaccinated_per_hundred_today,
+   people_fully_vaccinated_per_hundred)
 
 rm(continent_vaccination,
    vaccination_raw,

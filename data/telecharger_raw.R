@@ -2,10 +2,10 @@
 
 # Packgages utilisés 
 
-library(readr)
-library(tidyverse)
-library(readxl)
-library(lubridate)
+require(readr)
+require(tidyverse)
+require(readxl)
+require(lubridate)
 
 # Téléchargement des données RAW : 
 

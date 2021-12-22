@@ -1,6 +1,8 @@
 
 ##### Programmation de trois fonctions pour les tableaux #####
 
+require(tidyverse)
+
 xtab.cat <- function(y_var, x_var) { 
     perc <- prop.table(table(y_var)) * 100                  
     percX <- prop.table(table(y_var, x_var), 2)*100
@@ -27,4 +29,22 @@ xtab.conti <- function(y_var, x_var) {
     
     return(t)   
 }
+
+
+## Autre fonction en dévelopement qui, pour le moment, ne fonctionne pas
+
+
+# total_jour <- function(x_var) {
+#     df <- vaccination_raw %>%
+#         select(c(location, x_var, date)) %>%
+#         rename(country = location) %>% 
+#         complete(date, country) %>%
+#         pivot_wider(names_from = country, values_from = x_var) %>%
+#         fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
+#         subset(date == Sys.Date() -1) %>%
+#         pivot_longer(Afghanistan:Zimbabwe, names_to = "country", values_to = "x_var")
+# 
+#     return(df)  
+# }
+
 

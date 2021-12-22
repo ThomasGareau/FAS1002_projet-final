@@ -76,18 +76,15 @@ vaccination_raw <- read_csv("data/raw/vaccination_raw.csv")
 
 ### 4.2 Data Population 
 
-regions_pop_raw <- read_excel("data/raw/population_raw.xlsx", sheet = 3)
 countries_pop_raw <- read_excel("data/raw/population_raw.xlsx", sheet = 4)
 
 ### 4.3 Data PIB par habitant
 
-regions_gdpc_raw <- read_excel("data/raw/gdp_capita_raw.xlsx", sheet = 3)
 countries_gdpc_raw <- read_excel("data/raw/gdp_capita_raw.xlsx", sheet = 4)
 
 
 ### 4.4 Data espérance de vie
 
-regions_lifeexp_raw <- read_excel("data/raw/life_exp_raw.xlsx", sheet = 3)
 countries_lifeexp_raw <- read_excel("data/raw/life_exp_raw.xlsx", sheet = 4)
 
 

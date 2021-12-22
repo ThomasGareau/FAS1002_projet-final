@@ -215,6 +215,13 @@ rm(continent_vaccination,
    vaccination_raw,
    country_vaccination)
 
+#### créer la variable d'intérêt
+
+vaccination_today <- vaccination_today %>%
+    mutate(temps_ecoule = difftime(today(), date, units = "day")) %>%
+    relocate(temps_ecoule, .after = date)
+
+
 
 
 
@@ -227,8 +234,13 @@ rm(continent_vaccination,
 
 continent_pop <- regions_pop_raw %>%
     subset(time == year(Sys.Date())) %>% # bug de l'an 2022 au premier janvier ?
-    pivot_wider(names_from=time, values_from=Population) %>%
-    rename("population_2021" = "2021",
+    pivot_wider(names_from=time, values_from=Population)
+
+year <- as.numeric(year(Sys.Date()))
+    
+continent_pop <- continent_pop %>%
+    ifelse(colnames(continent_pop) == year )
+    rename("population_actuelle" = year,
            "continent" = "name") %>%
     select(-geo)
 
@@ -337,7 +349,7 @@ rm(continent_vaccination_annee,
 df_continent = df_continent %>%
     mutate(continent = str_replace_all(continent, "Africa", "Afrique"),
            continent = str_replace_all(continent, "Oceania", "Océanie"),
-           continent = str_replace_all(continent, "Americas", "Amériques"),
+           continent = str_replace_all(continent, "The Americas", "Amériques"),
            continent = str_replace_all(continent, "Asia", "Asie"))
 
 

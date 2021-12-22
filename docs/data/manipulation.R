@@ -332,6 +332,14 @@ rm(continent_vaccination_annee,
    continent_gdpc,
    continent_lifeexp)
 
+#### Franciser le nom des continents
+
+df_continent = df_continent %>%
+    mutate(continent = str_replace_all(continent, "Africa", "Afrique"),
+           continent = str_replace_all(continent, "Oceania", "Océanie"),
+           continent = str_replace_all(continent, "Americas", "Amériques"),
+           continent = str_replace_all(continent, "Asia", "Asie"))
+
 
 ##### Merge des bases de données par semaine ####
 
@@ -360,7 +368,11 @@ df_country <- full_join(iso_translator, df_country, by="geo") %>%
 
 #### Franciser le nom des continents
 
-
+df_country = df_country %>%
+    mutate(Continent_Name = str_replace_all(Continent_Name, "Africa", "Afrique"),
+           Continent_Name = str_replace_all(Continent_Name, "Oceania", "Océanie"),
+           Continent_Name = str_replace_all(Continent_Name, "North America | South America", "Amériques"),
+           Continent_Name = str_replace_all(Continent_Name, "Asia", "Asie"))
 
 
 rm(iso_translator)

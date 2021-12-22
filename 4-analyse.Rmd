@@ -24,7 +24,31 @@ citation_url: https://fas1002.github.io/FAS1002_projet-final
 bibliography: references.bib
 output: distill::distill_article
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
+## Un peu d'interactivité pour le plaisir!
+
+```{r, include=FALSE}
+library(knitr)
+library(tidyverse)
+library(kableExtra)
+```
+
+
+# Hypothèse
+
+Par rapport aux données qui sont à l'étude, nous émettons les hypothèses suivantes : 
+
+### H1 : Encore à ce jour, les pays du continent Africain vaccinent beaucoup moins que les pays des autres continents
+
+
+### H2 : Le taux de vaccination des population est principalement corrélé à l'accessibilité aux soins de santé
+
+Nous opérationnalisons ce concept via les données sur l'espérance de vie.
+
+### H3 : Les pays 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)

@@ -50,9 +50,9 @@ source("fonctions.R", local = knit_global())
 # Section descriptive
 
 
-### df_continent
+### 1. df_continent
 
-Le dataframe `df_continent` recense les variables de **Gapminder** et de **Our World in Data** en fonction des continents. Les données permettent d'entrevoir d'importants écarts entre pays en ce qui a trait aux indicateurs qui y ont été ajoutés : 
+Le dataframe `df_continent` recense les variables de **Gapminder** et de **Our World in Data** en fonction des continents. Cette base de données est composée de 4 observations et de 15 variables. Les données permettent d'entrevoir d'importants écarts entre pays en ce qui a trait aux indicateurs qui y ont été ajoutés : 
 
 
 ```{r, echo=FALSE}
@@ -73,13 +73,36 @@ tableau_2
 ```
 
 
+Flagrante en terme de de nombre de personnes vaccinées,
 
-En soi, cette banque de données ne sera pas utilisée dans nos analyses. Celle-ci permet malgré tout d'appréhender les différences entre les cadres nationaux en termes de vaccination. Ces données nous permettent donc d'introduire l'étude des déterminants de la vaccination élaborée ici. 
+```{r}
+ggplot(df_continent) +
+ aes(x = continent, weight = people_vaccinated) +
+ geom_bar(fill = "#112446") +
+ labs(x = "Continent", y = "Nombre d'individus (densité)", title = "Nombre d'individus vaccinés par continent") +
+ theme_minimal()
+
+```
 
 
-### df_country
+Ces inégalités sont encore plus flagrantes en ce qui a trait au fameux *"booster"*, cette troisième dose maintenant devenue d'une importance capitale en raison du développement et de la généralisation du variant Omicron :  
 
-La deuxième banque de données est beaucoup plus riche en raison du nombre d'observations qui y est associé.
+```{r}
+ggplot(df_continent) +
+ aes(x = continent, weight = total_boosters) +
+ geom_bar(fill = "#112446") +
+ labs(x = "Continent", 
+ y = "Nombre de \"boosters\"", title = "Nombre de \"boosters\" reçus par continent") +
+ theme_minimal()
+```
+
+
+En soi, cette banque de données ne sera pas utilisée dans nos analyses. Celle-ci permet malgré tout d'appréhender les différences entre les cadres nationaux en termes de vaccination. De plus, des données plus précises sur les continents se trouvent dans la banque de données suivante. Ce sont ces données qui seront utiliées dans le cadre des prochaines analyses. celles-ci nous ont toutefois permis d'introduire l'étude des déterminants nationaux de la vaccination, soit ce que nous tâcherons d'élaborer ici. 
+
+
+### 2. df_country
+
+La deuxième banque de données est beaucoup plus riche en raison du nombre d'observations qui y est associé. Celle-ci est composée de 185 observations et de 15 varuiables. 
 
 La fonction `glimpse` permet d'avoir un aperçu de ce que nous pourrons observer via `df_country`
 
@@ -112,47 +135,51 @@ Ce tableau présente de  nombreuses statistiques descriptives d'importance, à c
 
 D'une part, les mesures de dispersion pour des variables comme `people_fully_vaccinated_per_hundred` montrent de grands écarts entre les pays par rapport à la moyenne, qui elle est pourtant assez élevée. Ainsi, lorsque **Our World in Data** explique que « [56.9% of the world population has received at least one dose of a COVID-19 vaccine](https://ourworldindata.org/covid-vaccinations), il conviendrait de s'attarder plus spécifiquement à la distribution de ces variables. 
 
+Nos analyses vont se pencher plus spécifiquement sur les déterminants de la vaccination, mais il convient d'emblée de comprendre, et de voir, qui sont les individus vaccinés : 
 
 
 ```{r}
-ggplot(df_country) +
+graphique_1 <- ggplot(df_country) +
  aes(x = Income.per.person, y = people_fully_vaccinated_per_hundred, colour = Continent_Name) +
  geom_point(shape = "circle", size = 1.5) +
  scale_color_brewer(palette = "Paired", direction = 1) +
- labs(x = "Revenu par habitant", y = "Nombre d'individus complètement vaccinés pour 100 habitants", 
- title = "Distribution des individus complètement vaccinés", subtitle = "En fonction du pays", 
- caption = "En date du 20 décembre. Source : Gapminder et Our World in Data", color = "Continent") +
+ labs(x = "Revenu par habitant", y = "Population complètement vaccinée pour 100 habitants", 
+ title = "Distribution des individus complètement vaccinés", subtitle = "En fonction du pays en date du 20 décembre 2021", 
+ caption = "Graphique 1. Source : Gapminder et Our World in Data", color = "Continent") +
  theme_minimal()
 ```
 
 
+Le graphique 1 montre une distribution inégale en fonction des continents et du revenu par habitant. Le graphique 2 illustre lui aussi, mais à l'Aide d'un histogramme, cette distribution :
+
 ```{r}
-ggplot(df_country) +
+graphique_2 <- ggplot(df_country) +
  aes(x = people_fully_vaccinated_per_hundred, fill = Continent_Name) +
  geom_histogram(bins = 30L) +
  scale_fill_brewer(palette = "Paired", direction = 1) +
  labs(x = "Inidividus complètement vaccinés par 100 habitants", 
- y = "Nombre de pays", title = "Distribution des individus complètement vaccinés", subtitle = "En fonction du pays", 
+ y = "Nombre de pays", title = "Distribution des individus complètement vaccinés", subtitle = "En fonction du pays en date du 20 décembre 2021", 
  caption = "En date du 20 décembre. Source : Gapminder et Our World in Data", fill = "Continent") +
  theme_minimal()
 ```
 
-
-
+Les pays africains semblent systématiquement désavantagés à quelques rares exceptions près. Nous avions vu l'ampleur de l'écart type lorsque nous analysions les données descriptives de `df_continent`, mais le tout semble vouloir se confirmer. De fait, nous allons vérifier statistiquement cette hypothèse ultérieurement dans la section portant sur les analyses, mais ces déterminants semblent à première vue corrélés à l'espérance de vie pour l'année 2021. 
 
 ```{r}
-ggplot(df_country) +
+graphique_3 <- ggplot(df_country) +
  aes(x = people_fully_vaccinated_per_hundred, y = lifeeexp_2021, colour = Continent_Name) +
  geom_point(shape = "circle", size = 1.5) +
  scale_color_brewer(palette = "Paired", direction = 1) +
  labs(x = "Inidividus complètement vaccinés par 100 habitants", y = "Espérance de vie", title = "Distribution des individus complètement vaccinés", 
- subtitle = "Croisé avec l'espérance de vie", caption = "En date du 20 décembre. Source : Gapminder et Our World in Data", 
+ subtitle = "Croisé avec l'espérance de vie en date du 20 décembre 2021", caption = "En date du 20 décembre. Source : Gapminder et Our World in Data", 
  color = "Continent") +
  theme_minimal()
-
 ```
 
 
+### 3. df_semaine
+
+Cette troisième banque de données, appelée `df_semaine` s'intéresse à la moyenne des doses innoculées par jour sur une semaine. 
 
 
 

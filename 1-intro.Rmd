@@ -8,19 +8,10 @@ author:
   - first_name: "Thomas"
     last_name: "Gareau Paquette"
     url: https://github.com/thomasgareau
-    # les champs d'affiliation sont optionnels, vous pouvez les
-    # comment out en ajoutant un # devant.
     affiliation: FAS1002
     affiliation_url: https://admission.umontreal.ca/programmes/microprogramme-de-1er-cycle-en-analyse-des-megadonnees-en-sciences-humaines-et-sociales/structure-du-programme/
-    # changer pour votre propre orcid id
-    # https://orcid.org/ pour vous inscrire.
     orcid_id: 0000-0003-4421-4855
-# Changer pour votre propre URL si jamais quelqu'un vous cite!
 citation_url: https://fas1002.github.io/FAS1002_projet-final
-# Inclure les références que vous utilisez dans vos rapports
-# dans un fichier biblio.bib. Je conseille Zotero pour construire
-# ce fichier ou d'utiliser le package citr dans RStudio.
-# Installation: devtools::install_github("crsh/citr")
 bibliography: references.bib
 output: distill::distill_article
 ---
@@ -39,28 +30,17 @@ library(citr)
 # « A crisis like no other »
 Ces deux dernières années ont été, à de nombreux égards, historiques en raison des dangers entourant la COVID-19 et ses variants. Pour reprendre les mots du Fond monétaire international (FMI), les marchés et les populations des 5 continents ont vécu (et vivent toujours) les chocs et contrecoups d'une [« *Crisis like no other* »] [@fmiWorldEconomicOutlook2020].
 
+Qualitativement,les expériences personnelles liées à cette pandémie varient. Quantitativement, toutefois, les indicateurs ne mentent pas quant à l'étendue de cette crise qui s'est étendue à toutes les sphères de la société. Ainsi, pour tempérer la chute des indicateurs les plus centraux, les gouvernements n'y sont pas allés de main morte. L'économiste Adam @toozeShutdownHowCovid2021 va même jusqu'à affirmer que l'effort mobilisé rappelait des dimensions qui n'avaient jusqu'alors été vues uniquement en temps de guerre.
+
+Dans les derniers mois, cet effort a migré vers la campagne de vaccination la plus importante de l'histoire. Que disent les chiffres de cette aventure ? En tout cas, comme il sera possible de le constater, d'importantes inégalités se sont développées. 
+
+
+Nous tenterons donc de répondre à la question suviante : **Comment expliquer que les taux de vaccination par cent habitants soient aussi inégaux entre pays ?**
 
 
 
-Qualitativement,les expériences personnelles liées à cette pandémie varient. Quantitativement, toutefois, les indicateurs ne mentent pas quant à l'étendue de cette crise qui s'est étendue à toutes les sphères de la société. Ainsi, pour tempérer la chute des indicateurs les plus centraux, les gouvernements n'y sont pas allés de main morte. L'économiste Adam @toozeShutdownHowCovid2021 va même jusqu'à affirmer que l'effort mobilisé rappelait des dimensions qui n'avaient jusqu'alors été vues uniquement en temps de guerre.  
 
-Dans le cadre de ce rapport analytique, nous utiliserons les données de [@mathieu2021]
-
+Dans le cadre de ce rapport analytique, nous utiliserons les données de [@mathieu2021] de **Our World in Data**, ainsi que de **Gapminder** [@gapminderPopulationForecasts2021l; @gapminderGDPCapita2021; @gapminderLifeExpectancy2021].
 
 
-![Source : Intoaction](https://c.tenor.com/OaFNl1Me8TwAAAAd/ready-for-the-covid-vaccine-covid-vaccine.gif)
 
-
-## Inclure des graphiques ou des images pour présenter les ensembles de données.
-
-Comme la Figure \@ref(fig:diam) par exemple:
-
-```{r diam, layout="l-body-outset", fig.width=6, fig.height=1.5, fig.cap="Beaucoup de diamants"}
-library(ggplot2)
-ggplot(diamonds, aes(carat, price)) + geom_smooth() +
-  facet_grid(~ cut)
-```
-
-### Différents niveaux de titres
-
-Dans vos différents documents, assurez-vous de bien utiliser Markdown et autres. 

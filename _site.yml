@@ -2,7 +2,7 @@ name: "FAS1002_projet-final"
 title: "FAS1002 - Projet final de Thomas Gareau Paquette"
 favicon: static/images/FAS1002.png
 # N'oubliez pas d'activer votre site web dans vos params sur GH.
-repository_url: https://github.com/FAS1002/FAS1002_projet-final
+repository_url: https://github.com/ThomasGareau/FAS1002_projet-final
 description: "Ce site présente un rapport analytique (de qualité professionelle) sur la COVID-19 via les données sur la vaccination de Our World in Data et de Gapminder"
 output_dir: "docs"
 theme: static/theme.css

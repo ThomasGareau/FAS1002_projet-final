@@ -359,6 +359,11 @@ tableau_7 <- df_semaine %>%
 tableau_7
 ```
 
+Présentées ainsi, les disparités entre continents sont encore plus choquantes : alors que l'Afrique ne représente en moyenne que 2,6% des vaccinations quotidiennes mondiales (pour 17% de la population), tous les continents à l'exception de l'Océanie dépasse cette valeur. 
+
+Les graphiques suivants offrent toutefois une lueur d'espoir. Il semble que la campagne de vaccination africaine est en train de prendre de la vitesse. Par le fait même, il est intéressant de regarder la distribution des autres continents : 
+
+
 
 ```{r fig.show="hold", out.width="50%"}
 graphique_9 <- ggplot(df_semaine) +
@@ -385,7 +390,6 @@ graphique_10 <- ggplot(df_semaine) +
 graphique_9
 graphique_10
 ```
-
 
 
 ```{r fig.show="hold", out.width="50%"}

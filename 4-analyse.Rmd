@@ -34,6 +34,9 @@ library(knitr)
 library(tidyverse)
 library(kableExtra)
 library(modelsummary)
+library(dagitty)
+library(stats)
+library(gtsummary)
 ```
 
 ```{r, include=FALSE}
@@ -46,13 +49,95 @@ source("R/fonctions.R", local = knit_global())
 
 # Description II : Analyses bivariées
 
-
 ## Analyses descriptives bivariées
+
+### Variable sur la vaccination croisée avec le continent
+
+En utilisant deux fonctions « Maison », il est possible de constituer des statistiques croisées entre les variables. Ces données parlent d'elles-même et viennent confirmer nos intuitions graphique de la section précédente :
+
+```{r}
+t.conti <- xtab.conti(df_country$people_fully_vaccinated_per_hundred, df_country$Continent_Name)
+
+tableau_1 <- kable(t.conti,
+      caption = "Nombre d'individus complètement vaccinés (par cent habitants) selon le continent", 
+      digits=2) %>%
+  kable_styling()
+
+tableau_1
+```
+
+
+
+```{r}
+t.conti <- xtab.conti(df_country$people_fully_vaccinated_per_hundred, df_country$Continent_Name)
+
+tableau_2 <- kable(t.conti,
+      caption = "Nombre d'individus complètement vaccinés (par cent habitants) selon le continent", 
+      digits=2) %>%
+  kable_styling()
+
+tableau_2
+```
+
+```{r}
+t.conti <- xtab.conti(df_country$total_vaccinations, df_country$Continent_Name)
+
+tableau_3 <- kable(t.conti,
+      caption = "Nombre de vaccins inoculés en fonction du continent", 
+      digits=2) %>%
+  kable_styling()
+
+tableau_3
+```
+
+
+```{r}
+t.conti <- xtab.conti(df_country$total_boosters, df_country$Continent_Name)
+
+tableau_4 <- kable(t.conti,
+      caption = "Nombre de vaccins inoculés en fonction du continent", 
+      digits=2) %>%
+  kable_styling()
+
+tableau_4
+```
+
+
+[@fletcherGovernmentIncomeSupport2020] 
+
+
+### Question de recherche : Comment expliquer que les taux de vaccination par cent habitants soient aussi inégaux entre pays ?
+
+Notre question de recherche est la question suivante : Comment expliquer que les taux de vaccination par cent habitants soient aussi inégaux entre pays ?
+
+Nous l'avons vu grâce à la baque de données `df_semaine` (mais aussi dans les travaux de [@belandSocialPolicyResponses2021]), la cadance des campagnes de vaccination varie énormément d'un pays à l'autre, d'un continent à l'autre. D'où la nécessité, avec les facteurs socioéconomiques à l'étude, de déterminer lequel de ces facteurs a la plus grande force prédictive. Le tout doit évidemment être vérifiable statistiquement. 
+
+# Analyses
+
+### Hypothèses
+
+Par rapport aux données qui sont à l'étude, nous émettons les hypothèses suivantes, inspirées de la littérature : 
+
+#### Hypothèse 1
+Encore à ce jour, les pays du continent Africain vaccinent beaucoup moins que les pays des autres continents [@aresAttitudinalPolarizationRedistributive2021].
+
+
+#### Hypothèse 2
+Le taux de vaccination des population est principalement corrélé à l'accessibilité aux soins de santé [@ferraginaEndAusterityCommon2021].
+
+
+#### Hypothèse 3
+Le taux de vaccination n'est pas associé à la taille du PIB ou à la taille de la population [@toozeShutdownHowCovid2021].
+
+
+### Observation des corrélations
+
 
 D'une part, la table de corrélation suivante est particulièrement informative sur les informations que l'on pourrait éventuellement inférer de nos données : 
 
+
 ```{r}
-df_country %>%
+df <- df_country %>%
   datasummary_correlation() %>%
   kable_styling(font_size = 4, full_width = FALSE) %>%
   scroll_box(width = "800px", height = "400px")
@@ -68,147 +153,200 @@ L'association statistique la plus forte entre la variable `people_fully_vaccinat
 D'autre part, ce second tableau des corrélations n'est pas en soi indicatif puisqu'il est remarqueblement influencé par le poids des pays les plus peuplés. La seule conclusion que nous pourrions oser tirer présentement est celle selon laquelle les pays africains semblent suivre leur propre logique. 
 
 ```{r}
-df_semaine %>%
+tableau_5 <- df_semaine %>%
   datasummary_correlation() %>%
    kable_styling(font_size = 4, full_width = FALSE) %>%
   scroll_box(width = "800px", height = "400px")
-```
 
-
-### Variable sur la vaccination croisée avec le continent
-
-En utilisant deux fonctions « Maison », il est possible de constituer des statistiques croisées entre les variables.
-
-```{r}
-t.conti <- xtab.conti(df_country$people_fully_vaccinated_per_hundred, df_country$Continent_Name)
-
-kable(t.conti,
-      caption = "Nombre d'individus complètement vaccinés (par cent habitants) selon le continent", 
-      digits=2) %>%
-  kable_styling()
+tableau_5
 ```
 
 
 
-```{r}
-t.conti <- xtab.conti(df_country$people_fully_vaccinated_per_hundred, df_country$Continent_Name)
+### Exploration graphique des hypothèses
 
-kable(t.conti,
-      caption = "Nombre d'individus complètement vaccinés (par cent habitants) selon le continent", 
-      digits=2) %>%
-  kable_styling()
-```
 
+Les régressions linéeaires suivantes vont nous permettre de départager le bon grain de l'ivraie. 
 
 ```{r}
-t.conti <- xtab.conti(df_country$total_vaccinations, df_country$Continent_Name)
-
-kable(t.conti,
-      caption = "Nombre de vaccins inoculés en fonction du continent", 
-      digits=2) %>%
-  kable_styling()
-```
-
-
-
-```{r}
-t.conti <- xtab.conti(df_country$total_boosters, df_country$Continent_Name)
-
-kable(t.conti,
-      caption = "Nombre de vaccins inoculés en fonction du continent", 
-      digits=2) %>%
-  kable_styling()
-```
-
-### Variables socioéconomiques
-
-```{r}
-t.conti <- xtab.conti(df_country$lifeeexp_2021, df_country$Continent_Name)
-
-kable(t.conti,
-      caption = "Nombre d'individus complètement vaccinés (par cent habitants) selon le continent", 
-      digits=2) %>%
-  kable_styling()
-```
-
-
-```{r}
-t.conti <- xtab.conti(df_country$Income.per.person, df_country$Continent_Name)
-
-kable(t.conti,
-      caption = "Nombre d'individus complètement vaccinés (par cent habitants) selon le continent", 
-      digits=2) %>%
-  kable_styling()
-
-```
-
-
-
-
-
-[@fletcherGovernmentIncomeSupport2020] semble l'Avoir démontré :
-
-[@belandSocialPolicyResponses2021]
-
-[@aresAttitudinalPolarizationRedistributive2021] 
-
-[@COVID19BorderAmericans2020]
-
-[@ferraginaEndAusterityCommon2021] [@fletcherGovernmentIncomeSupport2020]
-
-[@gapminderGDPCapita2021] [@gapminderLifeExpectancy2021] [@gapminderPopulationForecasts2021]
-
-
-
-Nous avons jusqu'à présent pu établir de grandes généralités par rapport à nos données. Il est maintenant temps de les analyser en établissant 
-
-# Hypothèse
-
-Par rapport aux données qui sont à l'étude, nous émettons les hypothèses suivantes : 
-
-### H1 : Encore à ce jour, les pays du continent Africain vaccinent beaucoup moins que les pays des autres continents
-
-
-### H2 : Le taux de vaccination des population est principalement corrélé à l'accessibilité aux soins de santé
-
-Nous opérationnalisons ce concept via les données sur l'espérance de vie.
-
-### H3 : Les pays 
-
-Distill is a publication format for scientific and technical writing, native to the web. 
-
-Learn more about using Distill for R Markdown at <https://rstudio.github.io/distill>.
-
-
-
-
-```{r}
-graphique_8 <- ggplot(df_country) +
+graphique_1 <- ggplot(df_country) +
  aes(x = Income.per.person, y = people_fully_vaccinated_per_hundred, colour = Continent_Name) +
- geom_point(shape = "circle", size = 1.5) + scale_x_discrete(guide = guide_axis(n.dodge=3)) +
- scale_color_brewer(palette = "Paired", direction = 1) +
+ geom_point(shape = "circle", size = 1.5) + scale_x_discrete(guide = guide_axis(n.dodge=3)) + geom_smooth(method = "lm", se = FALSE) +
+ scale_color_brewer(palette = "Paired", direction = 1) + 
  labs(x = "Revenu par habitant", y = "Population complètement vaccinée pour 100 habitants", 
- title = "Distribution des individus complètement vaccinés", subtitle = "En fonction du pays en date du 20 décembre 2021", 
- caption = "Graphique 8. Source : Gapminder et Our World in Data", color = "Continent") +
+ title = "Individus complètement vaccinés en fonction du revenu", subtitle = "et du pays en date du 20 décembre 2021", 
+ caption = "Graphique 1. Source : Gapminder et Our World in Data", color = "Continent") +
  theme_minimal()
 
-graphique_8
+graphique_1
 ```
 
 ```{r }
-graphique_10 <- ggplot(df_country) +
+graphique_2 <- ggplot(df_country) +
  aes(x = people_fully_vaccinated_per_hundred, y = lifeeexp_2021, colour = Continent_Name) +
- geom_point(shape = "circle", size = 1.5) +
+ geom_point(shape = "circle", size = 1.5) + geom_smooth(method = "lm", se = FALSE) + 
  scale_color_brewer(palette = "Paired", direction = 1) +
  labs(x = "Inidividus complètement vaccinés par 100 habitants", y = "Espérance de vie", title = "Distribution des individus complètement vaccinés", 
- subtitle = "Croisé avec l'espérance de vie en date du 20 décembre 2021", caption = "Graphique 10. Source : Gapminder et Our World in Data", 
+ subtitle = "Croisé avec l'espérance de vie en date du 20 décembre 2021", caption = "Graphique 2. Source : Gapminder et Our World in Data", 
  color = "Continent") +
  theme_minimal()
 
-graphique_10
+graphique_2
 ```
 
+
+```{r}
+graphique_3 <- ggplot(df_country) +
+ aes(x = people_fully_vaccinated_per_hundred, y = GDP.total, colour = Continent_Name) +
+ geom_point(shape = "circle", size = 1.5) + geom_smooth(method = "lm", se = FALSE) +
+ scale_color_brewer(palette = "Dark2", direction = 1) +
+ labs(x = "Continent", y = "Nombre d'individus vaccinés par 100 habitants", title = "Individus complètement vaccinés et PIB total", 
+ caption = "Source : Gapminder et Our World in Data", color = "Continent") +
+ theme_minimal() +
+ theme(plot.title = element_text(face = "bold.italic", hjust = 0.5))
+
+graphique_3
+```
+
+```{r}
+ggplot(df_country) +
+ aes(x = people_fully_vaccinated_per_hundred, y = growth_21_22, colour = Continent_Name) +
+ geom_point(shape = "circle", size = 1.5) + geom_smooth(method = "lm", se = FALSE) +
+ scale_color_brewer(palette = "Set1", direction = 1) +
+ labs(x = "Continent", y = "Nombre d'individus vaccinés par 100 habitants", title = "Individus complètement vaccinés et croissance économique", 
+ caption = "Source : Gapminder et Our World in Data", color = "Continent") +
+ theme_minimal() +
+ theme(plot.title = element_text(face = "bold.italic", hjust = 0.5))
+```
+
+
+```{r}
+ggplot(df_country) +
+ aes(x = people_fully_vaccinated_per_hundred, y = growth_21_22, colour = Continent_Name) +
+ geom_point(shape = "circle", size = 1.5) + geom_smooth(method = "lm", se = FALSE) +
+ scale_color_brewer(palette = "Set1", direction = 1) +
+ labs(x = "Continent", y = "Nombre d'individus vaccinés par 100 habitants", title = "Individus complètement vaccinés et croissance économique", 
+ caption = "Source : Gapminder et Our World in Data", color = "Continent") +
+ theme_minimal() +
+ theme(plot.title = element_text(face = "bold.italic", hjust = 0.5))
+```
+
+```{r}
+ggplot(df_country) +
+ aes(x = people_fully_vaccinated_per_hundred, y = population_21_22, colour = Continent_Name) +
+ geom_point(shape = "circle", size = 1.5) + geom_smooth(method = "lm", se = FALSE) +
+ scale_color_brewer(palette = "Set1", direction = 1) + 
+ labs(x = "Continent", y = "Nombre d'individus vaccinés par 100 habitants", title = "Individus complètement vaccinés et population totale", 
+ caption = "Source : Gapminder et Our World in Data", color = "Continent") +
+ theme_minimal() +
+ theme(plot.title = element_text(face = "bold.italic", hjust = 0.5))
+```
+
+#### Que retenir de ces régressions linéaires ?
+
+Les associations semblent somme toute groupées. L'association semble au demeurant très forte avec l'espérance de vie et le revenu par habitant. Voyons voir lequel des deux facteurs a la plus grande influence sur notre variable dépendante, soit le nombre d'individus complètement vaccinés par 100 habitants. Nous insérons de plus les deux variables dans notre modèle car nous postulons les relations suivantes : 
+
+```{r}
+dag <- dagitty("dag {
+revenu_per_capita -> Taux_de_vaccination_par_100_habitants
+esperance_de_vie -> Taux_de_vaccination_par_100_habitants
+}")
+
+plot(graphLayout(dag))
+```
+
+
+Il convient donc d'effectuer une régression en utilisant la méthode des moindres carrés ordinaires (OLS). Son équation est la suivante : 
+
+
+```{r}
+modelelineaire = lm(people_fully_vaccinated_per_hundred ~ lifeeexp_2021 + Income.per.person, data = df_country)
+```
+
+```{r}
+summary.lm(modelelineaire)
+tbl_regression(modelelineaire)
+```
+
+
+
+
+
+Ensuite, il existe trois méthodes pour distinguer les associations statistiquement significatives de celles qui sont non-significatives : la statistique t, valeur p et les intervalles de confiance. Dans le tableau ci-haut, les données nous informent que qu'il y a signification statistique à hauteur d'au moins 99,9%. Nous pouvons donc rejeter l'hypothèse nulle.
+
+Il convient donc de s’attarder à les indépendante la plus substantive, c'est à dire l'espérance de vie. D’abord, cette relation est positive. C’est donc qu’une augmentation d’un an en termes d'espérance de vie est associée à une augmentation de 2,4 personnes sur 100 totalement vaccinées, soit  la valeur de notre variable dépendante. Évidemment, le tout manque de contrôle statistique. Il conviendrait donc d'ajouter l'épithète "ceteris paribus" devant la phrase précédente. 
+
+L'autre variable indépendante, le revenu par habitant, a quant à elle un coefficient nul (ou quasi-nul), mais est significative statistiquement. 
+
+Pourrait-il y avoir un effet d'interaction entre ces deux variables indépendantes ? En raison de la forte collinéarité entre ces variables, cela ne serait pas nécessairement étonnant. 
+
+Soit la régression suivante : 
+
+```{r}
+modelelineaire = lm(people_fully_vaccinated_per_hundred ~ lifeeexp_2021 * Income.per.person, data = df_country)
+```
+
+```{r}
+summary.lm(modelelineaire)
+tbl_regression(modelelineaire)
+```
+
+
+Notre première hypotèse (aisni qu'une partie de la seconde) est donc vérifiée. Quant à savoir si le taux de vaccination n'est pas associé au revenu par habitant, à la taille du PIB ou à la taille de la population, interrogeons deux régressions OLS :
+
+
 <aside>
-Quand même très cool, non? Vous pouvez mettre des annotations sur le côté! 
+
+Hypothèse 1
+Le taux de vaccination des population est principalement corrélé à l'accessibilité aux soins de santé [@ferraginaEndAusterityCommon2021].
+
+Hypothèse 2
+Le taux de vaccination n'est pas associé au revenu par habitant, à la taille du PIB ou à la taille de la population [@toozeShutdownHowCovid2021].
 </aside>
+
+
+```{r}
+modelelineaire = lm(people_fully_vaccinated_per_hundred ~ population_21_22 + GDP.total, data = df_country)
+```
+
+```{r}
+summary.lm(modelelineaire)
+tbl_regression(modelelineaire)
+```
+
+En raision de leur absence de substantivité et de signification statistique (pour l'une des deux variables d'intérêt), il convient de rejeter la seconde hypothèse. 
+
+
+```{r ggsave, include=FALSE}
+ggsave(graphique_1, file="Graphiques/graphique1_an.jpeg")
+ggsave(graphique_2, file="Graphiques/graphique2_an.jpeg")
+ggsave(graphique_3, file="Graphiques/graphique3_an.jpeg")
+
+rm(graphique_1,
+   graphique_2,
+   graphique_3)
+```
+ 
+ 
+ 
+```{r include=FALSE}
+save_kable(tableau_1, file = "tableaux/tableau7_an.png")
+save_kable(tableau_2, file = "tableaux/tableau7_an.png")
+save_kable(tableau_3, file = "tableaux/tableau7_an.png")
+save_kable(tableau_4, file = "tableaux/tableau7_an.png")
+save_kable(tableau_5, file = "tableaux/tableau7_an.png")
+
+
+rm(tableau_1,
+   tableau_2,
+   tableau_3,
+   tableau_4,
+   tableau_5)
+
+rm(dag, df, t.conti, modelelineaire)
+   
+```
+ 
+
+
 

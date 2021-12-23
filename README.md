@@ -12,17 +12,11 @@ L'ensemble des démarches et des analyses effectuées pour établir des groupes 
 pays comparables selon leur profil de vaccination sont présentées dans les 
 différentes sections de ce site. 
 
-* Importation : Cet onglet présente l'entierté de la démarche et des manipulation qui sont associées au « nettoyage » de nos données.
+* **Importation** : Cet onglet présente l'entierté de la démarche et des manipulation qui sont associées au « nettoyage » de nos données.
 
-*  Description I - Analyses univariées : Cette section décrit en détail et de façon univariée les banques de données (disponibles dans 'data')  que nous manipulons de le cadre de nos analyses. 
+*  **Description I - Analyses univariées** : Cette section décrit en détail et de façon univariée les banques de données (disponibles dans 'data')  que nous manipulons de le cadre de nos analyses. 
 
-*  Description II et analyses bivariées et multivariées : Cette section fournit la question de recherche exploratoire, nos hypothèses et conduit les analyses statistiques. 
-
-
-
-
-
-#####################################################################
+*  **Description II et analyses bivariées et multivariées** : Cette section fournit la question de recherche exploratoire, nos hypothèses et conduit les analyses. 
 
 ## Packages à installer : 
 * require(knitr)

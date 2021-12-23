@@ -21,22 +21,10 @@ différentes sections de ce site.
 
 
 
-*    Cette section présente les données 
-utilisées dans ce rapport ainsi que les manipulations qui ont été nécessaires 
-pour préparer les données aux analyses. 
-- **Exploration des données**. Cette section présente les données contenues dans 
-le jeu de données. Elle permet notamment de prendre connaissance des statistiques 
-relatives aux différentes variables d’intérêt et de visualiser leur distribution.
-- **Établir des groupes de pays comparables** (ou analyses). Cette section 
-présente les analyses réalisées pour établir des groupes de pays comparables 
-selon leur profil de vaccination.
-- **Visualisation des données**. Cette section présente quelques visualisations 
-des données à partir des groupes de pays comparables établis. 
-
 
 #####################################################################
 
-Packages à installer : 
+## Packages à installer : 
 * require(knitr)
 * require(tidyverse)
 * require(readxl)

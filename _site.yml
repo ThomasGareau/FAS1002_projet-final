@@ -31,7 +31,7 @@ navbar:
       href: 2-import.html
     - text: "Description I : Analyses univariées"
       href: 3-description.html
-    - text: "Analyse : Description II : analyses bivariées et multivariées"
+    - text: "Description II et analyses bivariées / multivariées"
       href: 4-analyse.html
     - text: "Contact"
       href: contact.html

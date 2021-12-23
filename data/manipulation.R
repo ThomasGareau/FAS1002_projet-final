@@ -94,7 +94,7 @@ total_vaccination_today <- vaccination_raw %>%
     complete(date, location) %>%
     pivot_wider(names_from = location, values_from = total_vaccinations) %>%
     fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
-    subset(date == Sys.Date() -1) %>%
+    subset(date == Sys.Date() -2) %>%
     pivot_longer(Afghanistan:Zimbabwe, names_to = "location", values_to = "total_vaccinations") %>%
     select(-date)
 
@@ -103,7 +103,7 @@ total_boosters_today <- vaccination_raw %>%
     complete(date, location) %>%
     pivot_wider(names_from = location, values_from = total_boosters) %>%
     fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
-    subset(date == Sys.Date() -1) %>%
+    subset(date == Sys.Date() -2) %>%
     pivot_longer(Afghanistan:Zimbabwe, names_to = "location", values_to = "total_boosters") %>%
     select(-date)
 
@@ -112,7 +112,7 @@ total_people_fully_vaccinated_today <- vaccination_raw %>%
     complete(date, location) %>%
     pivot_wider(names_from = location, values_from = people_fully_vaccinated) %>%
     fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
-    subset(date == Sys.Date() -1) %>%
+    subset(date == Sys.Date() -2) %>%
     pivot_longer(Afghanistan:Zimbabwe, names_to = "location", values_to = "people_fully_vaccinated") %>%
     select(-date)
 
@@ -121,7 +121,7 @@ total_vaccinations_per_hundred_today <- vaccination_raw %>%
     complete(date, location) %>%
     pivot_wider(names_from = location, values_from = total_vaccinations_per_hundred) %>%
     fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
-    subset(date == Sys.Date() -1) %>%
+    subset(date == Sys.Date() -2) %>%
     pivot_longer(Afghanistan:Zimbabwe, names_to = "location", values_to = "total_vaccinations_per_hundred") %>%
     select(-date)
 
@@ -130,7 +130,7 @@ people_vaccinated_per_hundred_today <- vaccination_raw %>%
     complete(date, location) %>%
     pivot_wider(names_from = location, values_from = people_vaccinated_per_hundred) %>%
     fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
-    subset(date == Sys.Date() -1) %>%
+    subset(date == Sys.Date() -2) %>%
     pivot_longer(Afghanistan:Zimbabwe, names_to = "location", values_to = "people_vaccinated_per_hundred") %>%
     select(-date)
 
@@ -139,7 +139,7 @@ people_fully_vaccinated_per_hundred <- vaccination_raw %>%
     complete(date, location) %>%
     pivot_wider(names_from = location, values_from = people_fully_vaccinated_per_hundred) %>%
     fill(Afghanistan:Zimbabwe, .direction = "downup") %>%
-    subset(date == Sys.Date() -1) %>%
+    subset(date == Sys.Date() -2) %>%
     pivot_longer(Afghanistan:Zimbabwe, names_to = "location", values_to = "people_fully_vaccinated_per_hundred") %>%
     select(-date)
 

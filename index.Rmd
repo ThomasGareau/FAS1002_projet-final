@@ -56,4 +56,4 @@ En date du 22 décembre 2021, la campagne de vaccination a débuté il y a 67 se
 
 ## Remerciements {.appendix}
 
-Un grand merci à Samuel Guay pour les apprentissages, 
+Un grand merci à Samuel Guay pour les apprentissages ! 

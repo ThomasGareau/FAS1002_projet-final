@@ -2465,12 +2465,12 @@ Informations supplémentaires sur la COVID-19
 <a href="1-intro.html">Introduction</a>
 <a href="2-import.html">Importation</a>
 <a href="3-description.html">Description I : Analyses univariées</a>
-<a href="4-analyse.html">Analyse : Description II : analyses bivariées et multivariées</a>
+<a href="4-analyse.html">Description II et analyses bivariées / multivariées</a>
 <a href="contact.html">Contact</a>
 <a href="https://twitter.com/thomasgareau">
 <i class="fab fa-twitter" aria-hidden="true"></i>
 </a>
-<a href="https://github.com/FAS1002/FAS1002_projet-final" aria-label="Link to source">
+<a href="https://github.com/ThomasGareau/FAS1002_projet-final" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
 </a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
@@ -2529,10 +2529,12 @@ Show code
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>t.conti</span> <span class='op'>&lt;-</span> <span class='fu'>xtab.conti</span><span class='op'>(</span><span class='va'>df_country</span><span class='op'>$</span><span class='va'>people_fully_vaccinated_per_hundred</span>, <span class='va'>df_country</span><span class='op'>$</span><span class='va'>Continent_Name</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>t.conti</span>,
+<span class='va'>tableau_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>t.conti</span>,
       caption <span class='op'>=</span> <span class='st'>"Nombre d'individus complètement vaccinés (par cent habitants) selon le continent"</span>, 
       digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='va'>tableau_1</span>
 </code></pre>
 </div>
 </details>
@@ -2612,10 +2614,12 @@ Show code
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>t.conti</span> <span class='op'>&lt;-</span> <span class='fu'>xtab.conti</span><span class='op'>(</span><span class='va'>df_country</span><span class='op'>$</span><span class='va'>people_fully_vaccinated_per_hundred</span>, <span class='va'>df_country</span><span class='op'>$</span><span class='va'>Continent_Name</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>t.conti</span>,
+<span class='va'>tableau_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>t.conti</span>,
       caption <span class='op'>=</span> <span class='st'>"Nombre d'individus complètement vaccinés (par cent habitants) selon le continent"</span>, 
       digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='va'>tableau_2</span>
 </code></pre>
 </div>
 </details>
@@ -2695,10 +2699,12 @@ Show code
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>t.conti</span> <span class='op'>&lt;-</span> <span class='fu'>xtab.conti</span><span class='op'>(</span><span class='va'>df_country</span><span class='op'>$</span><span class='va'>total_vaccinations</span>, <span class='va'>df_country</span><span class='op'>$</span><span class='va'>Continent_Name</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>t.conti</span>,
+<span class='va'>tableau_3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>t.conti</span>,
       caption <span class='op'>=</span> <span class='st'>"Nombre de vaccins inoculés en fonction du continent"</span>, 
       digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='va'>tableau_3</span>
 </code></pre>
 </div>
 </details>
@@ -2778,10 +2784,12 @@ Show code
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>t.conti</span> <span class='op'>&lt;-</span> <span class='fu'>xtab.conti</span><span class='op'>(</span><span class='va'>df_country</span><span class='op'>$</span><span class='va'>total_boosters</span>, <span class='va'>df_country</span><span class='op'>$</span><span class='va'>Continent_Name</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>t.conti</span>,
+<span class='va'>tableau_4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>t.conti</span>,
       caption <span class='op'>=</span> <span class='st'>"Nombre de vaccins inoculés en fonction du continent"</span>, 
       digits<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='va'>tableau_4</span>
 </code></pre>
 </div>
 </details>
@@ -2892,10 +2900,12 @@ Show code
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df_semaine</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tableau_5</span> <span class='op'>&lt;-</span> <span class='va'>df_semaine</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://vincentarelbundock.github.io/modelsummary/reference/datasummary_correlation.html'>datasummary_correlation</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
    <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/kable_styling.html'>kable_styling</a></span><span class='op'>(</span>font_size <span class='op'>=</span> <span class='fl'>4</span>, full_width <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://rdrr.io/pkg/kableExtra/man/scroll_box.html'>scroll_box</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='st'>"800px"</span>, height <span class='op'>=</span> <span class='st'>"400px"</span><span class='op'>)</span>
+
+<span class='va'>tableau_5</span>
 </code></pre>
 </div>
 </details>
@@ -167836,12 +167846,12 @@ Show code
 </code></pre>
 </div>
 </details>
-<div id="vbvttvmyam" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="qhnjwahndz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#vbvttvmyam .gt_table {
+#qhnjwahndz .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -167866,7 +167876,7 @@ Show code
   border-left-color: #D3D3D3;
 }
 
-#vbvttvmyam .gt_heading {
+#qhnjwahndz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -167878,7 +167888,7 @@ Show code
   border-right-color: #D3D3D3;
 }
 
-#vbvttvmyam .gt_title {
+#qhnjwahndz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -167888,7 +167898,7 @@ Show code
   border-bottom-width: 0;
 }
 
-#vbvttvmyam .gt_subtitle {
+#qhnjwahndz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -167898,13 +167908,13 @@ Show code
   border-top-width: 0;
 }
 
-#vbvttvmyam .gt_bottom_border {
+#qhnjwahndz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vbvttvmyam .gt_col_headings {
+#qhnjwahndz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -167919,7 +167929,7 @@ Show code
   border-right-color: #D3D3D3;
 }
 
-#vbvttvmyam .gt_col_heading {
+#qhnjwahndz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -167939,7 +167949,7 @@ Show code
   overflow-x: hidden;
 }
 
-#vbvttvmyam .gt_column_spanner_outer {
+#qhnjwahndz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -167951,15 +167961,15 @@ Show code
   padding-right: 4px;
 }
 
-#vbvttvmyam .gt_column_spanner_outer:first-child {
+#qhnjwahndz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vbvttvmyam .gt_column_spanner_outer:last-child {
+#qhnjwahndz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vbvttvmyam .gt_column_spanner {
+#qhnjwahndz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -167971,7 +167981,7 @@ Show code
   width: 100%;
 }
 
-#vbvttvmyam .gt_group_heading {
+#qhnjwahndz .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -167993,7 +168003,7 @@ Show code
   vertical-align: middle;
 }
 
-#vbvttvmyam .gt_empty_group_heading {
+#qhnjwahndz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -168008,15 +168018,15 @@ Show code
   vertical-align: middle;
 }
 
-#vbvttvmyam .gt_from_md > :first-child {
+#qhnjwahndz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vbvttvmyam .gt_from_md > :last-child {
+#qhnjwahndz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vbvttvmyam .gt_row {
+#qhnjwahndz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -168035,7 +168045,7 @@ Show code
   overflow-x: hidden;
 }
 
-#vbvttvmyam .gt_stub {
+#qhnjwahndz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -168047,7 +168057,7 @@ Show code
   padding-left: 12px;
 }
 
-#vbvttvmyam .gt_summary_row {
+#qhnjwahndz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -168057,7 +168067,7 @@ Show code
   padding-right: 5px;
 }
 
-#vbvttvmyam .gt_first_summary_row {
+#qhnjwahndz .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -168067,7 +168077,7 @@ Show code
   border-top-color: #D3D3D3;
 }
 
-#vbvttvmyam .gt_grand_summary_row {
+#qhnjwahndz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -168077,7 +168087,7 @@ Show code
   padding-right: 5px;
 }
 
-#vbvttvmyam .gt_first_grand_summary_row {
+#qhnjwahndz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -168087,11 +168097,11 @@ Show code
   border-top-color: #D3D3D3;
 }
 
-#vbvttvmyam .gt_striped {
+#qhnjwahndz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vbvttvmyam .gt_table_body {
+#qhnjwahndz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -168100,7 +168110,7 @@ Show code
   border-bottom-color: #D3D3D3;
 }
 
-#vbvttvmyam .gt_footnotes {
+#qhnjwahndz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -168114,13 +168124,13 @@ Show code
   border-right-color: #D3D3D3;
 }
 
-#vbvttvmyam .gt_footnote {
+#qhnjwahndz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#vbvttvmyam .gt_sourcenotes {
+#qhnjwahndz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -168134,41 +168144,41 @@ Show code
   border-right-color: #D3D3D3;
 }
 
-#vbvttvmyam .gt_sourcenote {
+#qhnjwahndz .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#vbvttvmyam .gt_left {
+#qhnjwahndz .gt_left {
   text-align: left;
 }
 
-#vbvttvmyam .gt_center {
+#qhnjwahndz .gt_center {
   text-align: center;
 }
 
-#vbvttvmyam .gt_right {
+#qhnjwahndz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vbvttvmyam .gt_font_normal {
+#qhnjwahndz .gt_font_normal {
   font-weight: normal;
 }
 
-#vbvttvmyam .gt_font_bold {
+#qhnjwahndz .gt_font_bold {
   font-weight: bold;
 }
 
-#vbvttvmyam .gt_font_italic {
+#qhnjwahndz .gt_font_italic {
   font-style: italic;
 }
 
-#vbvttvmyam .gt_super {
+#qhnjwahndz .gt_super {
   font-size: 65%;
 }
 
-#vbvttvmyam .gt_footnote_marks {
+#qhnjwahndz .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -168274,12 +168284,12 @@ Show code
 </code></pre>
 </div>
 </details>
-<div id="wssjsnxsmw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="tugkgamfcd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#wssjsnxsmw .gt_table {
+#tugkgamfcd .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -168304,7 +168314,7 @@ Show code
   border-left-color: #D3D3D3;
 }
 
-#wssjsnxsmw .gt_heading {
+#tugkgamfcd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -168316,7 +168326,7 @@ Show code
   border-right-color: #D3D3D3;
 }
 
-#wssjsnxsmw .gt_title {
+#tugkgamfcd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -168326,7 +168336,7 @@ Show code
   border-bottom-width: 0;
 }
 
-#wssjsnxsmw .gt_subtitle {
+#tugkgamfcd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -168336,13 +168346,13 @@ Show code
   border-top-width: 0;
 }
 
-#wssjsnxsmw .gt_bottom_border {
+#tugkgamfcd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wssjsnxsmw .gt_col_headings {
+#tugkgamfcd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -168357,7 +168367,7 @@ Show code
   border-right-color: #D3D3D3;
 }
 
-#wssjsnxsmw .gt_col_heading {
+#tugkgamfcd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -168377,7 +168387,7 @@ Show code
   overflow-x: hidden;
 }
 
-#wssjsnxsmw .gt_column_spanner_outer {
+#tugkgamfcd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -168389,15 +168399,15 @@ Show code
   padding-right: 4px;
 }
 
-#wssjsnxsmw .gt_column_spanner_outer:first-child {
+#tugkgamfcd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wssjsnxsmw .gt_column_spanner_outer:last-child {
+#tugkgamfcd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wssjsnxsmw .gt_column_spanner {
+#tugkgamfcd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -168409,7 +168419,7 @@ Show code
   width: 100%;
 }
 
-#wssjsnxsmw .gt_group_heading {
+#tugkgamfcd .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -168431,7 +168441,7 @@ Show code
   vertical-align: middle;
 }
 
-#wssjsnxsmw .gt_empty_group_heading {
+#tugkgamfcd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -168446,15 +168456,15 @@ Show code
   vertical-align: middle;
 }
 
-#wssjsnxsmw .gt_from_md > :first-child {
+#tugkgamfcd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wssjsnxsmw .gt_from_md > :last-child {
+#tugkgamfcd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wssjsnxsmw .gt_row {
+#tugkgamfcd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -168473,7 +168483,7 @@ Show code
   overflow-x: hidden;
 }
 
-#wssjsnxsmw .gt_stub {
+#tugkgamfcd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -168485,7 +168495,7 @@ Show code
   padding-left: 12px;
 }
 
-#wssjsnxsmw .gt_summary_row {
+#tugkgamfcd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -168495,7 +168505,7 @@ Show code
   padding-right: 5px;
 }
 
-#wssjsnxsmw .gt_first_summary_row {
+#tugkgamfcd .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -168505,7 +168515,7 @@ Show code
   border-top-color: #D3D3D3;
 }
 
-#wssjsnxsmw .gt_grand_summary_row {
+#tugkgamfcd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -168515,7 +168525,7 @@ Show code
   padding-right: 5px;
 }
 
-#wssjsnxsmw .gt_first_grand_summary_row {
+#tugkgamfcd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -168525,11 +168535,11 @@ Show code
   border-top-color: #D3D3D3;
 }
 
-#wssjsnxsmw .gt_striped {
+#tugkgamfcd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wssjsnxsmw .gt_table_body {
+#tugkgamfcd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -168538,7 +168548,7 @@ Show code
   border-bottom-color: #D3D3D3;
 }
 
-#wssjsnxsmw .gt_footnotes {
+#tugkgamfcd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -168552,13 +168562,13 @@ Show code
   border-right-color: #D3D3D3;
 }
 
-#wssjsnxsmw .gt_footnote {
+#tugkgamfcd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#wssjsnxsmw .gt_sourcenotes {
+#tugkgamfcd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -168572,41 +168582,41 @@ Show code
   border-right-color: #D3D3D3;
 }
 
-#wssjsnxsmw .gt_sourcenote {
+#tugkgamfcd .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#wssjsnxsmw .gt_left {
+#tugkgamfcd .gt_left {
   text-align: left;
 }
 
-#wssjsnxsmw .gt_center {
+#tugkgamfcd .gt_center {
   text-align: center;
 }
 
-#wssjsnxsmw .gt_right {
+#tugkgamfcd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wssjsnxsmw .gt_font_normal {
+#tugkgamfcd .gt_font_normal {
   font-weight: normal;
 }
 
-#wssjsnxsmw .gt_font_bold {
+#tugkgamfcd .gt_font_bold {
   font-weight: bold;
 }
 
-#wssjsnxsmw .gt_font_italic {
+#tugkgamfcd .gt_font_italic {
   font-style: italic;
 }
 
-#wssjsnxsmw .gt_super {
+#tugkgamfcd .gt_super {
   font-size: 65%;
 }
 
-#wssjsnxsmw .gt_footnote_marks {
+#tugkgamfcd .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -168654,12 +168664,440 @@ Show code
 </table>
 </div>
 </div>
+<p>Notre première hypotèse (aisni qu’une partie de la seconde) est donc vérifiée. Quant à savoir si le taux de vaccination n’est pas associé au revenu par habitant, à la taille du PIB ou à la taille de la population, interrogeons deux régressions OLS :</p>
 <aside>
-<p>Hypothèse 1 Encore à ce jour, les pays du continent Africain vaccinent beaucoup moins que les pays des autres continents <span class="citation" data-cites="aresAttitudinalPolarizationRedistributive2021">(<a href="#ref-aresAttitudinalPolarizationRedistributive2021" role="doc-biblioref">Ares, Burgisser, and Hausermann 2021</a>)</span>.</p>
-<p>Hypothèse 2 Le taux de vaccination des population est principalement corrélé à l’accessibilité aux soins de santé <span class="citation" data-cites="ferraginaEndAusterityCommon2021">(<a href="#ref-ferraginaEndAusterityCommon2021" role="doc-biblioref">Ferragina and Zola 2021</a>)</span>.</p>
-<p>Hypothèse 3 Le taux de vaccination n’est pas associé à la taille du PIB ou à la taille de la population <span class="citation" data-cites="toozeShutdownHowCovid2021">(<a href="#ref-toozeShutdownHowCovid2021" role="doc-biblioref">Tooze 2021</a>)</span>. Les résultats sont encore une fois similaires alors que l’effet d’interaction est nul.</p>
+<p>Hypothèse 1 Le taux de vaccination des population est principalement corrélé à l’accessibilité aux soins de santé <span class="citation" data-cites="ferraginaEndAusterityCommon2021">(<a href="#ref-ferraginaEndAusterityCommon2021" role="doc-biblioref">Ferragina and Zola 2021</a>)</span>.</p>
+Hypothèse 2 Le taux de vaccination n’est pas associé au revenu par habitant, à la taille du PIB ou à la taille de la population <span class="citation" data-cites="toozeShutdownHowCovid2021">(<a href="#ref-toozeShutdownHowCovid2021" role="doc-biblioref">Tooze 2021</a>)</span>.
 </aside>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>modelelineaire</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>people_fully_vaccinated_per_hundred</span> <span class='op'>~</span> <span class='va'>population_21_22</span> <span class='op'>+</span> <span class='va'>GDP.total</span>, data <span class='op'>=</span> <span class='va'>df_country</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/summary.lm.html'>summary.lm</a></span><span class='op'>(</span><span class='va'>modelelineaire</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<pre><code>
+Call:
+lm(formula = people_fully_vaccinated_per_hundred ~ population_21_22 + 
+    GDP.total, data = df_country)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-54.504 -23.346   0.795  22.751  46.733 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       4.141e+01  2.009e+00  20.618  &lt; 2e-16 ***
+population_21_22 -4.671e-08  2.073e-08  -2.253 0.025447 *  
+GDP.total         4.246e-12  1.203e-12   3.529 0.000529 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 26.09 on 181 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.06825,   Adjusted R-squared:  0.05795 
+F-statistic: 6.629 on 2 and 181 DF,  p-value: 0.001666</code></pre>
+<details>
+<summary>
+Show code
+</summary>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='http://www.danieldsjoberg.com/gtsummary//reference/tbl_regression.html'>tbl_regression</a></span><span class='op'>(</span><span class='va'>modelelineaire</span><span class='op'>)</span>
+</code></pre>
+</div>
+</details>
+<div id="gshspnyeby" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#gshspnyeby .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#gshspnyeby .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#gshspnyeby .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#gshspnyeby .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#gshspnyeby .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gshspnyeby .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#gshspnyeby .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#gshspnyeby .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#gshspnyeby .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#gshspnyeby .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#gshspnyeby .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#gshspnyeby .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#gshspnyeby .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#gshspnyeby .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#gshspnyeby .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#gshspnyeby .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#gshspnyeby .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#gshspnyeby .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gshspnyeby .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#gshspnyeby .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gshspnyeby .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#gshspnyeby .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#gshspnyeby .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gshspnyeby .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#gshspnyeby .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#gshspnyeby .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#gshspnyeby .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#gshspnyeby .gt_left {
+  text-align: left;
+}
+
+#gshspnyeby .gt_center {
+  text-align: center;
+}
+
+#gshspnyeby .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#gshspnyeby .gt_font_normal {
+  font-weight: normal;
+}
+
+#gshspnyeby .gt_font_bold {
+  font-weight: bold;
+}
+
+#gshspnyeby .gt_font_italic {
+  font-style: italic;
+}
+
+#gshspnyeby .gt_super {
+  font-size: 65%;
+}
+
+#gshspnyeby .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 65%;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Beta</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>95% CI</strong><sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>p-value</strong></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">population_21_22</td>
+<td class="gt_row gt_center">0.00</td>
+<td class="gt_row gt_center">0.00, 0.00</td>
+<td class="gt_row gt_center">0.025</td></tr>
+    <tr><td class="gt_row gt_left">GDP.total</td>
+<td class="gt_row gt_center">0.00</td>
+<td class="gt_row gt_center">0.00, 0.00</td>
+<td class="gt_row gt_center"><0.001</td></tr>
+  </tbody>
+  
+  <tfoot>
+    <tr class="gt_footnotes">
+      <td colspan="4">
+        <p class="gt_footnote">
+          <sup class="gt_footnote_marks">
+            <em>1</em>
+          </sup>
+           
+          CI = Confidence Interval
+          <br />
+        </p>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+<p>En raision de leur absence de substantivité et de signification statistique (pour l’une des deux variables d’intérêt), il convient de rejeter la seconde hypothèse.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-aresAttitudinalPolarizationRedistributive2021" class="csl-entry" role="doc-biblioentry">
 Ares, Macarena, Reto Burgisser, and Silja Hausermann. 2021. <span>“Attitudinal Polarization Towards the Redistributive Role of the State in the Wake of the <span>COVID-19</span> Crisis.”</span> <em>Journal of Elections, Public Opinion and Parties</em> 31 (sup1): 41–55. <a href="https://doi.org/10.1080/17457289.2021.1924736">https://doi.org/10.1080/17457289.2021.1924736</a>.
@@ -168692,7 +169130,7 @@ Tooze, Adam. 2021. <em>Shutdown: How Covid Shook the World’s Economy</em>. <sp
 <h3 id="references">References</h3>
 <div id="references-listing"></div>
 <h3 id="updates-and-corrections">Corrections</h3>
-<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/FAS1002/FAS1002_projet-final/issues/new">create an issue</a> on the source repository.</p>
+<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/ThomasGareau/FAS1002_projet-final/issues/new">create an issue</a> on the source repository.</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
 <pre class="citation-appendix short">Gareau Paquette (2021, Dec. 23). FAS1002 - Projet final de Thomas Gareau Paquette: Description II. Retrieved from https://fas1002.github.io/FAS1002_projet-final</pre>

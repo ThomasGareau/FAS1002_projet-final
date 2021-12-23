@@ -38,8 +38,6 @@ Dans les derniers mois, cet effort a migré vers la campagne de vaccination la p
 Nous tenterons donc de répondre à la question suviante : **Comment expliquer que les taux de vaccination par cent habitants soient aussi inégaux entre pays ?**
 
 
-
-
 Dans le cadre de ce rapport analytique, nous utiliserons les données de [@mathieu2021] de **Our World in Data**, ainsi que de **Gapminder** [@gapminderPopulationForecasts2021l; @gapminderGDPCapita2021; @gapminderLifeExpectancy2021].
 
 

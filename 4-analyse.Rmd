@@ -1,7 +1,7 @@
 ---
-title: "Description II"
+title: "Description II et analyses bivariées / multivariées"
 description: | 
-  Petite description du contenu de cette page
+  Dans cette section, nous explorons les données en faisant des statistiques descriptives bivariées. Nous formulons ensuite notre question de recherche et nos hypothèses pour ensuite exécuter les analyses. 
 date: "`r Sys.Date()`"
 # Modifier les détails que vous voulez
 author:
@@ -293,16 +293,6 @@ tbl_regression(modelelineaire)
 
 
 Notre première hypotèse (aisni qu'une partie de la seconde) est donc vérifiée. Quant à savoir si le taux de vaccination n'est pas associé au revenu par habitant, à la taille du PIB ou à la taille de la population, interrogeons deux régressions OLS :
-
-
-<aside>
-
-Hypothèse 1
-Le taux de vaccination des population est principalement corrélé à l'accessibilité aux soins de santé [@ferraginaEndAusterityCommon2021].
-
-Hypothèse 2
-Le taux de vaccination n'est pas associé au revenu par habitant, à la taille du PIB ou à la taille de la population [@toozeShutdownHowCovid2021].
-</aside>
 
 
 ```{r}

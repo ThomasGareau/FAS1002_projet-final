@@ -10,12 +10,6 @@ xtab.cat <- function(y_var, x_var) {
     return(t)  
 }
 
-xtab.cat.freq <- function(y_var, x_var) {
-    t <- cbind("Fréquence croisée" = table(y_var, x_var))
-    t <- rbind(t, "Total" = round(colSums(t), 2))
-    
-    return(t)  
-}
 
 xtab.conti <- function(y_var, x_var) {
     y_var <- ifelse(y_var == 88| y_var == 99, NA, y_var) 

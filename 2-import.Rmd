@@ -37,7 +37,7 @@ library(kableExtra)
 source("data/telecharger_raw.R", local = knit_global())     
 source("data/manipulation.R", local = knit_global())      
 source("data/open_data_clean.R", local = knit_global())
-source("fonctions.R", local = knit_global())        
+source("R/fonctions.R", local = knit_global())        
 ```
 
 
@@ -48,11 +48,11 @@ Ces deux dernières années ont été, à de nombreux égards, historiques en ra
 
 Afin de déterminer l'étendue de ces inégalités de même que l'effort entrepris par ces pays, nous mobiliserons les données de quatre bases de données distinctes. D'une part, nous utiliserons les données sur la vaccination de [Our World in Data](https://ourworldindata.org/covid-vaccinations). D'autre part, nous mobiliserons trois bases de données provenant de [Gapminder](https://www.gapminder.org) : 
 
-1. [Les données sur la population mondiale](https://www.gapminder.org/category/world-population/)
+1. [Les données sur la population mondiale](https://www.gapminder.org/category/world-population/), voir @gapminderPopulationForecasts2021
 
-1. [Les données du PIB par habitant en fonction des pays](https://www.gapminder.org/tag/life-expectancy/)
+1. [Les données du PIB par habitant en fonction des pays](https://www.gapminder.org/tag/life-expectancy/), voir @gapminderGDPCapita2021
 
-1. [Les données d'espérance de vie en fonction des pays](https://www.gapminder.org/tag/life-expectancy/)
+1. [Les données d'espérance de vie en fonction des pays](https://www.gapminder.org/tag/life-expectancy/), voir @gapminderLifeExpectancy2021
 
 
 Pour des raisons purement techniques, une base de données permettant de faire la « traduction » entre les codes régionaux, les pays et les continents a ausi été utilisée. Cette base de données, appelée « **Country and continent code list** », est disponible [ici](https://gist.github.com/stevewithington/20a69c0b6d2ff846ea5d35e5fc47f26c).
@@ -66,11 +66,11 @@ L'objectif de **Our World in Data** est de rendre accessibles et compréhensible
 ## Les données Gapminder
 Ce rapport analytique (de qualité profressionelle) portant sur les déterminants de la vaccination utilise aussi les données de **Gapminder**. Gapminder est un organisme à but non-lucratif enregistré en Suède. Son objectif est de  lutter contre les idées fausses à l'international.
 
-D'une part, les données sur la population mondiale [(disponibles en format brut ici)](https://docs.google.com/spreadsheets/d/14_suWY8fCPEXV0MH7ZQMZ-KndzMVsSsA5HdR-7WqAC0/edit#gid=501532268) donnent accès aux informations liées à la population mondiale par pays, par continent et pour la planète, de 1800 à aujourd'hui. Nous n'utilisons toutefois que les données pour 2021, en fonction des pays et des continents.
+D'une part, les données sur la population mondiale [@gapminderGDPCapita2021] [(disponibles en format brut ici)](https://docs.google.com/spreadsheets/d/14_suWY8fCPEXV0MH7ZQMZ-KndzMVsSsA5HdR-7WqAC0/edit#gid=501532268) donnent accès aux informations liées à la population mondiale par pays, par continent et pour la planète, de 1800 à aujourd'hui. Nous n'utilisons toutefois que les données pour 2021, en fonction des pays et des continents.
 
-Deuxièmement, les données sur le produit intérieur brut par habitant [(disponibles en format brut ici)](https://docs.google.com/spreadsheets/d/1gZZ28UiWCVue-tFHMEVOvSO58x7x-w20E23l1wZTR3E/edit#gid=501532268) donnent encore une fois accès aux données indiquées par le titre de 1800 à aujourd'hui, en fonction du monde entier, des continents et des pays. En plus du PIB *per capita*, le taux de croissance et le PIB total sont aussi disponibles. Encore une fois ici, nous n'utilisons que les données pour 2021. 
+Deuxièmement, les données sur le produit intérieur brut par habitant [@gapminderGDPCapita2021] [(disponibles en format brut ici)](https://docs.google.com/spreadsheets/d/1gZZ28UiWCVue-tFHMEVOvSO58x7x-w20E23l1wZTR3E/edit#gid=501532268) donnent encore une fois accès aux données indiquées par le titre de 1800 à aujourd'hui, en fonction du monde entier, des continents et des pays. En plus du PIB *per capita*, le taux de croissance et le PIB total sont aussi disponibles. Encore une fois ici, nous n'utilisons que les données pour 2021. 
 
-Enfin, le dernier jeu de données que nous utilisons [(disponible ici)](https://docs.google.com/spreadsheets/d/11mulzUH3_cueq-V9D5KIlo9oHE9YYZrUSeVyCin7_rM/edit#gid=501532268) présente les données liées à l'espérance de vie de 1800 à aujourd'hui pour la terre, les cinq continents et les 197 pays reconnus par l'Organisation des nations unies. À nouveau, nous n'utilisons que les données de 2021.
+Enfin, le dernier jeu de données que nous utilisons [@gapminderLifeExpectancy2021] [(disponible ici)](https://docs.google.com/spreadsheets/d/11mulzUH3_cueq-V9D5KIlo9oHE9YYZrUSeVyCin7_rM/edit#gid=501532268) présente les données liées à l'espérance de vie de 1800 à aujourd'hui pour la terre, les cinq continents et les 197 pays reconnus par l'Organisation des nations unies. À nouveau, nous n'utilisons que les données de 2021.
 
 
 
@@ -187,9 +187,10 @@ df_country <- full_join(iso_translator, df_country, by="geo") %>%
     drop_na("total_vaccinations")
 ```
 
+
 ```{r, echo=FALSE}
 preuve <- df_country %>%
-  select(Continent_Name, location)
+  select(Continent_Name, country)
 
 kable(head(preuve), caption = "Ajout de la variable continent") %>%
   kable_styling()

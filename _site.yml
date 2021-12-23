@@ -1,10 +1,9 @@
 name: "FAS1002_projet-final"
-title: "FAS1002 - Projet final"
+title: "FAS1002 - Projet final de Thomas Gareau Paquette"
 favicon: static/images/FAS1002.png
 # N'oubliez pas d'activer votre site web dans vos params sur GH.
 repository_url: https://github.com/FAS1002/FAS1002_projet-final
-description: |
-  Projet final pour le cours FAS1002! 🔥
+description: "Ce site présente un rapport analytique (de qualité professionelle) sur la COVID-19 via les données sur la vaccination de Our World in Data et de Gapminder"
 output_dir: "docs"
 theme: static/theme.css
 navbar:
@@ -13,41 +12,33 @@ navbar:
     href: index.html
   source_url: true
   left:
-  # Vous pouvez supprimer ou changer les pages
-    - text: "Aide pour le site"
+    - text: "Informations supplémentaires sur la COVID-19"
       menu:
-        - text: "Distill Basics"
-          href: https://rstudio.github.io/distill/basics.html
-        - text: "Figure Layout"
-          href: https://rstudio.github.io/distill/figures.html
-        - text: "Tables"
-          href: https://rstudio.github.io/distill/tables.html
-        - text: "Diagrams"
-          href: https://rstudio.github.io/distill/diagrams.html
-        - text: "JavaScript & D3"
-          href: https://rstudio.github.io/distill/interactivity.html
-        - text: "---"
-        - text: "Citations"
-          href: https://rstudio.github.io/distill/citations.html
-        - text: "Article Metadata"
-          href: https://rstudio.github.io/distill/metadata.html
+        - text: "Organisation mondiale de la santé"
+          href: https://www.who.int/fr/emergencies/diseases/novel-coronavirus-2019
+        - text: "Section COVID-19 de Radio-Canada"
+          href: https://ici.radio-canada.ca/info/2020/coronavirus-covid-19-pandemie-cas-carte-maladie-symptomes-propagation/
+        - text: "Portail Covid du gouvernement du Québec"
+          href: https://www.quebec.ca/sante/problemes-de-sante/a-z/coronavirus-2019
+        - text: "COVID-19 Map (JHU)"
+          href: https://coronavirus.jhu.edu/map.html
+        - text: "Omicron - les informations les plus récentes (CDC)"
+          href: https://www.cdc.gov/coronavirus/2019-ncov/variants/omicron-variant.html
   right:
-  # L'ordre et les noms == arbitraires, usez de créativité.
     - text: "Introduction"
       href: 1-intro.html
     - text: "Importation"
       href: 2-import.html
-    - text: "Exploration"
-      href: 3-exploration.html
-    - text: "Visualisation"
-      href: 3-exploration.html
+    - text: "Description I : Analyses univariées"
+      href: 3-description.html
+    - text: "Analyse : Description II : analyses bivariées et multivariées"
+      href: 4-analyse.html
     - text: "Contact"
       href: contact.html
 
-      # voir https://fontawesome.com/v4.7/icons/ pour les icones
     - icon: fab fa-twitter
-      href: https://twitter.com/VOTREUSERNAME
-creative_commons: CC BY
+      href: https://twitter.com/thomasgareau
+      creative_commons: CC BY
 
 output:
   distill::distill_article:

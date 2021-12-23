@@ -1,0 +1,587 @@
+---
+title: "Description I : analyses univariées"
+description: "Dans cette section, nous explorons les données en décrivant certaines de leurs mesures, mais aussi en exposant certaines distributions via des analyses graphiques univariées. Il est à noter que toutes les figures ont été effectuées en date du 19 et du 20 décembre. Les chiffres pourraient donc évoluer."
+date: "`r Sys.Date()`"
+# Modifier les détails que vous voulez
+author:
+  - first_name: "Thomas"
+    last_name: "Gareau Paquette"
+    url: https://github.com/thomasgareau
+    # les champs d'affiliation sont optionnels, vous pouvez les
+    # comment out en ajoutant un # devant.
+    affiliation: FAS1002
+    affiliation_url: https://admission.umontreal.ca/programmes/microprogramme-de-1er-cycle-en-analyse-des-megadonnees-en-sciences-humaines-et-sociales/structure-du-programme/
+    # changer pour votre propre orcid id
+    # https://orcid.org/ pour vous inscrire.
+    orcid_id: 0000-0003-4421-4855
+# Changer pour votre propre URL si jamais quelqu'un vous cite!
+citation_url: https://fas1002.github.io/FAS1002_projet-final
+# Inclure les références que vous utilisez dans vos rapports
+# dans un fichier biblio.bib. Je conseille Zotero pour construire
+# ce fichier ou d'utiliser le package citr dans RStudio.
+# Installation: devtools::install_github("crsh/citr")
+bibliography: references.bib
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r, include=FALSE}
+library(knitr)
+library(tidyverse)
+library(readxl)
+library(lubridate)
+library(kableExtra)
+library(skimr) 
+library(moderndive)
+library(modelsummary)
+library(DT)
+```
+
+```{r, include=FALSE}
+# importer nos scripts
+source("data/telecharger_raw.R", local = knit_global())     
+source("data/manipulation.R", local = knit_global())      
+source("data/open_data_clean.R", local = knit_global())
+source("R/fonctions.R", local = knit_global())        
+```
+
+# Disponibilité des données et exportation
+
+Si vous souhaitez télécharger les données par vous-même, celles-ci sont disponibles en format `.csv` via le répertoire github [ici](https://github.com/ThomasGareau/FAS1002_projet-final/tree/main/data/processed).
+
+Vous pouvez aussi télécharger les jeux de données par **Google Sheets**.
+
+* `df_continent` (`continent_clean.csv`) est diponible ici [ici](https://docs.google.com/spreadsheets/d/1c0ZfAzJM92GPKvsu_8GZBSQa2IS8TbkU823Cu9fu74c/edit?usp=sharing)
+
+* `df_country` (`country_clean.csv`) est disponible [ici](https://docs.google.com/spreadsheets/d/1jEH1VvUPa6OKKKzMWIvwRyKksgNEO8jkA1PEbGVl2VI/edit?usp=sharing)
+
+* `df_semaine` (`daily_vaccination_semaine_clean.csv`) est disponible [ici](https://docs.google.com/spreadsheets/d/1SKQqhyF4JhzAJyDGNM3Xdk1Zg-qsOncxUYoF6D59BFI/edit?usp=sharing)
+
+
+# Section descriptive
+
+### 1. df_continent
+
+Le dataframe `df_continent` recense les variables de **Gapminder** et de **Our World in Data** en fonction des continents. Cette base de données est composée de 4 observations et de 15 variables. Les données permettent d'entrevoir d'importants écarts entre pays en ce qui a trait aux indicateurs qui y ont été ajoutés : 
+
+
+```{r, echo=FALSE}
+tableau_1 <- df_continent %>%
+kable(caption = "Données des vaccinations par continent") %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+tableau_1
+```
+Il est difficile d'inférer quoi que ce soit des mesures de centralité ou de dispersion, tous les pays d'un continent donné ayant le même « poids ». C'était toutefois le « prix à payer » pour avoir une idée précise des données en matière de vaccination en Océanie, en Amérique du Sud et en Amérique du Nord. Nonobstant, les différences de « paysage » entre les continents sont toutefois flagrantes, notamment au regard des disparités par rapport à l'espérance de vie ou aux taux de vaccination moyens.
+
+
+Il convient aussi de noter les disparités en termes de vaccination totale par cent habitants (`total_vaccinations_per_hundred`). L'écart entre les Amériques et le reste du monde a de quoi laisser dubitatif. Concernant, les statistiques descriptives, celles-ci se présentent ainsi :
+
+```{r, echo=FALSE}
+tableau_2 <- df_continent %>%
+datasummary_skim() %>%
+  kable_styling(font_size = 4, full_width = FALSE)
+tableau_2
+```
+<br>
+
+
+Ces inégalités sont donc flagrantes en termes de nombre de personnes vaccinées, comme il est possible de le constater au graphique 1 : 
+
+
+```{r}
+
+graphique_1 <- ggplot(df_continent) +
+ aes(x = continent, fill = continent, weight = total_vaccinations_per_hundred) +
+ geom_bar() + 
+  scale_x_discrete(guide = guide_axis(n.dodge=2)) +
+ scale_fill_manual(values = c(Afrique = "#A50026", `Amérique du Nord` = "#F46D43", `Amérique du Sud` = "#FEE090",
+Asie = "#E0F3F8", Europe = "#74ADD1", Oceanie = "#313695")) +
+ labs(x = "Continent", y = "Nombre d'individus vaccinés", 
+ title = "Nombre d'individus vaccinés par cent habitants", subtitle = "En fonction du continent", 
+ caption = "Graphique 1. Source : Our World in data.", fill = "Continent") +
+ theme_bw() +
+ theme(plot.title = element_text(face = "bold.italic"),
+    legend.position = "none")
+
+graphique_1
+```
+<br>
+
+
+Ces inégalités sont encore plus flagrantes en ce qui a trait au fameux *"booster"*, cette troisième dose maintenant devenue d'une importance capitale en raison du développement et de la généralisation du variant Omicron :  
+
+
+```{r}
+graphique_2 <- ggplot(df_continent) +
+ aes(x = continent, fill = continent, weight = total_boosters) +
+ geom_bar() +
+ scale_fill_manual(values = c(Afrique = "#A50026", 
+`Amérique du Nord` = "#F46D43", `Amérique du Sud` = "#FEE08B", Asie = "#D9EF8B", Europe = "#66BD63", 
+Oceanie = "#006837")) +
+   scale_x_discrete(guide = guide_axis(n.dodge=2)) +
+ labs(x = "Continent", y = "Nombre de « boosters » donnés", title = "Nombre de boosters inoculés", 
+ subtitle = "En fonction du continent", caption = "Graphique 2. Source : Our World in data", fill = "Continent") +
+ theme_bw() +
+ theme(plot.title = element_text(face = "bold.italic"), legend.position = "none")
+
+graphique_2
+```
+<br>
+
+
+
+En soi, cette banque de données ne sera pas directement utilisée dans nos analyses. Celle-ci permet malgré tout d'appréhender les différences entre les cadres continentaux en termes de vaccination. De plus, des données plus précises sur les continents se trouvent dans la banque de données suivante. Ce sont ces données qui seront utilisées dans le cadre des prochaines analyses lorsque viendra le temps de mobiliser nos variables à l'échelle des continents. La banque de données `df_continent` nous aura toutefois permis d'introduire l'étude des déterminants nationaux de la vaccination, soit ce que nous tâcherons d'élaborer ici. 
+
+
+### 2. df_country
+
+#### Variable d'intérêt
+
+La deuxième banque de données est beaucoup plus riche en raison du nombre d'observations qui y est associé. Celle-ci est composée de 185 observations et de 15 variables. Les observations concernant la vaccination sont très récentes pour la majorité des pays :
+
+```{r}
+graphique_3 <- ggplot(df_country) +
+ aes(x = "", y = temps_ecoule, fill = Continent_Name) +
+ geom_violin(adjust = 1L, 
+ scale = "count") +
+ scale_fill_brewer(palette = "Set1", direction = 1) +
+ labs(x = "Nombre de jours", 
+ y = "Nombre de jours", title = "Nombre de jours", subtitle = " depuis la communication des dernières données", 
+ caption = "Graphique 3. Source : Our World in Data", fill = "Continent") +
+ theme_minimal() +
+ theme(plot.title = element_text(face = "bold.italic"))
+
+graphique_3
+```
+
+En fait, seulement 4 pays ont fourni leurs données les plus récentes il y a plus d'un mois. Il s'agit de Tuvalu (61 jours), Monaco (97 jours), Nauru (113 jours) et du Turkmenistan (115 jours). Les données de plus de 100 
+
+```{r}
+df_country %>%
+  tibble(temps_ecoule == 1)
+```
+
+
+#### Description
+
+La fonction `glimpse` permet d'avoir un aperçu de ce que nous pourrons observer via `df_country`.
+
+```{r, echo=FALSE}
+glimpse(df_country)
+```
+
+<br>
+
+La fonction `glimpse` n'est pas pour autant extrêmement informative. Par chance, en tableau « interactif », il est possible de saisir un peu mieux cette vaste banque de données.
+
+```{r, echo=FALSE}
+tableau_3 <- df_country %>%
+  kable(caption = "Données fournies par df_country") %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+tableau_3
+```
+
+<br>
+
+
+Mais qu'en est-il des statistiques descriptives à proprement parler? Encore une fois, faisons appel à la fonction `skim()`, présente dans le package `modelsummary` de Vincent Arel-Bundock : 
+
+```{r, echo=FALSE}
+tableau_4 <- df_country %>%
+datasummary_skim(caption = "Statistiques descriptives obtenues avec Skim") %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+tableau_4
+```
+
+<br>
+
+
+Ce tableau présente de  nombreuses statistiques descriptives d'importance, à commencer par le nombre d'observations, des mesures de centralité comme la moyenne, des mesures de dispersion comme l'écart type, etc. Les valeurs maximales et minimales sont aussi incluses. Dès lors, nous sommes en droit de développer une approche pour les analyses. Ils ns s'agit toutefois évidemment pas de la même échelle. Nous devons donc nous garder de faire toute conclusion hâtive.
+
+Il convient toutefois de souligner que la moyenne d'individus vaccinés par 100 habitants est de 49,1 alors que la médiane est de 44,2. Rien de cela ne semble problématique, jusqu'à ce que nous tombions sur un écart type de 26.9 pour cette même variable. Cette mesure robuste de tendance centrale semble donc indiquer statistiquement les disparités que nous tenterons d'analyser. 
+
+> la moyenne d'individus vaccinés par 100 habitants est de 49,1 alors que la médiane est de 44,2. Rien de cela ne semble problématique, jusqu'à ce que nous tombions sur un écart type de 26.9 pour cette même variable.
+
+#### Données sur la vaccination
+
+Ainsi, les mesures de dispersion pour des variables comme `people_fully_vaccinated_per_hundred` montrent de grands écarts entre les pays par rapport à la moyenne, qui elle est pourtant assez élevée. Ainsi, lorsque **Our World in Data** explique que « [56.9% of the world population has received at least one dose of a COVID-19 vaccine](https://ourworldindata.org/covid-vaccinations), il conviendrait de s'attarder plus spécifiquement à la distribution de ces variables. Ce « *pattern* » se reproduit pour de nombreuses variables en lien avec la vaccination. Comme il est possible de le constater graphiquement, ces chiffres divergent grandement d'une distribution statistique « normale ». Ici, nous utilisons le nombre d'individus complètement vaccinés par 100 habitants : 
+
+```{r}
+graphique_4 <- ggplot(df_country) +
+ aes(x = people_fully_vaccinated_per_hundred, fill = Continent_Name) +
+ geom_density(adjust = 1L) +
+ scale_fill_brewer(palette = "Set1", direction = 1) +
+ labs(x = "Nombre d'individus totalement vaccinés (par 100 habitants)", 
+ y = "Densité", title = "Disparités vaccinales entre les pays \nvia le nombre d'individus totalement vaccinés", subtitle = " par 100 habitants", 
+ caption = "Graphique 4. Source : Our World in Data", fill = "Continent") +
+ theme_minimal() +
+ theme(plot.title = element_text(face = "bold.italic"))
+
+graphique_4
+```
+
+Visuellement, toutes les données sur la vaccination semblent reproduire le même graphiquem que l'on s'intéresse au nombre de *booster* inoculés, au nombre d'individus vaccinés pour 100 habitants, au nombre d'individus complètement vaccinés pour 100 habitants, au nombre de doses administrées, etc. 
+
+Pour que les 5 continents se chevauchent en ce qui concerne le nombre d'individus vaccinés complètement pour 100 habitants, il faudrait dans les faits utiliser une échelle logarithmique :
+
+```{r}
+graphique_5 <- ggplot(df_country) +
+ aes(x = people_fully_vaccinated_per_hundred, fill = Continent_Name) +
+ geom_histogram(bins = 30L) +
+ scale_fill_brewer(palette = "Set1", direction = 1) +
+ scale_x_continuous(trans = "log") +
+ labs(x = "Nombre de vaccins administrés", 
+ y = "Nombre de pays", title = "Échelle logarithmique : nombre d'individus vaccinés entièrement par pays", 
+ caption = "Graphique 5. Source : Our World in Data", fill = "Continent") +
+ theme_minimal() +
+ theme(plot.title = element_text(face = "bold.italic", 
+ hjust = 0.5))
+
+graphique_5
+
+```
+
+
+#### Données socioéconomiques
+
+Dans le cadre de ces analyses, nous utiliserons aussi des données « socioéconomiques » que nous croiserons avec les données sur la vaccination. La superposition de certaines de ces variables, comme le revenu par habitant (**graphique 6**) ou l'espérance de vie (**graphique 7**) nous permet déjà d'entrevoir une certaine corrélation, que nous nous feront un plaisir de calculer dans la section suivante portant sur les analyses : 
+
+
+```{r}
+graphique_6 <- ggplot(df_country) +
+ aes(x = "", y = Income.per.person, fill = Continent_Name) +
+ geom_violin(adjust = 1L, 
+ scale = "area") +
+ scale_fill_brewer(palette = "RdYlBu", direction = 1) +
+ labs(x = "Continents", y = "Revenus par habitants", 
+ title = "Revenu par habitant", subtitle = "En fonction du continent", caption = "Graphique 6. Données : Gapminder", 
+ fill = "continent") +
+ theme_minimal() +
+ theme(plot.title = element_text(face = "bold.italic", hjust = 0.5), 
+ plot.subtitle = element_text(hjust = 0.5))
+
+graphique_6
+```
+
+
+```{r}
+graphique_7 <- ggplot(df_country) +
+ aes(x = lifeeexp_2021, fill = Continent_Name) +
+ geom_density(adjust = 0.9) +
+ scale_fill_brewer(palette = "Dark2", 
+ direction = 1) +
+ labs(x = "Espérance de vie", y = "Nombre de pays", title = "Espérance de vie", 
+ subtitle = "En fonction du continent", caption = "Graphique 7. Données : Gapminder", fill = "Continent") +
+ theme_minimal() +
+ theme(plot.title = element_text(face = "bold.italic", hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
+
+graphique_7
+```
+
+
+
+
+
+Nos analyses vont se pencher plus spécifiquement sur les déterminants de la vaccination, mais il convient d'emblée de comprendre, et de voir, qui sont les individus vaccinés : 
+
+
+
+
+<br>
+
+
+Le graphique ci-haut montre une distribution inégale en fonction des continents et du revenu par habitant. Le graphique 9 illustre lui aussi, mais à l'Aide d'un histogramme, cette distribution :
+
+```{r}
+graphique_8 <- ggplot(df_country) +
+ aes(x = people_fully_vaccinated_per_hundred, fill = Continent_Name) +
+ geom_histogram(bins = 30L) +
+ scale_fill_brewer(palette = "Paired", direction = 1) +
+ labs(x = "Inidividus complètement vaccinés par 100 habitants", 
+ y = "Nombre de pays", title = "Distribution des individus complètement vaccinés", subtitle = "En fonction du pays en date du 20 décembre 2021", 
+ caption = "Graphique 8. Source : Gapminder et Our World in Data", fill = "Continent") +
+ theme_minimal()
+
+graphique_8
+```
+
+
+Les pays africains semblent systématiquement désavantagés à quelques rares exceptions près. Nous avions vu l'ampleur de l'écart type lorsque nous analysions les données descriptives de `df_continent`, mais le tout semble vouloir se confirmer. De fait, nous allons vérifier statistiquement cette hypothèse ultérieurement dans la section portant sur les analyses, mais ces déterminants semblent à première vue corrélés à l'espérance de vie pour l'année 2021. 
+
+
+
+### 3. df_semaine
+
+Cette troisième banque de données, appelée `df_semaine` s'intéresse à la moyenne des doses innoculées par jour sur une semaine. Les observatuibs sont constuites à partir des moyennes quotidiennes (sur chaque semaine) de la variable `daily_vaccinations`.  
+
+Ensuite, cette banque de données est composée de 67 observations (pour les 67 semaines à l'étude représentant la totalité de la camoagne de vaccination mondiale) et de 67 variables. 3 de ces variables sont liées aux nombres quotidiens de vaccination via des modalités différentes (`daily_vaccinations_per_million`, `daily_people_vaccinated`, `daily_people_vaccinated_per_hundred`) alors que les autres variables représentent les pays, les continents et le pourcentage du nombre de doses administrés par continent pour la semaine donnée. Le tableau intéractif suivant les représente :  
+
+
+```{r}
+tableau_5 <- df_semaine %>%
+kable(caption = "Données par semaine") %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+
+tableau_5
+```
+
+<br>
+
+Le nombre de doses moyennes quotidiennes varie grandement d'une semaine à l'autre, ainsi que le démontrent les valeurs mesurant le degré d'écart des distributions à l'endroit du centre : 
+
+
+```{r}
+tableau_6 <- df_semaine %>%
+  select(Afrique, Amérique.du.Nord, Amérique.du.Sud, Asie, Europe, Oceanie) %>%
+  datasummary_skim()
+
+tableau_6
+```
+
+<br>
+
+
+Nous avions fait état dans la section précédente de 5 variables représentant le pourcentage de la moyenne du nombre de doses quotidiennes par continent. Ces données sont décrites statistiquement dans le tableau suivant : 
+
+
+```{r}
+tableau_7 <- df_semaine %>%
+  select(pourcentage_Afrique, pourcentage_Amérique_Nord, pourcentage_Amérique_Sud, pourcentage_Asie, pourcentage_Europe, pourcentage_Oceanie) %>%
+  datasummary_skim()
+
+tableau_7
+```
+
+
+```{r fig.show="hold", out.width="50%"}
+graphique_9 <- ggplot(df_semaine) +
+ aes(x = time, weight = Amérique.du.Nord) +
+ geom_bar(fill = "#228B22") +
+ labs(x = "Temps", 
+ y = "Doses quotidiennes", title = "Amérique du Nord : Nombre de doses quotidiennes inoculées", subtitle = "(Données moyennes sur une semaine)", 
+ caption = "Graphique 9. Source : Our World in Data") +
+ theme_void() +
+ theme(plot.title = element_text(face = "bold.italic", 
+ hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
+
+
+graphique_10 <- ggplot(df_semaine) +
+ aes(x = time, weight = Amérique.du.Sud) +
+ geom_bar(fill = "#1062AD") +
+ labs(x = "Temps", 
+ y = "Doses quotidiennes", title = "Amérique du Sud : Nombre de doses quotidiennes inoculées", subtitle = "(Données moyennes sur une semaine)", 
+ caption = "Graphique 10. Source : Our World in Data") +
+ theme_void() +
+ theme(plot.title = element_text(face = "bold.italic", 
+ hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
+
+graphique_9
+graphique_10
+```
+
+
+
+```{r fig.show="hold", out.width="50%"}
+graphique_11 <- ggplot(df_semaine) +
+ aes(x = time, weight = Europe) +
+ geom_bar(fill = "#B22222") +
+ labs(x = "Temps", 
+ y = "Doses quotidiennes", title = "Europe : Nombre de doses quotidiennes inoculées", subtitle = "(Données moyennes sur une semaine)", 
+ caption = "Graphique 11. Source : Our World in Data") +
+ theme_void() +
+ theme(plot.title = element_text(face = "bold.italic", 
+ hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
+
+graphique_12 <- ggplot(df_semaine) +
+ aes(x = time, weight = Oceanie) +
+ geom_bar(fill = "#0E3356") +
+ labs(x = "Temps", 
+ y = "Doses quotidiennes", title = "Océanie : Nombre de doses quotidiennes inoculées", subtitle = "(Données moyennes sur une semaine)", 
+ caption = "Graphique 12. Source : Our World in Data") +
+ theme_void() +
+ theme(plot.title = element_text(face = "bold.italic", 
+ hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
+
+graphique_11
+graphique_12
+```
+
+
+```{r fig.show="hold", out.width="50%"}
+graphique_13 <- ggplot(df_semaine) +
+ aes(x = time, weight = Asie) +
+ geom_bar(fill = "#36327E") +
+ labs(x = "Temps", y = "Doses quotidiennes", 
+ title = "Asie : Nombre de doses quotidiennes inoculées", subtitle = "(Données moyennes sur une semaine)", 
+ caption = "Graphique 13. Source : Our World in Data") +
+ theme_void() +
+ theme(plot.title = element_text(face = "bold.italic", 
+ hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
+
+graphique_14 <- ggplot(df_semaine) +
+ aes(x = time, weight = Afrique) +
+ geom_bar(fill = "#4682B4") +
+ labs(x = "Temps", 
+ y = "Doses quotidiennes", title = "Afrique : Nombre de doses quotidiennes inoculées", subtitle = "(Données moyennes sur une semaine)", 
+ caption = "Graphique 14. Source : Our World in Data") +
+ theme_void() +
+ theme(plot.title = element_text(face = "bold.italic", 
+ hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
+
+graphique_13
+graphique_14
+```
+<br>
+
+Ainsi, pour l'Afrique, la semaine où les vaccinations quotidiennes ont été les plus nombreuses est la 50e semaine de 2021, soit du 13 au 19 décembre. Cette semaine-là, les Africains se sont fait inoculer 16 462 247 par jour en moyenne :
+
+```{r}
+tableau_8 <- setDT(df_semaine)[order(-Afrique)] %>%
+  kable(caption = "La meilleure semaine pour l'Afrique") %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+
+tableau_8
+```
+<br>
+
+Ensuite, la meilleure semaine pour l'Asie était la semaine 31, soit du 2 au 8 août. 223 430 054 doses ont alors été inoculées. 
+
+```{r}
+tableau_9 <- setDT(df_semaine)[order(-Asie)] %>%
+  kable(caption = "La meilleure semaine pour l'Asie") %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+
+tableau_9
+```
+<br>
+
+Troisièmement, l'Europe a aussi eu sa meilleure semaine tout récemment, soit du 13 au 19 décembre. 38 914 891 auraient été injectées par jour en moyenne. 
+
+```{r}
+tableau_10 <- setDT(df_semaine)[order(-Europe)] %>%
+  kable(caption = "La meilleure semaine pour l'Europe") %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+
+tableau_10
+```
+<br>
+
+Quatrièmement, la meilleure semaine de l'Océanie était la 41e semaine, soit du 11 au 17 octobre. 2 620 274 doses étaient au rendez-vous : 
+
+```{r}
+tableau_11 <- setDT(df_semaine)[order(-Oceanie)] %>%
+  kable(caption = "La meilleure semaine pour l'Oceanie") %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+
+tableau_11
+```
+<br>
+
+La meilleure semaine de l'Amérique du Sud était quant-à-elle la 34éme semaine, avec 22 757 341 doses inoculées par jour en moyenne : 
+
+```{r}
+tableau_12 <- setDT(df_semaine)[order(-Amérique.du.Sud)] %>%
+  kable(caption = "La meilleure semaine pour l'Amérique du Sud") %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+
+tableau_12
+```
+<br>
+
+Enfin, la meilleure semaine de l'Amérique du Nord est arrivée beaucoup plus tôt, soit lors de la semaine 15 de 2021, couvrant les dates du 12 au 18 avril.  28 655 413 ont alors été distribuées. 
+
+```{r}
+tableau_13 <- setDT(df_semaine)[order(-Amérique.du.Nord)] %>%
+  kable(caption = "La meilleure semaine pour l'Amérique du Nord") %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+
+tableau_13
+```
+
+<br>
+
+
+```{r ggsave, include=FALSE}
+ggsave(graphique_1, file="Graphiques/graphique1_exp.jpeg")
+ggsave(graphique_2, file="Graphiques/graphique2_exp.jpeg")
+ggsave(graphique_3, file="Graphiques/graphique3_exp.jpeg")
+ggsave(graphique_4, file="Graphiques/graphique4_exp.jpeg")
+ggsave(graphique_5, file="Graphiques/graphique5_exp.jpeg")
+ggsave(graphique_6, file="Graphiques/graphique6_exp.jpeg")
+ggsave(graphique_7, file="Graphiques/graphique7_exp.jpeg")
+ggsave(graphique_8, file="Graphiques/graphique8_exp.jpeg")
+ggsave(graphique_9, file="Graphiques/graphique9_exp.jpeg")
+ggsave(graphique_10, file="Graphiques/graphique10_exp.jpeg")
+ggsave(graphique_11, file="Graphiques/graphique11_exp.jpeg")
+ggsave(graphique_12, file="Graphiques/graphique12_exp.jpeg")
+ggsave(graphique_13, file="Graphiques/graphique13_exp.jpeg")
+ggsave(graphique_14, file="Graphiques/graphique14_exp.jpeg")
+
+
+rm(graphique_1,
+   graphique_2,
+   graphique_3,
+   graphique_4,
+   graphique_5,
+   graphique_6,
+   graphique_7,
+   graphique_8,
+   graphique_9,
+   graphique_10,
+   graphique_11,
+   graphique_12,
+   graphique_13,
+   graphique_14)
+
+
+save_kable(tableau_1, file = "tableaux/tableau1_exp.png")
+save_kable(tableau_2, file = "tableaux/tableau2_exp.png")
+save_kable(tableau_3, file = "tableaux/tableau3_exp.png")
+save_kable(tableau_4, file = "tableaux/tableau4_exp.png")
+save_kable(tableau_5, file = "tableaux/tableau5_exp.png")
+save_kable(tableau_6, file = "tableaux/tableau6_exp.png")
+save_kable(tableau_7, file = "tableaux/tableau7_exp.png")
+save_kable(tableau_8, file = "tableaux/tableau6_exp.png")
+save_kable(tableau_9, file = "tableaux/tableau7_exp.png")
+save_kable(tableau_10, file = "tableaux/tableau6_exp.png")
+save_kable(tableau_11, file = "tableaux/tableau7_exp.png")
+save_kable(tableau_12, file = "tableaux/tableau7_exp.png")
+save_kable(tableau_13, file = "tableaux/tableau7_exp.png")
+
+rm(tableau_1,
+   tableau_2,
+   tableau_3,
+   tableau_4,
+   tableau_5,
+   tableau_6,
+   tableau_7,
+   tableau_8,
+   tableau_9,
+   tableau_10,
+   tableau_11,
+   tableau_12,
+   tableau_13)
+```
+
+
+
+
+Nous pourrions évidemment continuer de décrire ces données pendant des heures. Il serait même souhaitable de le faire, ne serait-ce que pour confirmer les intuitions de la littérature préliminaire à ce sujet [@bryantUnequalImpactCOVID192020]. Il convient toutefois de continuer d'explorer ces banques de données, mais cette fois via l'analyse. Les explorations bivariées se retrouveront donc dans la prochaine section. 
+
+
+
+
+

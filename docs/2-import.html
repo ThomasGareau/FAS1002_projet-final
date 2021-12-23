@@ -85,13 +85,33 @@ code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
+<style>
+  div.csl-bib-body { }
+  div.csl-entry {
+    clear: both;
+    }
+  .hanging div.csl-entry {
+    margin-left:2em;
+    text-indent:-2em;
+  }
+  div.csl-left-margin {
+    min-width:2em;
+    float:left;
+  }
+  div.csl-right-inline {
+    margin-left:2em;
+    padding-left:1em;
+  }
+  div.csl-indent {
+    margin-left: 2em;
+  }
+</style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>FAS1002 - Projet final: Importation des variables</title>
+  <title>FAS1002 - Projet final de Thomas Gareau Paquette: Importation des variables</title>
 
   <meta property="description" itemprop="description" content="Il est ici question d&#39;une description sommaire des données et des méthodes utilisées pour importer (périodiquement) les bases de données ici mobilisées. Nous en profitons aussi pour répondre aux deux critères établis dans les consignes en ce qui a trait à la manipulation des variables."/>
 
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
   <link rel="icon" type="image/png" href="static/images/FAS1002.png"/>
 
   <!--  https://schema.org/Article -->
@@ -100,27 +120,29 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <meta name="article:author" content="Thomas Gareau"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="FAS1002 - Projet final: Importation des variables"/>
+  <meta property="og:title" content="FAS1002 - Projet final de Thomas Gareau Paquette: Importation des variables"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="Il est ici question d&#39;une description sommaire des données et des méthodes utilisées pour importer (périodiquement) les bases de données ici mobilisées. Nous en profitons aussi pour répondre aux deux critères établis dans les consignes en ce qui a trait à la manipulation des variables."/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="FAS1002 - Projet final"/>
+  <meta property="og:site_name" content="FAS1002 - Projet final de Thomas Gareau Paquette"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="FAS1002 - Projet final: Importation des variables"/>
+  <meta property="twitter:title" content="FAS1002 - Projet final de Thomas Gareau Paquette: Importation des variables"/>
   <meta property="twitter:description" content="Il est ici question d&#39;une description sommaire des données et des méthodes utilisées pour importer (périodiquement) les bases de données ici mobilisées. Nous en profitons aussi pour répondre aux deux critères établis dans les consignes en ce qui a trait à la manipulation des variables."/>
 
   <!--  https://scholar.google.com/intl/en/scholar/inclusion.html#indexing -->
-  <meta name="citation_title" content="FAS1002 - Projet final: Importation des variables"/>
+  <meta name="citation_title" content="FAS1002 - Projet final de Thomas Gareau Paquette: Importation des variables"/>
   <meta name="citation_fulltext_html_url" content="https://fas1002.github.io/FAS1002_projet-final"/>
-  <meta name="citation_fulltext_world_readable" content=""/>
   <meta name="citation_online_date" content="2021/12/22"/>
   <meta name="citation_publication_date" content="2021/12/22"/>
   <meta name="citation_author" content="Thomas Gareau"/>
   <meta name="citation_author_institution" content="FAS1002"/>
   <!--/radix_placeholder_meta_tags-->
   
+  <meta name="citation_reference" content="citation_title=GDP per capita;citation_publication_date=2021;citation_author=GDP per capita"/>
+  <meta name="citation_reference" content="citation_title=Life expectancy;citation_publication_date=2021;citation_author=Life expectancy"/>
+  <meta name="citation_reference" content="citation_title=Population forecasts;citation_publication_date=2021;citation_author=Population forecasts"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
@@ -2129,8 +2151,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   /*-- Additional custom styles --*/
   /* Add any additional CSS rules below                      */
   </style>
-  <style type="text/css">
-  /* base variables */
+  <style type="text/css">/* base variables */
 
   /* Edit the CSS properties in this file to create a custom
      Distill theme. Only edit values in the right column
@@ -2141,27 +2162,28 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   /* Optional: embed custom fonts here with `@import`          */
   /* This must remain at the top of this file.                 */
-
+  @import url('https://fonts.googleapis.com/css2?family=Cardo');
+  @import url('https://fonts.googleapis.com/css2?family=Alata');
 
 
   html {
     /*-- Main font sizes --*/
     --title-size:      50px;
-    --body-size:       1.06rem;
+    --body-size:       1.075rem;                   /* edited */
     --code-size:       14px;
     --aside-size:      12px;
     --fig-cap-size:    13px;
     /*-- Main font colors --*/
     --title-color:     #000000;
-    --header-color:    rgba(0, 0, 0, 0.8);
+    --heading-color:   rgba(0, 0, 0, 0.8);
     --body-color:      rgba(0, 0, 0, 0.8);
     --aside-color:     rgba(0, 0, 0, 0.6);
     --fig-cap-color:   rgba(0, 0, 0, 0.6);
     /*-- Specify custom fonts ~~~ must be imported above   --*/
-    --heading-font:    sans-serif;
+    --heading-font:    'Alata', sans-serif;        /* edited */
     --mono-font:       monospace;
-    --body-font:       sans-serif;
-    --navbar-font:     sans-serif;  /* websites + blogs only */
+    --body-font:       'Cardo', serif;             /* edited */
+    --navbar-font:     'Alata', sans-serif;        /* edited */
   }
 
   /*-- ARTICLE METADATA --*/
@@ -2182,74 +2204,54 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-appendix {
     --heading-size:    15px;
     --heading-color:   rgba(0, 0, 0, 0.65);
-    --text-size:       0.8em;
-    --text-color:      rgba(0, 0, 0, 0.5);
+    --text-size:       1.075rem;                   /* edited */
+    --text-color:      rgb(0, 0, 0);               /* edited */
   }
 
   /*-- WEBSITE HEADER + FOOTER --*/
   /* These properties only apply to Distill sites and blogs  */
 
   .distill-site-header {
-    --title-size:       1.40rem;
-    --text-color:       rgba(255, 255, 255, 1);
-    --text-size:        1.25rem;
-    --hover-color:      #222;
-    --bkgd-color:       #EEE;
+    --title-size:       18px;
+    --text-color:       #000;                     /* edited */
+    --text-size:        15px;
+    --hover-color:      #ff00ff;                  /* edited */
+    --bkgd-color:       #fff;                     /* edited */
   }
 
-
   .distill-site-footer {
-    --text-color:       rgba(255, 255, 255, 1);
-    --text-size:        1.1rem;
-    --hover-color:      #222;
-    --bkgd-color:       #EEE;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
   }
 
   /*-- Additional custom styles --*/
-  /* Add any additional CSS rules below                      */
-  /*  Ligne 81 à 97 = le dégradé de couleur, simplement supprimer
-  au besoin */
-  .distill-site-footer {
-      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
+
+  .categories li > a:hover {
+      color: #00ff00;
+      border-bottom: 1px #00ff00;
   }
 
-  @keyframes gradient {
-      0% {
-          background-position: 0% 50%;
-      }
-      50% {
-          background-position: 100% 50%;
-      }
-      100% {
-          background-position: 0% 50%;
-      }
+  p a:hover  {
+      color: #00ff00;
   }
 
-  .distill-site-header {
-      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-      letter-spacing: 1px;
-      text-transform: uppercase;    
+  /* Change appearance of headers */
+  h1, h2, h3, h4, h5 {
+      font-weight: 700;
   }
 
-  @keyframes gradient {
-      0% {
-          background-position: 0% 50%;
-      }
-      50% {
-          background-position: 100% 50%;
-      }
-      100% {
-          background-position: 0% 50%;
-      }
+  /* Use specific font in the body of the text */
+  html, body, p {
+      font-weight: 200;
+      /*line-height: 1.3rem; */
+      /*font-style: normal;*/
   }
 
-  .distill-site-header .logo img{
-    max-height: 40px; /* Makes logo bigger, default was 20px */
-    margin-bottom: -30%; /* To vertically center it */
+  ul > li::marker {
+      font-weight: 700;
+      font-size: 1.125em;
   }</style>
   <style type="text/css">
   /* base style */
@@ -2441,33 +2443,33 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <a class="logo" href="index.html">
 <img src="static/images/FAS1002.png" alt="Logo"/>
 </a>
-<a href="index.html" class="title">FAS1002 - Projet final</a>
+<a href="index.html" class="title">FAS1002 - Projet final de Thomas Gareau Paquette</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
-Aide pour le site
+Informations supplémentaires sur la COVID-19
  
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
-<a href="https://rstudio.github.io/distill/basics.html">Distill Basics</a>
-<a href="https://rstudio.github.io/distill/figures.html">Figure Layout</a>
-<a href="https://rstudio.github.io/distill/tables.html">Tables</a>
-<a href="https://rstudio.github.io/distill/diagrams.html">Diagrams</a>
-<a href="https://rstudio.github.io/distill/interactivity.html">JavaScript &amp; D3</a>
-<hr/>
-<a href="https://rstudio.github.io/distill/citations.html">Citations</a>
-<a href="https://rstudio.github.io/distill/metadata.html">Article Metadata</a>
+<a href="https://www.who.int/fr/emergencies/diseases/novel-coronavirus-2019">Organisation mondiale de la santé</a>
+<a href="https://ici.radio-canada.ca/info/2020/coronavirus-covid-19-pandemie-cas-carte-maladie-symptomes-propagation/">Section COVID-19 de Radio-Canada</a>
+<a href="https://www.quebec.ca/sante/problemes-de-sante/a-z/coronavirus-2019">Portail Covid du gouvernement du Québec</a>
+<a href="https://coronavirus.jhu.edu/map.html">COVID-19 Map (JHU)</a>
+<a href="https://www.cdc.gov/coronavirus/2019-ncov/variants/omicron-variant.html">Omicron - les informations les plus récentes (CDC)</a>
 </div>
 </div>
 </div>
 <div class="nav-right">
 <a href="1-intro.html">Introduction</a>
 <a href="2-import.html">Importation</a>
-<a href="3-exploration.html">Exploration</a>
-<a href="3-exploration.html">Visualisation</a>
+<a href="3-description.html">Description I : Analyses univariées</a>
+<a href="4-analyse.html">Analyse : Description II : analyses bivariées et multivariées</a>
 <a href="contact.html">Contact</a>
-<a href="https://twitter.com/VOTREUSERNAME">
+<a href="https://twitter.com/thomasgareau">
 <i class="fab fa-twitter" aria-hidden="true"></i>
+</a>
+<a href="https://github.com/ThomasGareau/FAS1002_projet-final/tree/main/data/processed">
+<i class="fab fa-cloud-download" aria-hidden="true"></i>
 </a>
 <a href="https://github.com/FAS1002/FAS1002_projet-final" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
@@ -2517,18 +2519,18 @@ Aide pour le site
 <p>Ces deux dernières années ont été, à de nombreux égards, historiques en raison des dangers entourant la COVID-19 et ses variants. Pour la quasi-totalité de la communauté scientifique, la sortie de cette crise passe par la vaccination. Cette consigne a été prise à la lettre par de nombreux gouvernements, au point où certains experts ont mobilisé le terme « protectionnisme vaccinal » pour définir cette pratique corollaire d’une reproduction des inégalités à l’échelle internationale.</p>
 <p>Afin de déterminer l’étendue de ces inégalités de même que l’effort entrepris par ces pays, nous mobiliserons les données de quatre bases de données distinctes. D’une part, nous utiliserons les données sur la vaccination de <a href="https://ourworldindata.org/covid-vaccinations">Our World in Data</a>. D’autre part, nous mobiliserons trois bases de données provenant de <a href="https://www.gapminder.org">Gapminder</a> :</p>
 <ol type="1">
-<li><p><a href="https://www.gapminder.org/category/world-population/">Les données sur la population mondiale</a></p></li>
-<li><p><a href="https://www.gapminder.org/tag/life-expectancy/">Les données du PIB par habitant en fonction des pays</a></p></li>
-<li><p><a href="https://www.gapminder.org/tag/life-expectancy/">Les données d’espérance de vie en fonction des pays</a></p></li>
+<li><p><a href="https://www.gapminder.org/category/world-population/">Les données sur la population mondiale</a>, voir <span class="citation" data-cites="gapminderPopulationForecasts2021">Gapminder (<a href="#ref-gapminderPopulationForecasts2021" role="doc-biblioref">2021c</a>)</span></p></li>
+<li><p><a href="https://www.gapminder.org/tag/life-expectancy/">Les données du PIB par habitant en fonction des pays</a>, voir <span class="citation" data-cites="gapminderGDPCapita2021">Gapminder (<a href="#ref-gapminderGDPCapita2021" role="doc-biblioref">2021a</a>)</span></p></li>
+<li><p><a href="https://www.gapminder.org/tag/life-expectancy/">Les données d’espérance de vie en fonction des pays</a>, voir <span class="citation" data-cites="gapminderLifeExpectancy2021">Gapminder (<a href="#ref-gapminderLifeExpectancy2021" role="doc-biblioref">2021b</a>)</span></p></li>
 </ol>
 <p>Pour des raisons purement techniques, une base de données permettant de faire la « traduction » entre les codes régionaux, les pays et les continents a ausi été utilisée. Cette base de données, appelée « <strong>Country and continent code list</strong> », est disponible <a href="https://gist.github.com/stevewithington/20a69c0b6d2ff846ea5d35e5fc47f26c">ici</a>.</p>
 <h2 id="les-données-de-our-world-in-data">Les données de Our World in Data</h2>
 <p>L’objectif de <strong>Our World in Data</strong> est de rendre accessibles et compréhensibles <a href="https://ourworldindata.org/about">les connaissances sur les grands problèmes contemporains</a>. Nous utiliserons les données par pays et par continent sur la vaccination mondiale dans la lutte contre la COVID-19. (<a href="https://github.com/owid/covid-19-data/tree/master/public/data/vaccinations">disponibles en format brut ici</a>) sont colligées via des sources publiques officielles et centralisées par l’organisation dans une même base de données. Celle-ci contient de nombreuses variables permettant de mieux saisir l’effort vaccinal dans sa complétude. L’ensemble des données présentes dans cette base de données sont énumérées dans le <a href="https://github.com/owid/covid-19-data/blob/master/public/data/vaccinations/README.md">READ.me</a> de la base de données.</p>
 <h2 id="les-données-gapminder">Les données Gapminder</h2>
 <p>Ce rapport analytique (de qualité profressionelle) portant sur les déterminants de la vaccination utilise aussi les données de <strong>Gapminder</strong>. Gapminder est un organisme à but non-lucratif enregistré en Suède. Son objectif est de lutter contre les idées fausses à l’international.</p>
-<p>D’une part, les données sur la population mondiale <a href="https://docs.google.com/spreadsheets/d/14_suWY8fCPEXV0MH7ZQMZ-KndzMVsSsA5HdR-7WqAC0/edit#gid=501532268">(disponibles en format brut ici)</a> donnent accès aux informations liées à la population mondiale par pays, par continent et pour la planète, de 1800 à aujourd’hui. Nous n’utilisons toutefois que les données pour 2021, en fonction des pays et des continents.</p>
-<p>Deuxièmement, les données sur le produit intérieur brut par habitant <a href="https://docs.google.com/spreadsheets/d/1gZZ28UiWCVue-tFHMEVOvSO58x7x-w20E23l1wZTR3E/edit#gid=501532268">(disponibles en format brut ici)</a> donnent encore une fois accès aux données indiquées par le titre de 1800 à aujourd’hui, en fonction du monde entier, des continents et des pays. En plus du PIB <em>per capita</em>, le taux de croissance et le PIB total sont aussi disponibles. Encore une fois ici, nous n’utilisons que les données pour 2021.</p>
-<p>Enfin, le dernier jeu de données que nous utilisons <a href="https://docs.google.com/spreadsheets/d/11mulzUH3_cueq-V9D5KIlo9oHE9YYZrUSeVyCin7_rM/edit#gid=501532268">(disponible ici)</a> présente les données liées à l’espérance de vie de 1800 à aujourd’hui pour la terre, les cinq continents et les 197 pays reconnus par l’Organisation des nations unies. À nouveau, nous n’utilisons que les données de 2021.</p>
+<p>D’une part, les données sur la population mondiale <span class="citation" data-cites="gapminderGDPCapita2021">(<a href="#ref-gapminderGDPCapita2021" role="doc-biblioref">Gapminder 2021a</a>)</span> <a href="https://docs.google.com/spreadsheets/d/14_suWY8fCPEXV0MH7ZQMZ-KndzMVsSsA5HdR-7WqAC0/edit#gid=501532268">(disponibles en format brut ici)</a> donnent accès aux informations liées à la population mondiale par pays, par continent et pour la planète, de 1800 à aujourd’hui. Nous n’utilisons toutefois que les données pour 2021, en fonction des pays et des continents.</p>
+<p>Deuxièmement, les données sur le produit intérieur brut par habitant <span class="citation" data-cites="gapminderGDPCapita2021">(<a href="#ref-gapminderGDPCapita2021" role="doc-biblioref">Gapminder 2021a</a>)</span> <a href="https://docs.google.com/spreadsheets/d/1gZZ28UiWCVue-tFHMEVOvSO58x7x-w20E23l1wZTR3E/edit#gid=501532268">(disponibles en format brut ici)</a> donnent encore une fois accès aux données indiquées par le titre de 1800 à aujourd’hui, en fonction du monde entier, des continents et des pays. En plus du PIB <em>per capita</em>, le taux de croissance et le PIB total sont aussi disponibles. Encore une fois ici, nous n’utilisons que les données pour 2021.</p>
+<p>Enfin, le dernier jeu de données que nous utilisons <span class="citation" data-cites="gapminderLifeExpectancy2021">(<a href="#ref-gapminderLifeExpectancy2021" role="doc-biblioref">Gapminder 2021b</a>)</span> <a href="https://docs.google.com/spreadsheets/d/11mulzUH3_cueq-V9D5KIlo9oHE9YYZrUSeVyCin7_rM/edit#gid=501532268">(disponible ici)</a> présente les données liées à l’espérance de vie de 1800 à aujourd’hui pour la terre, les cinq continents et les 197 pays reconnus par l’Organisation des nations unies. À nouveau, nous n’utilisons que les données de 2021.</p>
 <h1 id="manipulations">Manipulations</h1>
 <p>D’une part, les données de <strong>Our World in Data</strong> sont mises à jour à tout les jour. Les données de <strong>Gapminder</strong> subiront quant-à-elles un traitement similaire à tous les changements de mois. Comment avons-nous procédé pour permettre, via un script, de re-télécharger ces données périodiquement ? Si nous prenons les données de <strong>Our World in Data</strong> en guise d’exemple, nous avons procédé par un énoncé conditionnel :</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2835,6 +2837,17 @@ verification_vaccination_par_100
 <img src="https://media.giphy.com/media/8UF0EXzsc0Ckg/giphy.gif" alt="Source : Giphy" /><figcaption aria-hidden="true">Source : Giphy</figcaption>
 </figure>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-gapminderGDPCapita2021" class="csl-entry" role="doc-biblioentry">
+Gapminder. 2021a. <span>“<span>GDP</span> Per Capita.”</span> 2021. <a href="https://www.gapminder.org/tag/gdp-per-capita/">https://www.gapminder.org/tag/gdp-per-capita/</a>.
+</div>
+<div id="ref-gapminderLifeExpectancy2021" class="csl-entry" role="doc-biblioentry">
+———. 2021b. <span>“Life Expectancy.”</span> 2021. <a href="https://www.gapminder.org/tag/life-expectancy/">https://www.gapminder.org/tag/life-expectancy/</a>.
+</div>
+<div id="ref-gapminderPopulationForecasts2021" class="csl-entry" role="doc-biblioentry">
+———. 2021c. <span>“Population Forecasts.”</span> 2021. <a href="https://www.gapminder.org/topics/population-forecasts/">https://www.gapminder.org/topics/population-forecasts/</a>.
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2851,15 +2864,13 @@ verification_vaccination_par_100
 <div id="references-listing"></div>
 <h3 id="updates-and-corrections">Corrections</h3>
 <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/FAS1002/FAS1002_projet-final/issues/new">create an issue</a> on the source repository.</p>
-<h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/FAS1002/FAS1002_projet-final">https://github.com/FAS1002/FAS1002_projet-final</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 <h3 id="citation">Citation</h3>
 <p>For attribution, please cite this work as</p>
-<pre class="citation-appendix short">Gareau (2021, Dec. 22). FAS1002 - Projet final: Importation des variables. Retrieved from https://fas1002.github.io/FAS1002_projet-final</pre>
+<pre class="citation-appendix short">Gareau (2021, Dec. 22). FAS1002 - Projet final de Thomas Gareau Paquette: Importation des variables. Retrieved from https://fas1002.github.io/FAS1002_projet-final</pre>
 <p>BibTeX citation</p>
 <pre class="citation-appendix long">@misc{gareau2021importation,
   author = {Gareau, Thomas},
-  title = {FAS1002 - Projet final: Importation des variables},
+  title = {FAS1002 - Projet final de Thomas Gareau Paquette: Importation des variables},
   url = {https://fas1002.github.io/FAS1002_projet-final},
   year = {2021}
 }</pre>
@@ -2867,7 +2878,7 @@ verification_vaccination_par_100
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p>Ce site a été conçu via le package Distill dans le cadre du cours FAS1002 - Initiation à la programmation en sciences sociales.</p>
+<p>Ce site a été conçu via le package Distill dans le cadre du cours FAS1002 - Initiation à la programmation en sciences sociales. N'hésitez pas à vous <a href="https://admission.umontreal.ca/programmes/microprogramme-de-1er-cycle-en-analyse-des-megadonnees-en-sciences-humaines-et-sociales/">inscrire</a> !</p>
 <p><img src="static/images/FAS1002.png" /></p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->

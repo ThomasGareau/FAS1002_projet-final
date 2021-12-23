@@ -1,4 +1,3 @@
-
 /* base variables */
 
 /* Edit the CSS properties in this file to create a custom
@@ -10,27 +9,28 @@
 
 /* Optional: embed custom fonts here with `@import`          */
 /* This must remain at the top of this file.                 */
-
+@import url('https://fonts.googleapis.com/css2?family=Cardo');
+@import url('https://fonts.googleapis.com/css2?family=Alata');
 
 
 html {
   /*-- Main font sizes --*/
   --title-size:      50px;
-  --body-size:       1.06rem;
+  --body-size:       1.075rem;                   /* edited */
   --code-size:       14px;
   --aside-size:      12px;
   --fig-cap-size:    13px;
   /*-- Main font colors --*/
   --title-color:     #000000;
-  --header-color:    rgba(0, 0, 0, 0.8);
+  --heading-color:   rgba(0, 0, 0, 0.8);
   --body-color:      rgba(0, 0, 0, 0.8);
   --aside-color:     rgba(0, 0, 0, 0.6);
   --fig-cap-color:   rgba(0, 0, 0, 0.6);
   /*-- Specify custom fonts ~~~ must be imported above   --*/
-  --heading-font:    sans-serif;
+  --heading-font:    'Alata', sans-serif;        /* edited */
   --mono-font:       monospace;
-  --body-font:       sans-serif;
-  --navbar-font:     sans-serif;  /* websites + blogs only */
+  --body-font:       'Cardo', serif;             /* edited */
+  --navbar-font:     'Alata', sans-serif;        /* edited */
 }
 
 /*-- ARTICLE METADATA --*/
@@ -51,72 +51,52 @@ d-byline {
 d-appendix {
   --heading-size:    15px;
   --heading-color:   rgba(0, 0, 0, 0.65);
-  --text-size:       0.8em;
-  --text-color:      rgba(0, 0, 0, 0.5);
+  --text-size:       1.075rem;                   /* edited */
+  --text-color:      rgb(0, 0, 0);               /* edited */
 }
 
 /*-- WEBSITE HEADER + FOOTER --*/
 /* These properties only apply to Distill sites and blogs  */
 
 .distill-site-header {
-  --title-size:       1.40rem;
-  --text-color:       rgba(255, 255, 255, 1);
-  --text-size:        1.25rem;
-  --hover-color:      #222;
-  --bkgd-color:       #EEE;
+  --title-size:       18px;
+  --text-color:       #000;                     /* edited */
+  --text-size:        15px;
+  --hover-color:      #ff00ff;                  /* edited */
+  --bkgd-color:       #fff;                     /* edited */
 }
 
-
 .distill-site-footer {
-  --text-color:       rgba(255, 255, 255, 1);
-  --text-size:        1.1rem;
-  --hover-color:      #222;
-  --bkgd-color:       #EEE;
+  --text-color:       rgba(255, 255, 255, 0.8);
+  --text-size:        15px;
+  --hover-color:      white;
+  --bkgd-color:       #0F2E3D;
 }
 
 /*-- Additional custom styles --*/
-/* Add any additional CSS rules below                      */
-/*  Ligne 81 à 97 = le dégradé de couleur, simplement supprimer
-au besoin */
-.distill-site-footer {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+
+.categories li > a:hover {
+    color: #00ff00;
+    border-bottom: 1px #00ff00;
 }
 
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+p a:hover  {
+    color: #00ff00;
 }
 
-.distill-site-header {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    letter-spacing: 1px;
-    text-transform: uppercase;    
+/* Change appearance of headers */
+h1, h2, h3, h4, h5 {
+    font-weight: 700;
 }
 
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+/* Use specific font in the body of the text */
+html, body, p {
+    font-weight: 200;
+    /*line-height: 1.3rem; */
+    /*font-style: normal;*/
 }
 
-.distill-site-header .logo img{
-  max-height: 40px; /* Makes logo bigger, default was 20px */
-  margin-bottom: -30%; /* To vertically center it */
+ul > li::marker {
+    font-weight: 700;
+    font-size: 1.125em;
 }

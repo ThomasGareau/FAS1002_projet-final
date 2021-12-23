@@ -45,20 +45,10 @@ Ces deux dernières années ont été, à de nombreux égards, historiques en ra
 Qualitativement,les expériences personnelles liées à cette pandémie varient. Quantitativement, toutefois, les indicateurs ne mentent pas quant à l'étendue de cette crise qui s'est étendue à toutes les sphères de la société. Ainsi, pour tempérer la chute des indicateurs les plus centraux, les gouvernements n'y sont pas allés de main morte. L'économiste Adam @toozeShutdownHowCovid2021 va même jusqu'à affirmer que l'effort mobilisé rappelait des dimensions qui n'avaient jusqu'alors été vues uniquement en temps de guerre.  
 
 Dans le cadre de ce rapport analytique, nous utiliserons les données de [@mathieu2021]
+
+
+
 ![Source : Intoaction](https://c.tenor.com/OaFNl1Me8TwAAAAd/ready-for-the-covid-vaccine-covid-vaccine.gif)
-
-
-[@fletcherGovernmentIncomeSupport2020] semble l'Avoir démontré :
-
-[@belandSocialPolicyResponses2021]
-
-[@aresAttitudinalPolarizationRedistributive2021] 
-
-[@COVID19BorderAmericans2020]
-
-[@ferraginaEndAusterityCommon2021] [@fletcherGovernmentIncomeSupport2020]
-
-[@gapminderGDPCapita2021] [@gapminderLifeExpectancy2021] [@gapminderPopulationForecasts2021]
 
 
 ## Inclure des graphiques ou des images pour présenter les ensembles de données.

@@ -68,6 +68,7 @@ df_semaine <- df_semaine %>%
            pourcentage_Oceanie = round(Oceania/total*100)) #### données intéressantes
 
 
+
 #### Pour franciser les noms des continents
 
 df_semaine <- df_semaine %>%

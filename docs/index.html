@@ -85,33 +85,52 @@ code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
+<style>
+  div.csl-bib-body { }
+  div.csl-entry {
+    clear: both;
+    }
+  .hanging div.csl-entry {
+    margin-left:2em;
+    text-indent:-2em;
+  }
+  div.csl-left-margin {
+    min-width:2em;
+    float:left;
+  }
+  div.csl-right-inline {
+    margin-left:2em;
+    padding-left:1em;
+  }
+  div.csl-indent {
+    margin-left: 2em;
+  }
+</style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>FAS1002 - Projet final: Titre de votre projet final</title>
+  <title>FAS1002 - Projet final de Thomas Gareau Paquette: Les déterminants de la vaccination à l'international</title>
 
-  <meta property="description" itemprop="description" content="Ceci est votre page d&#39;accueil de votre site web"/>
 
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
   <link rel="icon" type="image/png" href="static/images/FAS1002.png"/>
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="FAS1002 - Projet final: Titre de votre projet final"/>
+  <meta property="og:title" content="FAS1002 - Projet final de Thomas Gareau Paquette: Les déterminants de la vaccination à l&#39;international"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Ceci est votre page d&#39;accueil de votre site web"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="FAS1002 - Projet final"/>
+  <meta property="og:site_name" content="FAS1002 - Projet final de Thomas Gareau Paquette"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="FAS1002 - Projet final: Titre de votre projet final"/>
-  <meta property="twitter:description" content="Ceci est votre page d&#39;accueil de votre site web"/>
+  <meta property="twitter:title" content="FAS1002 - Projet final de Thomas Gareau Paquette: Les déterminants de la vaccination à l&#39;international"/>
 
   <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=Canada to take COVAX vaccines, won’t share doses until every Canadian is inoculated: Anand | CBC News;citation_publication_date=2021;citation_publisher=CBC;citation_author=Peter Zimonjic;citation_author=Catherine Cullen"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","site","toc"]}},"value":[{"type":"character","attributes":{},"value":["Titre de votre projet final"]},{"type":"character","attributes":{},"value":["Ceci est votre page d'accueil de votre site web\n"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"logical","attributes":{},"value":[false]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","site","toc","bibliography"]}},"value":[{"type":"character","attributes":{},"value":["Les déterminants de la vaccination à l'international"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["references.bib"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2116,8 +2135,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   /*-- Additional custom styles --*/
   /* Add any additional CSS rules below                      */
   </style>
-  <style type="text/css">
-  /* base variables */
+  <style type="text/css">/* base variables */
 
   /* Edit the CSS properties in this file to create a custom
      Distill theme. Only edit values in the right column
@@ -2128,27 +2146,28 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   /* Optional: embed custom fonts here with `@import`          */
   /* This must remain at the top of this file.                 */
-
+  @import url('https://fonts.googleapis.com/css2?family=Cardo');
+  @import url('https://fonts.googleapis.com/css2?family=Alata');
 
 
   html {
     /*-- Main font sizes --*/
     --title-size:      50px;
-    --body-size:       1.06rem;
+    --body-size:       1.075rem;                   /* edited */
     --code-size:       14px;
     --aside-size:      12px;
     --fig-cap-size:    13px;
     /*-- Main font colors --*/
     --title-color:     #000000;
-    --header-color:    rgba(0, 0, 0, 0.8);
+    --heading-color:   rgba(0, 0, 0, 0.8);
     --body-color:      rgba(0, 0, 0, 0.8);
     --aside-color:     rgba(0, 0, 0, 0.6);
     --fig-cap-color:   rgba(0, 0, 0, 0.6);
     /*-- Specify custom fonts ~~~ must be imported above   --*/
-    --heading-font:    sans-serif;
+    --heading-font:    'Alata', sans-serif;        /* edited */
     --mono-font:       monospace;
-    --body-font:       sans-serif;
-    --navbar-font:     sans-serif;  /* websites + blogs only */
+    --body-font:       'Cardo', serif;             /* edited */
+    --navbar-font:     'Alata', sans-serif;        /* edited */
   }
 
   /*-- ARTICLE METADATA --*/
@@ -2169,74 +2188,54 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-appendix {
     --heading-size:    15px;
     --heading-color:   rgba(0, 0, 0, 0.65);
-    --text-size:       0.8em;
-    --text-color:      rgba(0, 0, 0, 0.5);
+    --text-size:       1.075rem;                   /* edited */
+    --text-color:      rgb(0, 0, 0);               /* edited */
   }
 
   /*-- WEBSITE HEADER + FOOTER --*/
   /* These properties only apply to Distill sites and blogs  */
 
   .distill-site-header {
-    --title-size:       1.40rem;
-    --text-color:       rgba(255, 255, 255, 1);
-    --text-size:        1.25rem;
-    --hover-color:      #222;
-    --bkgd-color:       #EEE;
+    --title-size:       18px;
+    --text-color:       #000;                     /* edited */
+    --text-size:        15px;
+    --hover-color:      #ff00ff;                  /* edited */
+    --bkgd-color:       #fff;                     /* edited */
   }
 
-
   .distill-site-footer {
-    --text-color:       rgba(255, 255, 255, 1);
-    --text-size:        1.1rem;
-    --hover-color:      #222;
-    --bkgd-color:       #EEE;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
   }
 
   /*-- Additional custom styles --*/
-  /* Add any additional CSS rules below                      */
-  /*  Ligne 81 à 97 = le dégradé de couleur, simplement supprimer
-  au besoin */
-  .distill-site-footer {
-      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
+
+  .categories li > a:hover {
+      color: #00ff00;
+      border-bottom: 1px #00ff00;
   }
 
-  @keyframes gradient {
-      0% {
-          background-position: 0% 50%;
-      }
-      50% {
-          background-position: 100% 50%;
-      }
-      100% {
-          background-position: 0% 50%;
-      }
+  p a:hover  {
+      color: #00ff00;
   }
 
-  .distill-site-header {
-      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-      letter-spacing: 1px;
-      text-transform: uppercase;    
+  /* Change appearance of headers */
+  h1, h2, h3, h4, h5 {
+      font-weight: 700;
   }
 
-  @keyframes gradient {
-      0% {
-          background-position: 0% 50%;
-      }
-      50% {
-          background-position: 100% 50%;
-      }
-      100% {
-          background-position: 0% 50%;
-      }
+  /* Use specific font in the body of the text */
+  html, body, p {
+      font-weight: 200;
+      /*line-height: 1.3rem; */
+      /*font-style: normal;*/
   }
 
-  .distill-site-header .logo img{
-    max-height: 40px; /* Makes logo bigger, default was 20px */
-    margin-bottom: -30%; /* To vertically center it */
+  ul > li::marker {
+      font-weight: 700;
+      font-size: 1.125em;
   }</style>
   <style type="text/css">
   /* base style */
@@ -2413,7 +2412,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Titre de votre projet final","description":"Ceci est votre page d'accueil de votre site web","authors":[]}
+{"title":"Les déterminants de la vaccination à l'international","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2424,33 +2423,33 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <a class="logo" href="index.html">
 <img src="static/images/FAS1002.png" alt="Logo"/>
 </a>
-<a href="index.html" class="title">FAS1002 - Projet final</a>
+<a href="index.html" class="title">FAS1002 - Projet final de Thomas Gareau Paquette</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
-Aide pour le site
+Informations supplémentaires sur la COVID-19
  
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
-<a href="https://rstudio.github.io/distill/basics.html">Distill Basics</a>
-<a href="https://rstudio.github.io/distill/figures.html">Figure Layout</a>
-<a href="https://rstudio.github.io/distill/tables.html">Tables</a>
-<a href="https://rstudio.github.io/distill/diagrams.html">Diagrams</a>
-<a href="https://rstudio.github.io/distill/interactivity.html">JavaScript &amp; D3</a>
-<hr/>
-<a href="https://rstudio.github.io/distill/citations.html">Citations</a>
-<a href="https://rstudio.github.io/distill/metadata.html">Article Metadata</a>
+<a href="https://www.who.int/fr/emergencies/diseases/novel-coronavirus-2019">Organisation mondiale de la santé</a>
+<a href="https://ici.radio-canada.ca/info/2020/coronavirus-covid-19-pandemie-cas-carte-maladie-symptomes-propagation/">Section COVID-19 de Radio-Canada</a>
+<a href="https://www.quebec.ca/sante/problemes-de-sante/a-z/coronavirus-2019">Portail Covid du gouvernement du Québec</a>
+<a href="https://coronavirus.jhu.edu/map.html">COVID-19 Map (JHU)</a>
+<a href="https://www.cdc.gov/coronavirus/2019-ncov/variants/omicron-variant.html">Omicron - les informations les plus récentes (CDC)</a>
 </div>
 </div>
 </div>
 <div class="nav-right">
 <a href="1-intro.html">Introduction</a>
 <a href="2-import.html">Importation</a>
-<a href="3-exploration.html">Exploration</a>
-<a href="3-exploration.html">Visualisation</a>
+<a href="3-description.html">Description I : Analyses univariées</a>
+<a href="4-analyse.html">Analyse : Description II : analyses bivariées et multivariées</a>
 <a href="contact.html">Contact</a>
-<a href="https://twitter.com/VOTREUSERNAME">
+<a href="https://twitter.com/thomasgareau">
 <i class="fab fa-twitter" aria-hidden="true"></i>
+</a>
+<a href="https://github.com/ThomasGareau/FAS1002_projet-final/tree/main/data/processed">
+<i class="fab fa-cloud-download" aria-hidden="true"></i>
 </a>
 <a href="https://github.com/FAS1002/FAS1002_projet-final" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
@@ -2464,55 +2463,49 @@ Aide pour le site
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Titre de votre projet final</h1>
+<h1>Les déterminants de la vaccination à l’international</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Ceci est votre page d’accueil de votre site web</p></p>
+
 </div>
 
 
 <div class="d-article">
-<p>Vous pouvez faire le résumé de votre projet directement sur cette page et utiliser le document <a href="1-intro.html">1-intro</a> pour décrire votre projet.</p>
-<p>Il s’agit d’un fichier R Markdown traditionnel. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<h2 id="inclure-des-graphiques">Inclure des graphiques</h2>
-<p>Comme la classique pyramide à la Figure <a href="#fig:pie">1</a> par exemple:</p>
+<p>Et si la coopération internationale était elle aussi atteinte d’un virus ?</p>
+<p>Avant le début de la campagne de vaccination au Canada, celle qui était alors ministre des Services publics et de l’Approvisionnement, Anita Anand, affirmait haut et fort que le Canada ne donnera aucune dose, même lorsque celles-ci sont financées par la communauté internationale, tant que toute la population « n’aura pas été vaccinée » <span class="citation" data-cites="zimonjicCanadaTakeCOVAX2021">(<a href="#ref-zimonjicCanadaTakeCOVAX2021" role="doc-biblioref">Zimonjic and Cullen 2021</a>)</span>.</p>
+<p>Faisant échos à la stratégie américaine de « protectionnisme vacinal », cette phrase a été prononcée par la ministre Anand alors que le Canada recevait encore des doses de vaccin dans le cadre de l’initiative internationale COVAX.</p>
 <div class="layout-chunk" data-layout="l-body">
 <details>
 <summary>
 Show code
 </summary>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/pie.html'>pie</a></span><span class='op'>(</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>280</span>, <span class='fl'>60</span>, <span class='fl'>20</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'Ciel'</span>, <span class='st'>'Côté ensoleillé de la pyramide'</span>, <span class='st'>'Côté ombragé de la pyramide'</span><span class='op'>)</span>,
-  col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'#0292D8'</span>, <span class='st'>'#F7EA39'</span>, <span class='st'>'#C4B632'</span><span class='op'>)</span>,
-  init.angle <span class='op'>=</span> <span class='op'>-</span><span class='fl'>50</span>, border <span class='op'>=</span> <span class='cn'>NA</span>
-<span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>df_country</span><span class='op'>)</span> <span class='op'>+</span>
+ <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>people_fully_vaccinated</span>, fill <span class='op'>=</span> <span class='va'>Continent_Name</span><span class='op'>)</span> <span class='op'>+</span>
+ <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_density.html'>geom_density</a></span><span class='op'>(</span>adjust <span class='op'>=</span> <span class='fl'>1L</span><span class='op'>)</span> <span class='op'>+</span>
+ <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_brewer.html'>scale_fill_brewer</a></span><span class='op'>(</span>palette <span class='op'>=</span> <span class='st'>"Set1"</span>, direction <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
+ <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_x_continuous</a></span><span class='op'>(</span>trans <span class='op'>=</span> <span class='st'>"log"</span><span class='op'>)</span> <span class='op'>+</span>
+ <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>" "</span>, 
+ title <span class='op'>=</span> <span class='st'>"Vaccination des populations par continent"</span>, subtitle <span class='op'>=</span> <span class='st'>"Échelle logarithmique"</span>, caption <span class='op'>=</span> <span class='st'>"Graphique 1. Source : Our World in Data. "</span>, 
+ fill <span class='op'>=</span> <span class='st'>" Continent"</span><span class='op'>)</span> <span class='op'>+</span>
+ <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_void</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+ <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>plot.title <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>face <span class='op'>=</span> <span class='st'>"bold.italic"</span>, hjust <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>, 
+ plot.subtitle <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>hjust <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+ <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/vars.html'>vars</a></span><span class='op'>(</span><span class='va'>Continent_Name</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 </details>
-<div class="figure"><span style="display:block;" id="fig:pie"></span>
-<img src="index_files/figure-html5/pie-1.png" alt="Une très belle tarte" width="624" />
-<p class="caption">
-Figure 1: Une très belle tarte
-</p>
+<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
-</div>
-<aside>
-Quand même très cool, non? Vous pouvez mettre des annotations sur le côté!
-</aside>
-<h3 id="toujours-très-important-de-mettre-les-bons-niveaux-de-titres">Toujours très important de mettre les bons niveaux de titres</h3>
-<p>Un peu de texte de remplissage pour faire comme si la page était plus longue. <em>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</em></p>
-<h2 class="appendix" id="remerciements">Remerciements</h2>
-<p>J’aimerais remercier toutes les étudiantes et tous les étudiants du cours FAS1002 de l’automne 2021 pour leur enthousiasme, leur ouverture et leur rétroaction envers le cours!</p>
+<p><br> En date du 22 décembre 2021, la campagne de vaccination a débuté il y a 67 semaines. Il convient ainsi de se demander quels sont les déterminants de la vaccination à l’international aujourd’hui.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
-<section class="footnotes" role="doc-endnotes">
-<hr />
-<ol>
-<li id="fn1" role="doc-endnote"><p>Avec des petits trucs sympa comme des notes de bas de page<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-zimonjicCanadaTakeCOVAX2021" class="csl-entry" role="doc-biblioentry">
+Zimonjic, Peter, and Catherine Cullen. 2021. <span>“Canada to Take <span>COVAX</span> Vaccines, Won’t Share Doses Until Every <span>Canadian</span> Is Inoculated: <span>Anand</span> | <span>CBC News</span>.”</span> <span>CBC</span>. March 5, 2021. <a href="https://www.cbc.ca/news/politics/covax-anand-vaccine-timetable-1.5939270">https://www.cbc.ca/news/politics/covax-anand-vaccine-timetable-1.5939270</a>.
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2525,15 +2518,15 @@ Quand même très cool, non? Vous pouvez mettre des annotations sur le côté!
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
 <h3 id="updates-and-corrections">Corrections</h3>
 <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/FAS1002/FAS1002_projet-final/issues/new">create an issue</a> on the source repository.</p>
-<h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/FAS1002/FAS1002_projet-final">https://github.com/FAS1002/FAS1002_projet-final</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 </div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p>Ce site a été conçu via le package Distill dans le cadre du cours FAS1002 - Initiation à la programmation en sciences sociales.</p>
+<p>Ce site a été conçu via le package Distill dans le cadre du cours FAS1002 - Initiation à la programmation en sciences sociales. N'hésitez pas à vous <a href="https://admission.umontreal.ca/programmes/microprogramme-de-1er-cycle-en-analyse-des-megadonnees-en-sciences-humaines-et-sociales/">inscrire</a> !</p>
 <p><img src="static/images/FAS1002.png" /></p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->

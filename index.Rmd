@@ -1,41 +1,56 @@
 ---
-title: "Titre de votre projet final"
+title: "Les déterminants de la vaccination à l'international"
 description: |
-  Ceci est votre page d'accueil de votre site web
 site: distill::distill_website
 toc: false
+bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Vous pouvez faire le résumé de votre projet directement sur cette page et utiliser le document [1-intro](1-intro.html) pour décrire votre projet.
-
-Il s'agit d'un fichier R Markdown traditionnel. ^[Avec des petits trucs sympa comme des notes de bas de page]
-
-## Inclure des graphiques
-
-Comme la classique pyramide à la Figure \@ref(fig:pie) par exemple:
-
-```{r pie, fig.cap='Une très belle tarte', tidy=FALSE}
-par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c('Ciel', 'Côté ensoleillé de la pyramide', 'Côté ombragé de la pyramide'),
-  col = c('#0292D8', '#F7EA39', '#C4B632'),
-  init.angle = -50, border = NA
-)
+```{r include=FALSE}
+library(knitr)
+library(tidyverse)
 ```
 
-<aside>
-Quand même très cool, non? Vous pouvez mettre des annotations sur le côté! 
-</aside>
 
-### Toujours très important de mettre les bons niveaux de titres
+```{r, include=FALSE}
+# importer nos scripts
+source("data/telecharger_raw.R", local = knit_global())     
+source("data/manipulation.R", local = knit_global())      
+source("data/open_data_clean.R", local = knit_global())
+source("R/fonctions.R", local = knit_global())        
+```
 
-Un peu de texte de remplissage pour faire comme si la page était plus longue. *Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.*
+Et si la coopération internationale était elle aussi atteinte d'un virus ?
 
-## Remerciements {.appendix}
+Avant le début de la campagne de vaccination au Canada, celle qui était alors ministre des Services publics et de l’Approvisionnement, Anita Anand, affirmait haut et fort que le Canada ne donnera aucune dose, même lorsque celles-ci sont financées par la communauté internationale, tant que toute la population « n’aura pas été vaccinée » [@zimonjicCanadaTakeCOVAX2021].
 
-J'aimerais remercier toutes les étudiantes et tous les étudiants du cours FAS1002 de l'automne 2021 pour leur enthousiasme, leur ouverture et leur rétroaction envers le cours!
+Faisant échos à la stratégie américaine de « protectionnisme vacinal », cette phrase a été prononcée par la ministre Anand alors que le Canada recevait encore des doses de vaccin dans le cadre de l'initiative internationale COVAX. 
+
+
+
+```{r }
+
+library(ggplot2)
+
+ggplot(df_country) +
+ aes(x = people_fully_vaccinated, fill = Continent_Name) +
+ geom_density(adjust = 1L) +
+ scale_fill_brewer(palette = "Set1", direction = 1) +
+ scale_x_continuous(trans = "log") +
+ labs(x = " ", 
+ title = "Vaccination des populations par continent", subtitle = "Échelle logarithmique", caption = "Graphique 1. Source : Our World in Data. ", 
+ fill = " Continent") +
+ theme_void() +
+ theme(plot.title = element_text(face = "bold.italic", hjust = 0.5), 
+ plot.subtitle = element_text(hjust = 0.5)) +
+ facet_wrap(vars(Continent_Name))
+
+```
+
+<br>
+En date du 22 décembre 2021, la campagne de vaccination a débuté il y a 67 semaines. Il convient  ainsi de se demander quels sont les déterminants de la vaccination à l'international aujourd'hui.
+

@@ -87,24 +87,23 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>FAS1002 - Projet final: À propos</title>
+  <title>FAS1002 - Projet final de Thomas Gareau Paquette: À propos</title>
 
   <meta property="description" itemprop="description" content="Lisez ci-dessous pour en apprendre plus sur la personne derrière ce rapport."/>
 
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
   <link rel="icon" type="image/png" href="static/images/FAS1002.png"/>
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="FAS1002 - Projet final: À propos"/>
+  <meta property="og:title" content="FAS1002 - Projet final de Thomas Gareau Paquette: À propos"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="Lisez ci-dessous pour en apprendre plus sur la personne derrière ce rapport."/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="FAS1002 - Projet final"/>
+  <meta property="og:site_name" content="FAS1002 - Projet final de Thomas Gareau Paquette"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="FAS1002 - Projet final: À propos"/>
+  <meta property="twitter:title" content="FAS1002 - Projet final de Thomas Gareau Paquette: À propos"/>
   <meta property="twitter:description" content="Lisez ci-dessous pour en apprendre plus sur la personne derrière ce rapport."/>
 
   <!--/radix_placeholder_meta_tags-->
@@ -2116,8 +2115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   /*-- Additional custom styles --*/
   /* Add any additional CSS rules below                      */
   </style>
-  <style type="text/css">
-  /* base variables */
+  <style type="text/css">/* base variables */
 
   /* Edit the CSS properties in this file to create a custom
      Distill theme. Only edit values in the right column
@@ -2128,27 +2126,28 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   /* Optional: embed custom fonts here with `@import`          */
   /* This must remain at the top of this file.                 */
-
+  @import url('https://fonts.googleapis.com/css2?family=Cardo');
+  @import url('https://fonts.googleapis.com/css2?family=Alata');
 
 
   html {
     /*-- Main font sizes --*/
     --title-size:      50px;
-    --body-size:       1.06rem;
+    --body-size:       1.075rem;                   /* edited */
     --code-size:       14px;
     --aside-size:      12px;
     --fig-cap-size:    13px;
     /*-- Main font colors --*/
     --title-color:     #000000;
-    --header-color:    rgba(0, 0, 0, 0.8);
+    --heading-color:   rgba(0, 0, 0, 0.8);
     --body-color:      rgba(0, 0, 0, 0.8);
     --aside-color:     rgba(0, 0, 0, 0.6);
     --fig-cap-color:   rgba(0, 0, 0, 0.6);
     /*-- Specify custom fonts ~~~ must be imported above   --*/
-    --heading-font:    sans-serif;
+    --heading-font:    'Alata', sans-serif;        /* edited */
     --mono-font:       monospace;
-    --body-font:       sans-serif;
-    --navbar-font:     sans-serif;  /* websites + blogs only */
+    --body-font:       'Cardo', serif;             /* edited */
+    --navbar-font:     'Alata', sans-serif;        /* edited */
   }
 
   /*-- ARTICLE METADATA --*/
@@ -2169,74 +2168,54 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   d-appendix {
     --heading-size:    15px;
     --heading-color:   rgba(0, 0, 0, 0.65);
-    --text-size:       0.8em;
-    --text-color:      rgba(0, 0, 0, 0.5);
+    --text-size:       1.075rem;                   /* edited */
+    --text-color:      rgb(0, 0, 0);               /* edited */
   }
 
   /*-- WEBSITE HEADER + FOOTER --*/
   /* These properties only apply to Distill sites and blogs  */
 
   .distill-site-header {
-    --title-size:       1.40rem;
-    --text-color:       rgba(255, 255, 255, 1);
-    --text-size:        1.25rem;
-    --hover-color:      #222;
-    --bkgd-color:       #EEE;
+    --title-size:       18px;
+    --text-color:       #000;                     /* edited */
+    --text-size:        15px;
+    --hover-color:      #ff00ff;                  /* edited */
+    --bkgd-color:       #fff;                     /* edited */
   }
 
-
   .distill-site-footer {
-    --text-color:       rgba(255, 255, 255, 1);
-    --text-size:        1.1rem;
-    --hover-color:      #222;
-    --bkgd-color:       #EEE;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
   }
 
   /*-- Additional custom styles --*/
-  /* Add any additional CSS rules below                      */
-  /*  Ligne 81 à 97 = le dégradé de couleur, simplement supprimer
-  au besoin */
-  .distill-site-footer {
-      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
+
+  .categories li > a:hover {
+      color: #00ff00;
+      border-bottom: 1px #00ff00;
   }
 
-  @keyframes gradient {
-      0% {
-          background-position: 0% 50%;
-      }
-      50% {
-          background-position: 100% 50%;
-      }
-      100% {
-          background-position: 0% 50%;
-      }
+  p a:hover  {
+      color: #00ff00;
   }
 
-  .distill-site-header {
-      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-      letter-spacing: 1px;
-      text-transform: uppercase;    
+  /* Change appearance of headers */
+  h1, h2, h3, h4, h5 {
+      font-weight: 700;
   }
 
-  @keyframes gradient {
-      0% {
-          background-position: 0% 50%;
-      }
-      50% {
-          background-position: 100% 50%;
-      }
-      100% {
-          background-position: 0% 50%;
-      }
+  /* Use specific font in the body of the text */
+  html, body, p {
+      font-weight: 200;
+      /*line-height: 1.3rem; */
+      /*font-style: normal;*/
   }
 
-  .distill-site-header .logo img{
-    max-height: 40px; /* Makes logo bigger, default was 20px */
-    margin-bottom: -30%; /* To vertically center it */
+  ul > li::marker {
+      font-weight: 700;
+      font-size: 1.125em;
   }</style>
   <style type="text/css">
   /* base style */
@@ -2424,33 +2403,33 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <a class="logo" href="index.html">
 <img src="static/images/FAS1002.png" alt="Logo"/>
 </a>
-<a href="index.html" class="title">FAS1002 - Projet final</a>
+<a href="index.html" class="title">FAS1002 - Projet final de Thomas Gareau Paquette</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
-Aide pour le site
+Informations supplémentaires sur la COVID-19
  
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
-<a href="https://rstudio.github.io/distill/basics.html">Distill Basics</a>
-<a href="https://rstudio.github.io/distill/figures.html">Figure Layout</a>
-<a href="https://rstudio.github.io/distill/tables.html">Tables</a>
-<a href="https://rstudio.github.io/distill/diagrams.html">Diagrams</a>
-<a href="https://rstudio.github.io/distill/interactivity.html">JavaScript &amp; D3</a>
-<hr/>
-<a href="https://rstudio.github.io/distill/citations.html">Citations</a>
-<a href="https://rstudio.github.io/distill/metadata.html">Article Metadata</a>
+<a href="https://www.who.int/fr/emergencies/diseases/novel-coronavirus-2019">Organisation mondiale de la santé</a>
+<a href="https://ici.radio-canada.ca/info/2020/coronavirus-covid-19-pandemie-cas-carte-maladie-symptomes-propagation/">Section COVID-19 de Radio-Canada</a>
+<a href="https://www.quebec.ca/sante/problemes-de-sante/a-z/coronavirus-2019">Portail Covid du gouvernement du Québec</a>
+<a href="https://coronavirus.jhu.edu/map.html">COVID-19 Map (JHU)</a>
+<a href="https://www.cdc.gov/coronavirus/2019-ncov/variants/omicron-variant.html">Omicron - les informations les plus récentes (CDC)</a>
 </div>
 </div>
 </div>
 <div class="nav-right">
 <a href="1-intro.html">Introduction</a>
 <a href="2-import.html">Importation</a>
-<a href="3-exploration.html">Exploration</a>
-<a href="3-exploration.html">Visualisation</a>
+<a href="3-description.html">Description I : Analyses univariées</a>
+<a href="4-analyse.html">Analyse : Description II : analyses bivariées et multivariées</a>
 <a href="contact.html">Contact</a>
-<a href="https://twitter.com/VOTREUSERNAME">
+<a href="https://twitter.com/thomasgareau">
 <i class="fab fa-twitter" aria-hidden="true"></i>
+</a>
+<a href="https://github.com/ThomasGareau/FAS1002_projet-final/tree/main/data/processed">
+<i class="fab fa-cloud-download" aria-hidden="true"></i>
 </a>
 <a href="https://github.com/FAS1002/FAS1002_projet-final" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
@@ -2503,13 +2482,11 @@ Aide pour le site
 <div class="appendix-bottom">
 <h3 id="updates-and-corrections">Corrections</h3>
 <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/FAS1002/FAS1002_projet-final/issues/new">create an issue</a> on the source repository.</p>
-<h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/FAS1002/FAS1002_projet-final">https://github.com/FAS1002/FAS1002_projet-final</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
 </div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p>Ce site a été conçu via le package Distill dans le cadre du cours FAS1002 - Initiation à la programmation en sciences sociales.</p>
+<p>Ce site a été conçu via le package Distill dans le cadre du cours FAS1002 - Initiation à la programmation en sciences sociales. N'hésitez pas à vous <a href="https://admission.umontreal.ca/programmes/microprogramme-de-1er-cycle-en-analyse-des-megadonnees-en-sciences-humaines-et-sociales/">inscrire</a> !</p>
 <p><img src="static/images/FAS1002.png" /></p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->

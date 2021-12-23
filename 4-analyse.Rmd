@@ -1,5 +1,5 @@
 ---
-title: "Exploration des données"
+title: "Description II"
 description: | 
   Petite description du contenu de cette page
 date: "`r Sys.Date()`"
@@ -28,14 +28,139 @@ output: distill::distill_article
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Un peu d'interactivité pour le plaisir!
 
 ```{r, include=FALSE}
 library(knitr)
 library(tidyverse)
 library(kableExtra)
+library(modelsummary)
 ```
 
+```{r, include=FALSE}
+# importer nos scripts
+source("data/telecharger_raw.R", local = knit_global())     
+source("data/manipulation.R", local = knit_global())      
+source("data/open_data_clean.R", local = knit_global())
+source("R/fonctions.R", local = knit_global())        
+```
+
+# Description II : Analyses bivariées
+
+
+## Analyses descriptives bivariées
+
+D'une part, la table de corrélation suivante est particulièrement informative sur les informations que l'on pourrait éventuellement inférer de nos données : 
+
+```{r}
+df_country %>%
+  datasummary_correlation() %>%
+  kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+```
+
+Par exemple, l'espérance de vie est fortement corrélée à toutes les variables touchant la vaccination. Cette corrélation est notamment plus importante qu'entre les données touchant au revenu par habitant et leur corrélation avec les variables associées à la vaccination. La croissance économique ne semble pas non plus associée à la vaccination.
+
+Le plus grand prédicteur au regard de ce modèle serait plutôt (et sans conteste) le PIB total, avec un *r de Pearson* atteignant ,94 pour les variables touchant les boosters. Cette relation ne se concrétise toutefois pas en ce qui a trait aux données par 100 habitants : il pourrait donc y avoir « collinéarité » entre la variable d'intérêt portant sur le PIB par habitant et les données liées au *boosters*.
+
+L'association statistique la plus forte entre la variable `people_fully_vaccinated_per_hundred` et le revenu par habitant. Ce tableau ne nous offre toutefois pas d'information quant à la signification statistique. Nous ne pouvons donc rien inférer pour le moment. 
+
+
+D'autre part, ce second tableau des corrélations n'est pas en soi indicatif puisqu'il est remarqueblement influencé par le poids des pays les plus peuplés. La seule conclusion que nous pourrions oser tirer présentement est celle selon laquelle les pays africains semblent suivre leur propre logique. 
+
+```{r}
+df_semaine %>%
+  datasummary_correlation() %>%
+   kable_styling(font_size = 4, full_width = FALSE) %>%
+  scroll_box(width = "800px", height = "400px")
+```
+
+
+### Variable sur la vaccination croisée avec le continent
+
+En utilisant deux fonctions « Maison », il est possible de constituer des statistiques croisées entre les variables.
+
+```{r}
+t.conti <- xtab.conti(df_country$people_fully_vaccinated_per_hundred, df_country$Continent_Name)
+
+kable(t.conti,
+      caption = "Nombre d'individus complètement vaccinés (par cent habitants) selon le continent", 
+      digits=2) %>%
+  kable_styling()
+```
+
+
+
+```{r}
+t.conti <- xtab.conti(df_country$people_fully_vaccinated_per_hundred, df_country$Continent_Name)
+
+kable(t.conti,
+      caption = "Nombre d'individus complètement vaccinés (par cent habitants) selon le continent", 
+      digits=2) %>%
+  kable_styling()
+```
+
+
+```{r}
+t.conti <- xtab.conti(df_country$total_vaccinations, df_country$Continent_Name)
+
+kable(t.conti,
+      caption = "Nombre de vaccins inoculés en fonction du continent", 
+      digits=2) %>%
+  kable_styling()
+```
+
+
+
+```{r}
+t.conti <- xtab.conti(df_country$total_boosters, df_country$Continent_Name)
+
+kable(t.conti,
+      caption = "Nombre de vaccins inoculés en fonction du continent", 
+      digits=2) %>%
+  kable_styling()
+```
+
+### Variables socioéconomiques
+
+```{r}
+t.conti <- xtab.conti(df_country$lifeeexp_2021, df_country$Continent_Name)
+
+kable(t.conti,
+      caption = "Nombre d'individus complètement vaccinés (par cent habitants) selon le continent", 
+      digits=2) %>%
+  kable_styling()
+```
+
+
+```{r}
+t.conti <- xtab.conti(df_country$Income.per.person, df_country$Continent_Name)
+
+kable(t.conti,
+      caption = "Nombre d'individus complètement vaccinés (par cent habitants) selon le continent", 
+      digits=2) %>%
+  kable_styling()
+
+```
+
+
+
+
+
+[@fletcherGovernmentIncomeSupport2020] semble l'Avoir démontré :
+
+[@belandSocialPolicyResponses2021]
+
+[@aresAttitudinalPolarizationRedistributive2021] 
+
+[@COVID19BorderAmericans2020]
+
+[@ferraginaEndAusterityCommon2021] [@fletcherGovernmentIncomeSupport2020]
+
+[@gapminderGDPCapita2021] [@gapminderLifeExpectancy2021] [@gapminderPopulationForecasts2021]
+
+
+
+Nous avons jusqu'à présent pu établir de grandes généralités par rapport à nos données. Il est maintenant temps de les analyser en établissant 
 
 # Hypothèse
 
@@ -50,10 +175,6 @@ Nous opérationnalisons ce concept via les données sur l'espérance de vie.
 
 ### H3 : Les pays 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
-
 Distill is a publication format for scientific and technical writing, native to the web. 
 
 Learn more about using Distill for R Markdown at <https://rstudio.github.io/distill>.
@@ -61,4 +182,33 @@ Learn more about using Distill for R Markdown at <https://rstudio.github.io/dist
 
 
 
+```{r}
+graphique_8 <- ggplot(df_country) +
+ aes(x = Income.per.person, y = people_fully_vaccinated_per_hundred, colour = Continent_Name) +
+ geom_point(shape = "circle", size = 1.5) + scale_x_discrete(guide = guide_axis(n.dodge=3)) +
+ scale_color_brewer(palette = "Paired", direction = 1) +
+ labs(x = "Revenu par habitant", y = "Population complètement vaccinée pour 100 habitants", 
+ title = "Distribution des individus complètement vaccinés", subtitle = "En fonction du pays en date du 20 décembre 2021", 
+ caption = "Graphique 8. Source : Gapminder et Our World in Data", color = "Continent") +
+ theme_minimal()
+
+graphique_8
+```
+
+```{r }
+graphique_10 <- ggplot(df_country) +
+ aes(x = people_fully_vaccinated_per_hundred, y = lifeeexp_2021, colour = Continent_Name) +
+ geom_point(shape = "circle", size = 1.5) +
+ scale_color_brewer(palette = "Paired", direction = 1) +
+ labs(x = "Inidividus complètement vaccinés par 100 habitants", y = "Espérance de vie", title = "Distribution des individus complètement vaccinés", 
+ subtitle = "Croisé avec l'espérance de vie en date du 20 décembre 2021", caption = "Graphique 10. Source : Gapminder et Our World in Data", 
+ color = "Continent") +
+ theme_minimal()
+
+graphique_10
+```
+
+<aside>
+Quand même très cool, non? Vous pouvez mettre des annotations sur le côté! 
+</aside>
 
